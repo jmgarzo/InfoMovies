@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">InfoMovies</string>
+    <string name="action_settings">Settings</string>
+
+
+    <string name="mdb_results_key" translatable="false">results</string>
+    <string name="mdb_poster_path_key" translatable="false">poster_path</string>
+    <string name="mdb_title_key" translatable="false">original_title</string>
+    <string name="mdb_overview_key" translatable="false">overview</string>
+    <string name="mdb_vote_average_key" translatable="false">vote_average</string>
+    <string name="mdb_release_date_key" translatable="false">release_date</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+    <string name="pref_sort_by_label">Sort by</string>
+    <string name="pref_sort_by_key" translatable="false">sort</string>
+    <string name="pref_sort_by_most_popular" translatable="false">most_popular</string>
+    <string name="pref_sort_by_defautl" translatable="false">most_popular</string>
+    <string name="pref_sort_by_top_rate" translatable="false">top_rate</string>
+    <string name="pref_sort_by_most_popular_label">Most popular</string>
+    <string name="pref_sort_by_top_rate_label">Top Rate</string>
+    <string name="title_activity_detail_movie">DetailMovie</string>
+
+
+</resources>
