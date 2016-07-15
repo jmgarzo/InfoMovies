@@ -36,7 +36,6 @@ import java.util.HashMap;
 public class MainActivityFragment extends Fragment {
 
 
-    private String THE_MOVIE_DB_API_KEY = "";
     private String TOP_RATE_PARAM = "top_rate";
     private String MOST_POPULAR = "most_popular";
 
@@ -161,11 +160,11 @@ public class MainActivityFragment extends Fragment {
 //                    .build();
 
             Uri buildUriMostPopular = Uri.parse(MOVIES_DB_BASE_URL + MOST_POPULAR).buildUpon()
-                    .appendQueryParameter(API_KEY_PARAM, THE_MOVIE_DB_API_KEY)
+                    .appendQueryParameter(API_KEY_PARAM, BuildConfig.THE_MOVIE_DB_API_KEY)
                     .build();
 
             Uri buildUriTopRate = Uri.parse(MOVIES_DB_BASE_URL + TOP_RATE).buildUpon()
-                    .appendQueryParameter(API_KEY_PARAM, THE_MOVIE_DB_API_KEY)
+                    .appendQueryParameter(API_KEY_PARAM, BuildConfig.THE_MOVIE_DB_API_KEY)
                     .build();
             // Uri build = Uri.parse("http://api.themoviedb.org/3/movie/popular?api_key=3890bbe3b27964c4c01fe8863a852df5").buildUpon().build();
 
