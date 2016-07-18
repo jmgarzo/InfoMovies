@@ -4,11 +4,20 @@
 
 
     <string name="mdb_results_key" translatable="false">results</string>
+    <string name="mdb_adult_key" translatable="false">adult</string>
+    <string name="mdb_overview_key" translatable="false">overview</string>
+    <string name="mdb_release_date_key" translatable="false">release_date</string>
+    <string name="mdb_movie_web_id_key" translatable="false">id</string>
+    <string name="mdb_original_title_key" translatable="false">original_title</string>
+    <string name="mdb_original_language_key" translatable="false">original_language</string>
     <string name="mdb_poster_path_key" translatable="false">poster_path</string>
     <string name="mdb_title_key" translatable="false">original_title</string>
-    <string name="mdb_overview_key" translatable="false">overview</string>
+    <string name="mdb_backdrop_path_key" translatable="false">backdrop_path</string>
+    <string name="mdb_popularity_key" translatable="false">popularity</string>
+    <string name="mdb_vote_count_key" translatable="false">vote_count</string>
+    <string name="mdb_video_key" translatable="false">video</string>
     <string name="mdb_vote_average_key" translatable="false">vote_average</string>
-    <string name="mdb_release_date_key" translatable="false">release_date</string>
+
     <string name="title_activity_settings">Settings</string>
 
     <!-- Strings related to Settings -->

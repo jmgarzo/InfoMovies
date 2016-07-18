@@ -1,5 +1,7 @@
 package com.jmgarzo.infomovies;
 
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -15,6 +17,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import com.jmgarzo.infomovies.data.MoviesContract;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,6 +32,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Vector;
 
 
 /**
@@ -69,8 +74,9 @@ public class MainActivityFragment extends Fragment {
 
                 Movie movie = androidMovieAdapter.getItem(position);
 
-                Intent intent = new Intent(getActivity(),DetailMovie.class);
-                intent.putExtra("movie",movie);
+                Intent intent = new Intent(getActivity(), DetailMovie.class);
+                intent.putExtra(getString(R.string.mdb_movie_web_id_key), movie.getWebMovieId());
+                //intent.putExtra("movie",movie);
                 startActivity(intent);
             }
         });
@@ -104,13 +110,12 @@ public class MainActivityFragment extends Fragment {
 //    }
 
 
-
     private void updateMovies() {
-        FetchTheMovieDBInfo fetchTheMovieDBInfo = new FetchTheMovieDBInfo();
+        FetchTheMovieDBInfo fetchTheMovieDBInfo = new FetchTheMovieDBInfo(getActivity());
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         String location = sharedPreferences.getString(getString(R.string.pref_sort_by_key), getString(R.string.pref_sort_by_defautl));
-        String sortBy = sharedPreferences.getString(getString(R.string.pref_sort_by_key),getString(R.string.pref_sort_by_defautl));
+        String sortBy = sharedPreferences.getString(getString(R.string.pref_sort_by_key), getString(R.string.pref_sort_by_defautl));
         fetchTheMovieDBInfo.execute(sortBy);
     }
 
@@ -118,6 +123,12 @@ public class MainActivityFragment extends Fragment {
     public class FetchTheMovieDBInfo extends AsyncTask<String, Void, ArrayList<HashMap<String, String>>> {
 
         private String LOG_TAG = FetchTheMovieDBInfo.class.getSimpleName();
+
+        private final Context mContext;
+
+        public FetchTheMovieDBInfo(Context context) {
+            mContext = context;
+        }
 
         @Override
         protected ArrayList<HashMap<String, String>> doInBackground(String... params) {
@@ -254,38 +265,89 @@ public class MainActivityFragment extends Fragment {
             JSONObject moviesJson = new JSONObject(moviesJsonStr);
             JSONArray moviesArray = moviesJson.getJSONArray(MDB_RESULTS);
 
+            Vector<ContentValues> cVVector = new Vector<ContentValues>(moviesArray.length());
 
             for (int i = 0; i < moviesArray.length(); i++) {
 
                 HashMap<String, String> map = new HashMap<String, String>();
                 String posterPath;
-                String title;
+                String adult;
                 String overview;
-                String voteAverage;
                 String releaseDate;
+                String movieWebId;
+                String originalTitle;
+                String originalLanguage;
+                String title;
+                String backdropPath;
+                String popularity;
+                String voteCount;
+                String video;
+                String voteAverage;
 
 
                 JSONObject jsonMovie = moviesArray.getJSONObject(i);
 
                 posterPath = jsonMovie.getString(getString(R.string.mdb_poster_path_key));
-                title = jsonMovie.getString((getString(R.string.mdb_title_key)));
+                adult = jsonMovie.getString(getString(R.string.mdb_adult_key));
                 overview = jsonMovie.getString(getString(R.string.mdb_overview_key));
-                voteAverage = jsonMovie.getString(getString(R.string.mdb_vote_average_key));
                 releaseDate = jsonMovie.getString(getString(R.string.mdb_release_date_key));
+                movieWebId = jsonMovie.getString(getString(R.string.mdb_movie_web_id_key));
+                originalTitle = jsonMovie.getString(getString(R.string.mdb_original_title_key));
+                originalLanguage = jsonMovie.getString(getString(R.string.mdb_original_language_key));
+                title = jsonMovie.getString((getString(R.string.mdb_title_key)));
+                backdropPath = jsonMovie.getString(getString(R.string.mdb_backdrop_path_key));
+                popularity = jsonMovie.getString(getString(R.string.mdb_popularity_key));
+                voteCount = jsonMovie.getString(getString(R.string.mdb_vote_count_key));
+                video = jsonMovie.getString(getString(R.string.mdb_video_key));
+                voteAverage = jsonMovie.getString(getString(R.string.mdb_vote_average_key));
 
-
+                map.put(getString(R.string.mdb_movie_web_id_key), movieWebId);
                 map.put(getString(R.string.mdb_poster_path_key), posterPath);
                 map.put(getString(R.string.mdb_title_key), title);
                 map.put(getString(R.string.mdb_overview_key), overview);
-                map.put(getString(R.string.mdb_vote_average_key), voteAverage);
+                map.put(getString(R.string.mdb_vote_average_key), voteAverage.toString());
                 map.put(getString(R.string.mdb_release_date_key), releaseDate);
 
-                resultList.add(map);
+//                resultList.add(map);
 
+                ContentValues movieValues = new ContentValues();
+
+
+                URL url = pathPosterToURL(map.get(getString(R.string.mdb_poster_path_key)).toString());
+                movieValues.put(MoviesContract.MoviesEntry.POSTER_PATH, checkNull(url.toString()));
+                movieValues.put(MoviesContract.MoviesEntry.ADULT, checkNull(adult));
+                movieValues.put(MoviesContract.MoviesEntry.OVERVIEW, checkNull(overview));
+                movieValues.put(MoviesContract.MoviesEntry.RELEASE_DATE, checkNull(releaseDate));
+                movieValues.put(MoviesContract.MoviesEntry.MOVIE_WEB_ID, checkNull(movieWebId));
+                movieValues.put(MoviesContract.MoviesEntry.ORIGINAL_TITLE, checkNull(originalTitle));
+                movieValues.put(MoviesContract.MoviesEntry.ORIGINAL_LANGUAGE, checkNull(originalLanguage));
+                movieValues.put(MoviesContract.MoviesEntry.TITLE, checkNull(title));
+                movieValues.put(MoviesContract.MoviesEntry.BACKDROP_PATH, checkNull(backdropPath));
+                movieValues.put(MoviesContract.MoviesEntry.POPULARITY, checkNull(popularity));
+                movieValues.put(MoviesContract.MoviesEntry.VOTE_COUNT, checkNull(voteCount));
+                movieValues.put(MoviesContract.MoviesEntry.VIDEO, checkNull(video));
+                movieValues.put(MoviesContract.MoviesEntry.VOTE_AVERAGE, checkNull(voteAverage));
+
+                cVVector.add(movieValues);
+                resultList.add(map);
 
             }
 
+            //add to database
+            if (cVVector.size() > 0) {
+                ContentValues[] cvArray = new ContentValues[cVVector.size()];
+                cVVector.toArray(cvArray);
+                mContext.getContentResolver().bulkInsert(MoviesContract.MoviesEntry.CONTENT_URI, cvArray);
+            }
+
             return resultList;
+        }
+
+        private String checkNull (String value){
+            if (null==value){
+                return "";
+            }
+            return value;
         }
 
         private URL pathPosterToURL(String path) {
@@ -304,7 +366,7 @@ public class MainActivityFragment extends Fragment {
 //            Uri builtUri = Uri.parse(IMAGE_URL_BASE).buildUpon()
 //                    .appendPath(SIZE_w185)
 //                    .appendPath(path.toString()).build();
-            String uri = IMAGE_URL_BASE + SIZE_w500 +path;
+            String uri = IMAGE_URL_BASE + SIZE_w500 + path;
             URL url = null;
             try {
                 url = new URL(uri);
@@ -315,6 +377,7 @@ public class MainActivityFragment extends Fragment {
 
         }
 
+
         @Override
         protected void onPostExecute(ArrayList<HashMap<String, String>> hashMaps) {
             if (hashMaps != null) {
@@ -324,6 +387,7 @@ public class MainActivityFragment extends Fragment {
                     URL url = pathPosterToURL(map.get(getString(R.string.mdb_poster_path_key)).toString());
 
                     Movie movie = new Movie(
+                            map.get(getString(R.string.mdb_movie_web_id_key)).toString(),
                             url.toString(),
                             map.get(getString(R.string.mdb_title_key)).toString(),
                             map.get(getString(R.string.mdb_overview_key)).toString(),

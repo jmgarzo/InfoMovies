@@ -8,16 +8,44 @@ import android.os.Parcelable;
  */
 public class Movie implements Parcelable {
     String posterPath;
-    String title;
+    String adult;
     String overview;
-    String voteAverage;
     String releaseDate;
+    String webMovieId;
+    String originalTitle;
+    String originalLanguage;
+    String title;
+    String backDropPath;
+    String popularity;
+    String voteCount;
+    String video;
+    String voteAverage;
 
     public Movie() {
 
     }
 
-    public Movie(String posterPath, String title, String overview, String voteAverage, String releaseDate) {
+
+    public Movie(String posterPath, String adult, String overview, String releaseDate, String webMovieId,
+                 String originalTitle, String originalLanguage, String title, String backDropPath,
+                 String popularity, String voteCount, String video, String voteAverage) {
+        this.posterPath = posterPath;
+        this.adult = adult;
+        this.overview = overview;
+        this.releaseDate = releaseDate;
+        this.webMovieId = webMovieId;
+        this.originalTitle = title;
+        this.originalLanguage = originalLanguage;
+        this.title = title;
+        this.backDropPath = backDropPath;
+        this.popularity = popularity;
+        this.voteCount = voteCount;
+        this.video = video;
+        this.voteAverage = voteAverage;
+    }
+
+    public Movie(String webMovieId,String posterPath, String title, String overview, String voteAverage, String releaseDate) {
+        this.webMovieId = webMovieId;
         this.posterPath = posterPath;
         this.title = title;
         this.overview = overview;
@@ -25,6 +53,70 @@ public class Movie implements Parcelable {
         this.releaseDate = releaseDate;
     }
 
+
+    public String getAdult() {
+        return adult;
+    }
+
+    public void setAdult(String adult) {
+        this.adult = adult;
+    }
+
+    public String getWebMovieId() {
+        return webMovieId;
+    }
+
+    public void setWebMovieId(String webMovieId) {
+        this.webMovieId = webMovieId;
+    }
+
+    public String getOriginalTitle() {
+        return originalTitle;
+    }
+
+    public void setOriginalTitle(String originalTitle) {
+        this.originalTitle = originalTitle;
+    }
+
+    public String getOriginalLanguage() {
+        return originalLanguage;
+    }
+
+    public void setOriginalLanguage(String originalLanguage) {
+        this.originalLanguage = originalLanguage;
+    }
+
+    public String getBackDropPath() {
+        return backDropPath;
+    }
+
+    public void setBackDropPath(String backDropPath) {
+        this.backDropPath = backDropPath;
+    }
+
+    public String getPopularity() {
+        return popularity;
+    }
+
+    public void setPopularity(String popularity) {
+        this.popularity = popularity;
+    }
+
+    public String getVoteCount() {
+        return voteCount;
+    }
+
+    public void setVoteCount(String voteCount) {
+        this.voteCount = voteCount;
+    }
+
+    public String getVideo() {
+        return video;
+    }
+
+    public void setVideo(String video) {
+        this.video = video;
+    }
 
     public String getPosterPath() {
         return posterPath;
@@ -72,6 +164,7 @@ public class Movie implements Parcelable {
     }
 
     private Movie(Parcel in) {
+        webMovieId = in.readString();
         posterPath = in.readString();
         title = in.readString();
         overview = in.readString();
@@ -82,6 +175,7 @@ public class Movie implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(webMovieId.toString());
         dest.writeString(posterPath.toString());
         dest.writeString(title);
         dest.writeString(overview);

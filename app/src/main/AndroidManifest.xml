@@ -37,6 +37,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jmgarzo.infomovies.MainActivity" />
         </activity>
+        <provider
+            android:authorities="com.jmgarzo.infomovies"
+            android:name=".data.MovieProvider" />
     </application>
 
 </manifest>
