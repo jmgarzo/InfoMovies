@@ -3,13 +3,15 @@ package com.jmgarzo.infomovies;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,13 +40,47 @@ import java.util.Vector;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainActivityFragment extends Fragment {
+public class MainActivityFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
 
+    private static final int MOVIE_LOADER = 0;
     private String TOP_RATE_PARAM = "top_rate";
     private String MOST_POPULAR = "most_popular";
 
-    private AndroidMovieAdapter androidMovieAdapter;
+
+    private MovieAdapter mMovieAdapter;
+
+    private static final String[] MOVIE_COLUMNS = {
+            MoviesContract.MoviesEntry.TABLE_NAME + "." + MoviesContract.MoviesEntry._ID,
+            MoviesContract.MoviesEntry.POSTER_PATH,
+            MoviesContract.MoviesEntry.ADULT,
+            MoviesContract.MoviesEntry.OVERVIEW,
+            MoviesContract.MoviesEntry.RELEASE_DATE,
+            MoviesContract.MoviesEntry.MOVIE_WEB_ID,
+            MoviesContract.MoviesEntry.ORIGINAL_TITLE,
+            MoviesContract.MoviesEntry.ORIGINAL_LANGUAGE,
+            MoviesContract.MoviesEntry.TITLE,
+            MoviesContract.MoviesEntry.BACKDROP_PATH,
+            MoviesContract.MoviesEntry.POPULARITY,
+            MoviesContract.MoviesEntry.VOTE_COUNT,
+            MoviesContract.MoviesEntry.VIDEO,
+            MoviesContract.MoviesEntry.VOTE_AVERAGE
+    };
+
+    static final int COL_MOVIE_ID = 0;
+    static final int COL_POSTER_PATH = 1;
+    static final int COL_ADULT = 2;
+    static final int COL_OVERVIEW = 3;
+    static final int COL_RELEASE_DATE = 4;
+    static final int COL_MOVIE_WEB_ID = 5;
+    static final int COL_ORIGINAL_TITLE = 6;
+    static final int COL_ORIGINAL_LANGUAGE = 7;
+    static final int COL_TITLE = 8;
+    static final int COL_BACKDROP_PATH = 9;
+    static final int COL_POPULARITY = 10;
+    static final int COL_VOTE_COUNT = 11;
+    static final int COL_VIDEO = 12;
+    static final int COL_VOTE_AVERAGE = 13;
 
 
     public MainActivityFragment() {
@@ -55,31 +91,62 @@ public class MainActivityFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        updateMovies();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        androidMovieAdapter = new AndroidMovieAdapter(getActivity(), new ArrayList<Movie>());
+
+        //TODO Think about how to store diference movies sort by
+        String sortBy = Utility.getPreferredSortBy(getActivity());
+
+        Uri moviesSortBy = MoviesContract.MoviesEntry.CONTENT_URI;
+
+        Cursor cur = getActivity().getContentResolver().query(moviesSortBy, null, null, null, null);
+
+
+        mMovieAdapter = new MovieAdapter(getActivity(), cur, 0);
+
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
         final GridView gridView = (GridView) rootView.findViewById(R.id.gridview);
-        gridView.setAdapter(androidMovieAdapter);
+        gridView.setAdapter(mMovieAdapter);
+
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                            @Override
+                                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                                Cursor cursor = (Cursor) parent.getItemAtPosition(position);
+                                                if (cursor != null) {
+                                                    Intent intent = new Intent(getActivity(), DetailMovie.class);
+                                                    intent.putExtra(getString(R.string.mdb_movie_web_id_key), cursor.getString(COL_MOVIE_WEB_ID));
+                                                    startActivity(intent);
+                                                }
+                                            }
+                                        }
 
-                Movie movie = androidMovieAdapter.getItem(position);
+        );
 
-                Intent intent = new Intent(getActivity(), DetailMovie.class);
-                intent.putExtra(getString(R.string.mdb_movie_web_id_key), movie.getWebMovieId());
-                //intent.putExtra("movie",movie);
-                startActivity(intent);
-            }
-        });
+
+//        androidMovieAdapter = new AndroidMovieAdapter(getActivity(), new ArrayList<Movie>());
+//
+//
+//
+//        final GridView gridView = (GridView) rootView.findViewById(R.id.gridview);
+//        gridView.setAdapter(androidMovieAdapter);
+//        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//                Movie movie = androidMovieAdapter.getItem(position);
+//
+//                Intent intent = new Intent(getActivity(), DetailMovie.class);
+//                intent.putExtra(getString(R.string.mdb_movie_web_id_key), movie.getWebMovieId());
+//                //intent.putExtra("movie",movie);
+//                startActivity(intent);
+//            }
+//        });
 
 
         return rootView;
@@ -110,17 +177,44 @@ public class MainActivityFragment extends Fragment {
 //    }
 
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        getLoaderManager().initLoader(MOVIE_LOADER, null, this);
+        super.onActivityCreated(savedInstanceState);
+    }
+
     private void updateMovies() {
         FetchTheMovieDBInfo fetchTheMovieDBInfo = new FetchTheMovieDBInfo(getActivity());
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-
-        String location = sharedPreferences.getString(getString(R.string.pref_sort_by_key), getString(R.string.pref_sort_by_defautl));
-        String sortBy = sharedPreferences.getString(getString(R.string.pref_sort_by_key), getString(R.string.pref_sort_by_defautl));
+        String sortBy = Utility.getPreferredSortBy(getActivity());
         fetchTheMovieDBInfo.execute(sortBy);
     }
 
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        String orderBy = Utility.getPreferredSortBy(getActivity());
 
-    public class FetchTheMovieDBInfo extends AsyncTask<String, Void, ArrayList<HashMap<String, String>>> {
+        Uri moviesUri = MoviesContract.MoviesEntry.CONTENT_URI;
+        return new CursorLoader(getActivity(),
+                moviesUri,
+                null,
+                null,
+                null,
+                null);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        mMovieAdapter.swapCursor(data);
+
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        mMovieAdapter.swapCursor(null);
+    }
+
+
+    public class FetchTheMovieDBInfo extends AsyncTask<String, Void, Void> {
 
         private String LOG_TAG = FetchTheMovieDBInfo.class.getSimpleName();
 
@@ -131,7 +225,7 @@ public class MainActivityFragment extends Fragment {
         }
 
         @Override
-        protected ArrayList<HashMap<String, String>> doInBackground(String... params) {
+        protected Void doInBackground(String... params) {
 
             if (params.length == 0) {
                 return null;
@@ -242,7 +336,7 @@ public class MainActivityFragment extends Fragment {
 
 
             try {
-                return getMoviesDataFromJson(moviesJsonStr);
+                getMoviesDataFromJson(moviesJsonStr, getActivity());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -251,7 +345,7 @@ public class MainActivityFragment extends Fragment {
         }
 
 
-        private ArrayList<HashMap<String, String>> getMoviesDataFromJson(String moviesJsonStr) throws JSONException {
+        private void getMoviesDataFromJson(String moviesJsonStr, Context context) throws JSONException {
 
             ArrayList<HashMap<String, String>> resultList = new ArrayList<>();
 
@@ -269,7 +363,6 @@ public class MainActivityFragment extends Fragment {
 
             for (int i = 0; i < moviesArray.length(); i++) {
 
-                HashMap<String, String> map = new HashMap<String, String>();
                 String posterPath;
                 String adult;
                 String overview;
@@ -287,7 +380,10 @@ public class MainActivityFragment extends Fragment {
 
                 JSONObject jsonMovie = moviesArray.getJSONObject(i);
 
+
                 posterPath = jsonMovie.getString(getString(R.string.mdb_poster_path_key));
+
+
                 adult = jsonMovie.getString(getString(R.string.mdb_adult_key));
                 overview = jsonMovie.getString(getString(R.string.mdb_overview_key));
                 releaseDate = jsonMovie.getString(getString(R.string.mdb_release_date_key));
@@ -301,20 +397,21 @@ public class MainActivityFragment extends Fragment {
                 video = jsonMovie.getString(getString(R.string.mdb_video_key));
                 voteAverage = jsonMovie.getString(getString(R.string.mdb_vote_average_key));
 
-                map.put(getString(R.string.mdb_movie_web_id_key), movieWebId);
-                map.put(getString(R.string.mdb_poster_path_key), posterPath);
-                map.put(getString(R.string.mdb_title_key), title);
-                map.put(getString(R.string.mdb_overview_key), overview);
-                map.put(getString(R.string.mdb_vote_average_key), voteAverage.toString());
-                map.put(getString(R.string.mdb_release_date_key), releaseDate);
+//                map.put(getString(R.string.mdb_movie_web_id_key), movieWebId);
+//                map.put(getString(R.string.mdb_poster_path_key), posterPath);
+//                map.put(getString(R.string.mdb_title_key), title);
+//                map.put(getString(R.string.mdb_overview_key), overview);
+//                map.put(getString(R.string.mdb_vote_average_key), voteAverage.toString());
+//                map.put(getString(R.string.mdb_release_date_key), releaseDate);
 
 //                resultList.add(map);
 
                 ContentValues movieValues = new ContentValues();
 
 
-                URL url = pathPosterToURL(map.get(getString(R.string.mdb_poster_path_key)).toString());
+                URL url = pathPosterToURL(posterPath);
                 movieValues.put(MoviesContract.MoviesEntry.POSTER_PATH, checkNull(url.toString()));
+
                 movieValues.put(MoviesContract.MoviesEntry.ADULT, checkNull(adult));
                 movieValues.put(MoviesContract.MoviesEntry.OVERVIEW, checkNull(overview));
                 movieValues.put(MoviesContract.MoviesEntry.RELEASE_DATE, checkNull(releaseDate));
@@ -328,8 +425,10 @@ public class MainActivityFragment extends Fragment {
                 movieValues.put(MoviesContract.MoviesEntry.VIDEO, checkNull(video));
                 movieValues.put(MoviesContract.MoviesEntry.VOTE_AVERAGE, checkNull(voteAverage));
 
+//                imageToFile(url.toString(),movieWebId,context);
+
                 cVVector.add(movieValues);
-                resultList.add(map);
+
 
             }
 
@@ -337,18 +436,28 @@ public class MainActivityFragment extends Fragment {
             if (cVVector.size() > 0) {
                 ContentValues[] cvArray = new ContentValues[cVVector.size()];
                 cVVector.toArray(cvArray);
+                mContext.getContentResolver().delete(MoviesContract.MoviesEntry.CONTENT_URI, null, null);
                 mContext.getContentResolver().bulkInsert(MoviesContract.MoviesEntry.CONTENT_URI, cvArray);
             }
 
-            return resultList;
+            // return resultList;
         }
 
-        private String checkNull (String value){
-            if (null==value){
+        private String checkNull(String value) {
+            if (null == value) {
                 return "";
             }
             return value;
         }
+
+//        private String imageToFile(String posterPath,String name,Context context){
+//
+//            URL urlImage = pathPosterToURL(posterPath);
+//            File file = new File(context.getFilesDir(), name);
+//            Picasso.with(context).load(new File(...)).into(imageView3);
+//
+//            return null;
+//        }
 
         private URL pathPosterToURL(String path) {
 
@@ -378,26 +487,25 @@ public class MainActivityFragment extends Fragment {
         }
 
 
-        @Override
-        protected void onPostExecute(ArrayList<HashMap<String, String>> hashMaps) {
-            if (hashMaps != null) {
-                androidMovieAdapter.clear();
-                for (HashMap map : hashMaps) {
-
-                    URL url = pathPosterToURL(map.get(getString(R.string.mdb_poster_path_key)).toString());
-
-                    Movie movie = new Movie(
-                            map.get(getString(R.string.mdb_movie_web_id_key)).toString(),
-                            url.toString(),
-                            map.get(getString(R.string.mdb_title_key)).toString(),
-                            map.get(getString(R.string.mdb_overview_key)).toString(),
-                            map.get(getString(R.string.mdb_vote_average_key)).toString(),
-                            map.get(getString(R.string.mdb_release_date_key)).toString());
-                    androidMovieAdapter.add(movie);
-
-                }
-            }
-        }
+//        @Override
+//        protected void onPostExecute(ArrayList<HashMap<String, String>> hashMaps) {
+//            if (hashMaps != null) {
+//                androidMovieAdapter.clear();
+//                for (HashMap map : hashMaps) {
+//
+//                    URL url = pathPosterToURL(map.get(getString(R.string.mdb_poster_path_key)).toString());
+//
+//                    Movie movie = new Movie(
+//                            url.toString(),
+//                            map.get(getString(R.string.mdb_title_key)).toString(),
+//                            map.get(getString(R.string.mdb_overview_key)).toString(),
+//                            map.get(getString(R.string.mdb_vote_average_key)).toString(),
+//                            map.get(getString(R.string.mdb_release_date_key)).toString());
+//                    androidMovieAdapter.add(movie);
+//
+//                }
+//            }
+//        }
     }
 
 

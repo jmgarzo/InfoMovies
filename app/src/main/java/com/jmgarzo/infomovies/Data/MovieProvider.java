@@ -61,7 +61,7 @@ public class MovieProvider extends ContentProvider {
                         null,
                         null,
                         sortOrder);
-                return retCursor;
+                break;
 
             }
             case MOVIE_WITH_ID: {
@@ -73,7 +73,7 @@ public class MovieProvider extends ContentProvider {
                         null,
                         null,
                         sortOrder);
-                return retCursor;
+                break;
             }
             case MOVIE_WITH_WEB_MOVIE_ID:
                 retCursor = mOpenHelper.getReadableDatabase().query(
@@ -84,7 +84,7 @@ public class MovieProvider extends ContentProvider {
                         null,
                         null,
                         sortOrder);
-                return retCursor;
+                break;
             case PATH_POSTER: {
                 retCursor = mOpenHelper.getReadableDatabase().query(
                         MoviesContract.MoviesEntry.TABLE_NAME,
@@ -94,14 +94,17 @@ public class MovieProvider extends ContentProvider {
                         null,
                         null,
                         sortOrder);
-                return retCursor;
 
+                break;
             }
             default: {
                 // By default, we assume a bad URI
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
             }
+
         }
+        retCursor.setNotificationUri(getContext().getContentResolver(), uri);
+        return retCursor;
     }
 
     @Nullable
@@ -163,6 +166,10 @@ public class MovieProvider extends ContentProvider {
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
+
+        if (numDeleted != 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
         return numDeleted;
 
     }
@@ -204,6 +211,7 @@ public class MovieProvider extends ContentProvider {
 
     @Override
     public int bulkInsert(Uri uri, ContentValues[] values) {
+
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         final int match = sUriMatcher.match(uri);
         switch (match) {
@@ -243,11 +251,13 @@ public class MovieProvider extends ContentProvider {
                     // if there was successful insertion, notify the content resolver that there
                     // was a change
                     getContext().getContentResolver().notifyChange(uri, null);
+                    return numInserted;
+
                 }
-                return numInserted;
             default:
                 return super.bulkInsert(uri, values);
         }
-     }
+    }
+
 
 }
