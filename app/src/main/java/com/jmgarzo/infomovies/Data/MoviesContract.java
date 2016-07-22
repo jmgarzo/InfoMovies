@@ -15,6 +15,7 @@ public class MoviesContract {
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 
     public static final String PATH_MOVIE = "movie";
+    public static final String PATH_VIDEO = "video";
 
 
     public static final class MoviesEntry implements BaseColumns {
@@ -43,11 +44,42 @@ public class MoviesContract {
         public static final String CONTENT_ITEM_TYPE =
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + TABLE_NAME;
 
-        public static Uri buildMoviesUri(long id) {
+        public static Uri buildMoviesWithIdUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
 
         public static Uri buildMovieWithWebId(String MovieWebId) {
+            return CONTENT_URI.buildUpon().appendPath(MovieWebId).build();
+        }
+
+    }
+
+
+    public static final class VideoEntry implements BaseColumns {
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_VIDEO).build();
+
+        public static final String TABLE_NAME = "video";
+        public static final String MOVIE_KEY = "id_movie";
+        public static final String ID = "id";
+        public static final String ISO_639_1 = "iso_639_1";
+        public static final String ISO_3166_1 = "iso_3166_1";
+        public static final String KEY = "key";
+        public static final String NAME = "name";
+        public static final String SITE = "site";
+        public static final String SIZE = "size";
+        public static final String TYPE = "type";
+
+
+        public static final String CONTENT_DIR_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + TABLE_NAME;
+        public static final String CONTENT_ITEM_TYPE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + TABLE_NAME;
+
+        public static Uri buildVideosUri(long id) {
+            return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
+
+        public static Uri buildVideoWithMovieId(String MovieWebId) {
             return CONTENT_URI.buildUpon().appendPath(MovieWebId).build();
         }
 
