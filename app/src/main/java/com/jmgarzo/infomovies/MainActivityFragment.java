@@ -1,6 +1,5 @@
 package com.jmgarzo.infomovies;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,6 +9,9 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -30,6 +32,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 
 
     private MovieAdapter mMovieAdapter;
+    private GridView mGridView;
 
     private static final String[] MOVIE_COLUMNS = {
             MoviesContract.MoviesEntry.TABLE_NAME + "." + MoviesContract.MoviesEntry._ID,
@@ -63,6 +66,13 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     static final int COL_VIDEO = 12;
     static final int COL_VOTE_AVERAGE = 13;
 
+    public interface Callback {
+        /**
+         * DetailFragmentCallback for when an item has been selected.
+         */
+        public void onItemSelected(Uri dateUri,String movie_id );
+    }
+
 
     public MainActivityFragment() {
     }
@@ -78,34 +88,31 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
-        //TODO Think about how to store diference movies sort by
-        String sortBy = Utility.getPreferredSortBy(getActivity());
-
-        Uri moviesSortBy = MoviesContract.MoviesEntry.CONTENT_URI;
-
         mMovieAdapter = new MovieAdapter(getActivity(),null,0);
-        //Cursor cur = getActivity().getContentResolver().query(moviesSortBy, null, null, null, null);
-
-
-        //mMovieAdapter = new MovieAdapter(getActivity(), cur, 0);
-
-
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        final GridView gridView = (GridView) rootView.findViewById(R.id.gridview);
-        gridView.setAdapter(mMovieAdapter);
+//        View view = inflater.inflate(R.layout.list_item_movie,container,false);
+//        mImageView = (ImageView) view.findViewById(R.id.list_item_image);
 
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        mGridView = (GridView) rootView.findViewById(R.id.gridview);
+
+        mGridView.setAdapter(mMovieAdapter);
+
+
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                             @Override
                                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                                 Cursor cursor = (Cursor) parent.getItemAtPosition(position);
                                                 if (cursor != null) {
-                                                    Intent intent = new Intent(getActivity(), DetailMovie.class);
-//                                                    intent.putExtra(getString(R.string.mdb_movie_web_id_key), cursor.getString(COL_MOVIE_WEB_ID));
-                                                    intent.setData(MoviesContract.MoviesEntry.buildMovieWithWebId(cursor.getString(COL_MOVIE_WEB_ID)));
-                                                    intent.putExtra(MoviesContract.MoviesEntry._ID,cursor.getString(COL_MOVIE_ID));
-                                                    startActivity(intent);
+//                                                    Intent intent = new Intent(getActivity(), DetailMovie.class);
+////                                                    intent.putExtra(getString(R.string.mdb_movie_web_id_key), cursor.getString(COL_MOVIE_WEB_ID));
+//                                                    intent.setData(MoviesContract.MoviesEntry.buildMovieWithWebId(cursor.getString(COL_MOVIE_WEB_ID)));
+//                                                    intent.putExtra(MoviesContract.MoviesEntry._ID,cursor.getString(COL_MOVIE_ID));
+//                                                    startActivity(intent);
+
+                                                    ((Callback) getActivity())
+                                                            .onItemSelected(MoviesContract.MoviesEntry.buildMovieWithWebId(cursor.getString(COL_MOVIE_WEB_ID)),cursor.getString(COL_MOVIE_ID));
                                                 }
                                             }
                                         }
@@ -143,22 +150,35 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     }
 
 
-//    @Override
-//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        //super.onCreateOptionsMenu(menu, inflater);
-//        inflater.inflate(R.menu.menu_fragment_main, menu);
-//
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        int id = item.getItemId();
-//
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        //super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_fragment_main, menu);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    private void updateSortBy() {
+        FetchTheMovieDBInfo fetchTheMovieDBInfo = new FetchTheMovieDBInfo(getActivity());
+        String sortBy = Utility.getPreferredSortBy(getActivity());
+        fetchTheMovieDBInfo.execute(sortBy);
+    }
+
+    void onSortChanged() {
+        updateSortBy();
+        getLoaderManager().restartLoader(MOVIE_LOADER, null, this);
+
+    }
 
 
     @Override
@@ -189,6 +209,38 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mMovieAdapter.swapCursor(data);
+
+//        int myRequestedColumnWidth = mGridView.getNumColumns();
+//
+//        Point size = new Point();
+//        getActivity().getWindowManager().getDefaultDisplay().getSize( size );
+//        int width = size.x;
+//        int height = size.y;
+//
+//        int myGridColumns = width / myRequestedColumnWidth;
+//
+//        if ( myGridColumns == 0 || myGridColumns == 1 )
+//            myGridColumns = 3;
+//        int myColumnWidth = ( width / myGridColumns );
+//
+//        mGridView.setNumColumns(myGridColumns);
+//        ImageView imageview = (ImageView) getActivity().findViewById(R.id.list_item_image);
+//
+//        if(data.moveToFirst()) {
+//            do {
+//                String posterPath = data.getString(MainActivityFragment.COL_POSTER_PATH);
+//                Picasso.with(getActivity()).load(posterPath).into(mImageView);
+//            } while (data.moveToNext());
+//        }
+//        if (data.moveToFirst())
+//            do{
+//                Picasso.with(getActivity()).load(data.getString(COL_POSTER_PATH)).into(imageview);
+//
+//            }while (data.moveToNext());
+
+
+//        FetchVideoInfo fetchVideoInfo = new FetchVideoInfo(getActivity());
+//        fetchVideoInfo.execute();
 
     }
 

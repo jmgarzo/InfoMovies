@@ -28,6 +28,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity implements Pre
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.pref_general);
 
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_settings);
+//        setSupportActionBar(toolbar);
         bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_sort_by_key)));
 
     }

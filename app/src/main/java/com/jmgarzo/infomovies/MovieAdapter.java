@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
 
-import com.jmgarzo.infomovies.data.MoviesContract;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -16,23 +15,67 @@ import com.squareup.picasso.Picasso;
  */
 public class MovieAdapter extends CursorAdapter {
 
+    private final LayoutInflater inflater;
+
+    public static class ViewHolder{
+        public  ImageView imageView;
+
+        public ViewHolder(View view){
+            imageView = (ImageView) view.findViewById(R.id.list_item_image);
+        }
+    }
+
     public MovieAdapter(Context context, Cursor c, int flags){
         super(context,c,flags);
+        inflater = LayoutInflater.from(context);
+
     }
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        View view = LayoutInflater.from(context).inflate(R.layout.list_item_movie,parent,false);
+        View itemLayout = inflater.inflate(R.layout.list_item_movie, parent, false);
 
-        return view;
+        ViewHolder holder = new ViewHolder(itemLayout);
+
+        holder.imageView = (ImageView) itemLayout.findViewById(R.id.list_item_image);
+
+        itemLayout.setTag(holder);
+
+        return itemLayout;
     }
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        ImageView imageView = (ImageView) view;
-        int idx_poster_path = cursor.getColumnIndex(MoviesContract.MoviesEntry.POSTER_PATH);
-        String path = cursor.getString(idx_poster_path);
 
-        Picasso.with(context).load(path).into(imageView);
+//        View itemLayout = inflater.inflate(R.layout.list_item_movie, viewGroup, false);
+//        ViewHolder holder = new ViewHolder();
+//        holder. = (TextView) itemLayout.findViewById(android.R.id.text1);
+//        holder.imageView = (ImageView) .findViewById(android.R.id.icon);
+////        ImageView imageView = (ImageView) view.findViewById(R.id.list_item_image);
+//        String posterPath = cursor.getString(MainActivityFragment.COL_POSTER_PATH);
+
+        ViewHolder holder = (ViewHolder) view.getTag();
+
+        String url = cursor.getString(MainActivityFragment.COL_POSTER_PATH);
+
+        Picasso.with(context)
+                .load(url)
+                .placeholder(R.drawable.placeholder)
+                .tag(context)
+                .into(holder.imageView);
+
+
+
+
+
+
+
+
+
+//
+
+//       Picasso.with(context).load(posterPath).into(viewHolder.imageView);
+//        imageView.setAdjustViewBounds(true);
+//        imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
 
 

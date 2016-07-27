@@ -9,13 +9,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -35,8 +38,12 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
 
     private static final String LOG_TAG = DetailMovieFragment.class.getSimpleName();
 
+    static final String DETAIL_URI = "URI";
+
+
     private static final int DETAIL_LOADER = 0;
     private static final int DETAIL_TRAILER_LOADER = 1;
+    private static final int DETAIL_REVIEW_LOADER = 2;
 
     private static final String[] MOVIE_COLUMNS = {
             MoviesContract.MoviesEntry.TABLE_NAME + "." + MoviesContract.MoviesEntry._ID,
@@ -97,9 +104,30 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
     static final int COL_VIDEO_TYPE = 9;
 
 
+    private static final String[] REVIEW_COLUNMS =
+            {
+                    MoviesContract.ReviewEntry.TABLE_NAME + "." + MoviesContract.ReviewEntry._ID,
+                    MoviesContract.ReviewEntry.MOVIE_KEY,
+                    MoviesContract.ReviewEntry.ID,
+                    MoviesContract.ReviewEntry.AUTHOR,
+                    MoviesContract.ReviewEntry.CONTENT,
+                    MoviesContract.ReviewEntry.URL,
+            };
+
+    static final int COL_REVIEW_ID = 0;
+    static final int COL_REVIEW_MOVIE_KEY = 1;
+    static final int COL_REVIEW_WEB_ID_KEY = 2;
+    static final int COL_REVIEW_AUTHOR = 3;
+    static final int COL_REVIEW_CONTENT = 4;
+    static final int COL_REVIEW_URL = 5;
+
+
     private ListView listViewTrailers;
+    private ListView listViewReview;
     private TrailerAdapter mTrailerAdapter;
-    private String idMovie;
+    private ReviewAdapter mReviewAdapter;
+    private Uri mUri;
+    private String mIdMovie;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -111,213 +139,214 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        Bundle argument = getArguments();
+        if (argument != null) {
+            mUri = argument.getParcelable(DetailMovieFragment.DETAIL_URI);
+            mIdMovie = argument.getString(MoviesContract.MoviesEntry._ID);
+        }
+
         View rootView = inflater.inflate(R.layout.fragment_detail_movie, container, false);
         mTrailerAdapter = new TrailerAdapter(getActivity(), null, 0);
 
         listViewTrailers = (ListView) rootView.findViewById(R.id.listview_trailers);
         listViewTrailers.setAdapter(mTrailerAdapter);
 
-
-
-
-//
-//        Intent intent = getActivity().getIntent();
-//        String movieID = intent.getStringExtra(MoviesContract.MoviesEntry._ID);
-//        Cursor cursorMovies = getActivity().getContentResolver().query(
-//                MoviesContract.VideoEntry.buildVideoWithMovieId(movieID),
-//                null,
-//                null,
-//                null,
-//                null);
-//
-//        if (cursorMovies.moveToFirst()) {
-//            int i = 0;
-//            do {
-//                i++;
-//                String id = cursorMovies.getString(COL_VIDEO_ID);
-//                String name = cursorMovies.getString(COL_VIDEO_NAME);
-//                Log.v(LOG_TAG, id + "-" + name + i);
-//            } while (cursorMovies.moveToNext());
-//        }
-
-//        Intent intent = getActivity().getIntent();
-//        //Movie movie = intent.getExtras().getParcelable("movie");
-//        String webMovieId = intent.getExtras().getString(getString(R.string.mdb_movie_web_id_key));
-//
-//        Uri MovieWithWebIdUri = MoviesContract.MoviesEntry.buildMovieWithWebId(webMovieId);
-//        Cursor cursorMovies = getActivity().getContentResolver().query(
-//                MovieWithWebIdUri ,
-//                null,
-//                MoviesContract.MoviesEntry.MOVIE_WEB_ID + " = ?",
-//                new String[]{webMovieId},
-//                null);
-//
-//        int _id=0;
-//        String title="";
-//        String posterPath="";
-//        String overview="";
-//        String releaseDate="";
-//        String voteAverage="";
-//        if (cursorMovies.moveToFirst()) {
-//
-//            int _idMovie = cursorMovies.getColumnIndex(MoviesContract.MoviesEntry._ID);
-//            _id = cursorMovies.getInt(_idMovie);
-//
-//            int titleIndex = cursorMovies.getColumnIndex(MoviesContract.MoviesEntry.TITLE);
-//            title = cursorMovies.getString(titleIndex);
-//
-//            int posterPathIndex = cursorMovies.getColumnIndex(MoviesContract.MoviesEntry.POSTER_PATH);
-//            posterPath = cursorMovies.getString(posterPathIndex);
-//
-//            int overviewIndex = cursorMovies.getColumnIndex(MoviesContract.MoviesEntry.OVERVIEW);
-//            overview = cursorMovies.getString(overviewIndex);
-//
-//            int releaseDateIndex = cursorMovies.getColumnIndex(MoviesContract.MoviesEntry.RELEASE_DATE);
-//            releaseDate = cursorMovies.getString(releaseDateIndex);
-//
-//            int voteAverageIndex = cursorMovies.getColumnIndex(MoviesContract.MoviesEntry.VOTE_AVERAGE);
-//            voteAverage = cursorMovies.getString(voteAverageIndex);
-//
-//        }
-//
-//
-//        String key="";
-//
-//        Uri VideosWithMovieIdUri = MoviesContract.VideoEntry.buildVideoWithMovieId(Integer.valueOf(_id).toString());
-//        Cursor cursorVideos = getActivity().getContentResolver().query(
-//                VideosWithMovieIdUri ,
-//                null,
-//                MoviesContract.VideoEntry._ID + " = ?",
-//                new String[]{Integer.valueOf(_id).toString()},
-//                null);
-//
-//        if(cursorVideos.moveToFirst()){
-//            int keyIndex = cursorVideos.getColumnIndex(MoviesContract.VideoEntry.KEY);
-//            key = cursorVideos.getString(keyIndex);
-//        }
-//
-//
-//        getActivity().setTitle(title);
-//
-//        ImageView imageViewPoster = (ImageView) rootView.findViewById(R.id.img_poster);
-//        Picasso.with(getContext()).load(posterPath).into(imageViewPoster);
-//
-//        TextView txtOverview = (TextView) rootView.findViewById(R.id.txt_overview);
-//        txtOverview.setText(overview);
-//
-//        TextView txtReleaseDate = (TextView) rootView.findViewById(R.id.txt_release_date);
-//        txtReleaseDate.setText(releaseDate);
-//
-//        TextView txtVoteAverage = (TextView) rootView.findViewById(R.id.txt_vote_average);
-//        txtVoteAverage.setText(voteAverage + "/ 10");
-
-
-            return rootView;
-        }
-
-        @Override
-        public void onCreateOptionsMenu (Menu menu, MenuInflater inflater){
-            super.onCreateOptionsMenu(menu, inflater);
-        }
-
-        @Override
-        public void onActivityCreated (@Nullable Bundle savedInstanceState){
-            getLoaderManager().initLoader(DETAIL_LOADER, null, this);
-            getLoaderManager().initLoader(DETAIL_TRAILER_LOADER, null, this);
-            super.onActivityCreated(savedInstanceState);
-        }
-
-
-        @Override
-        public Loader<Cursor> onCreateLoader ( int id, Bundle args){
-            Log.v(LOG_TAG, "In onCreateLoader");
-            Intent intent = getActivity().getIntent();
-            if (intent == null) {
-                return null;
-            }
-
-            CursorLoader cursorLoader = null;
-            switch (id) {
-                case DETAIL_LOADER: {
-                    Uri uri = intent.getData();
-
-                    return new CursorLoader(
-                            getActivity(),
-                            intent.getData(),
-                            MOVIE_COLUMNS,
-                            null,
-                            null,
-                            null
-                    );
-
+        listViewTrailers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Cursor cursor = (Cursor) parent.getItemAtPosition(position);
+                if (cursor != null) {
+                    String key = cursor.getString(COL_VIDEO_KEY);
+                    startActivity(new Intent(Intent.ACTION_VIEW, buildTrailerURL(key)));
 
                 }
+            }
+        });
 
+        mReviewAdapter = new ReviewAdapter(getActivity(), null, 0);
+        listViewReview = (ListView) rootView.findViewById(R.id.listview_review);
+        listViewReview.setAdapter(mReviewAdapter);
 
-                case DETAIL_TRAILER_LOADER: {
-                    String idMovie = intent.getStringExtra(MoviesContract.MoviesEntry._ID);
-                    return new CursorLoader(
-                            getActivity(),
-                            MoviesContract.VideoEntry.buildVideoWithMovieId(idMovie),
-                            VIDEO_COLUNMS,
-                            null,
-                            null,
-                            null
-                    );
-
-                }
+        listViewReview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
             }
+        });
+
+
+
+        return rootView;
+    }
+
+    private Uri buildTrailerURL(String trailerKey) {
+
+        final String BASE_YOUTUBE_URI = "http://www.youtube.com/watch";
+        final String VIDEO_PARAM = "v";
+        return Uri.parse(BASE_YOUTUBE_URI).buildUpon().appendQueryParameter(VIDEO_PARAM, trailerKey).build();
+    }
+
+
+    private static void setListViewHeightBasedOnChildren(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null)
+            return;
+
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
+        int totalHeight = 0;
+        View view = null;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            view = listAdapter.getView(i, view, listView);
+            if (i == 0)
+                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewPager.LayoutParams.WRAP_CONTENT));
+
+            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            totalHeight += view.getMeasuredHeight();
+        }
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        getLoaderManager().initLoader(DETAIL_LOADER, null, this);
+        getLoaderManager().initLoader(DETAIL_TRAILER_LOADER, null, this);
+        getLoaderManager().initLoader(DETAIL_REVIEW_LOADER, null, this);
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    void onLocationChanged( String newLocation ) {
+        // replace the uri, since the sort by  has changed
+        Uri uri = mUri;
+        if (null != uri) {
+//            Uri updatedUri = MoviesContract.MoviesEntry.b(newLocation, date);
+//            mUri = updatedUri;
+            getLoaderManager().restartLoader(DETAIL_LOADER, null, this);
+        }
+    }
+
+
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        Log.v(LOG_TAG, "In onCreateLoader");
+//            Intent intent = getActivity().getIntent();
+//            if (intent == null || intent.getData() == null) {
+//                return null;
+//            }
+        if (mUri == null || mIdMovie == null) {
             return null;
-
         }
 
-        @Override
-        public void onLoadFinished (Loader < Cursor > loader, Cursor data){
-            Log.v(LOG_TAG, "In onLoadFinished");
-            if (!data.moveToFirst()) {
-                return;
+        switch (id) {
+            case DETAIL_LOADER: {
+
+                return new CursorLoader(
+                        getActivity(),
+                        mUri,
+                        MOVIE_COLUMNS,
+                        null,
+                        null,
+                        null
+                );
             }
 
-            switch (loader.getId()) {
-                case DETAIL_LOADER: {
+            case DETAIL_TRAILER_LOADER: {
+                return new CursorLoader(
+                        getActivity(),
+                        MoviesContract.VideoEntry.buildVideoWithMovieId(mIdMovie),
+                        VIDEO_COLUNMS,
+                        null,
+                        null,
+                        null
+                );
 
-
-                    getActivity().setTitle(data.getString(COL_TITLE));
-
-                    ImageView imageViewPoster = (ImageView) getView().findViewById(R.id.img_poster);
-                    Picasso.with(getContext()).load(data.getString(COL_POSTER_PATH)).into(imageViewPoster);
-
-                    TextView txtOverview = (TextView) getView().findViewById(R.id.txt_overview);
-                    txtOverview.setText(data.getString(COL_OVERVIEW));
-
-                    TextView txtReleaseDate = (TextView) getView().findViewById(R.id.txt_release_date);
-                    txtReleaseDate.setText(data.getString(COL_RELEASE_DATE));
-
-                    TextView txtVoteAverage = (TextView) getView().findViewById(R.id.txt_vote_average);
-                    txtVoteAverage.setText(data.getString(COL_VOTE_AVERAGE) + "/ 10");
-
-                    break;
-                }
-                case DETAIL_TRAILER_LOADER: {
-                    mTrailerAdapter.swapCursor(data);
-                    break;
-                }
             }
 
+            case DETAIL_REVIEW_LOADER: {
+                return new CursorLoader(
+                        getActivity(),
+                        MoviesContract.ReviewEntry.buildReviewWithMovieId(mIdMovie),
+                        REVIEW_COLUNMS,
+                        null,
+                        null,
+                        null
+                );
 
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        Log.v(LOG_TAG, "In onLoadFinished");
+        if (!data.moveToFirst()) {
+            return;
         }
 
-        @Override
-        public void onLoaderReset (Loader < Cursor > loader) {
+        switch (loader.getId()) {
+            case DETAIL_LOADER: {
 
-            switch (loader.getId()) {
-                case DETAIL_TRAILER_LOADER: {
-                    mTrailerAdapter.swapCursor(null);
 
-                }
+                getActivity().setTitle(data.getString(COL_TITLE));
+
+                ImageView imageViewPoster = (ImageView) getView().findViewById(R.id.img_poster);
+                Picasso.with(getContext()).load(data.getString(COL_POSTER_PATH)).into(imageViewPoster);
+
+                TextView overviewLabel = (TextView) getView().findViewById(R.id.overview_label);
+                overviewLabel.setText(getString(R.string.overview_label));
+
+
+                TextView txtOverview = (TextView) getView().findViewById(R.id.overview_text);
+                txtOverview.setText(data.getString(COL_OVERVIEW));
+
+                TextView txtReleaseDate = (TextView) getView().findViewById(R.id.txt_release_date);
+                txtReleaseDate.setText(data.getString(COL_RELEASE_DATE));
+
+                TextView txtVoteAverage = (TextView) getView().findViewById(R.id.txt_vote_average);
+                txtVoteAverage.setText(data.getString(COL_VOTE_AVERAGE) + "/ 10");
+
+                break;
+            }
+            case DETAIL_TRAILER_LOADER: {
+
+                mTrailerAdapter.swapCursor(data);
+                setListViewHeightBasedOnChildren(listViewTrailers);
+                break;
+            }
+
+            case DETAIL_REVIEW_LOADER:{
+                mReviewAdapter.swapCursor(data);
+                setListViewHeightBasedOnChildren(listViewReview);
+                break;
             }
         }
 
 
     }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+
+        switch (loader.getId()) {
+            case DETAIL_TRAILER_LOADER: {
+                mTrailerAdapter.swapCursor(null);
+                break;
+            }
+            case DETAIL_REVIEW_LOADER: {
+                mReviewAdapter.swapCursor(null);
+                break;
+            }
+        }
+    }
+
+
+}

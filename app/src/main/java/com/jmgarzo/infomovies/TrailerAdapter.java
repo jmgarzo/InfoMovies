@@ -9,8 +9,6 @@ import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.jmgarzo.infomovies.data.MoviesContract;
-
 /**
  * Created by jmgarzo on 21/07/2016.
  */
@@ -30,21 +28,25 @@ public class TrailerAdapter extends CursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
 
 
+        ImageView imageView = (ImageView) view.findViewById(R.id.trailer_icon_image);
+        imageView.setImageResource(R.drawable.ic_play_circle_filled_black_48dp);
 
-            ImageView imageView = (ImageView) view.findViewById(R.id.trailer_icon_image);
-            imageView.setImageResource(R.mipmap.ic_launcher);
+        TextView textViewTitle = (TextView) view.findViewById(R.id.trailer_title_textview);
+        textViewTitle.setText(cursor.getString(DetailMovieFragment.COL_VIDEO_NAME));
 
-            TextView textViewTitle = (TextView) view.findViewById(R.id.trailer_title_text);
-            int indexName = cursor.getColumnIndex(MoviesContract.VideoEntry.NAME);
-            String title = cursor.getString(indexName);
-            textViewTitle.setText(title);
+        TextView textViewType = (TextView) view.findViewById(R.id.trailer_type_textview);
+        textViewType.setText(cursor.getString(DetailMovieFragment.COL_VIDEO_TYPE)+ " / ");
 
-            TextView textViewSite = (TextView) view.findViewById(R.id.trailer_site_text);
-            int indexSite = cursor.getColumnIndex(MoviesContract.VideoEntry.SITE);
-            String site = cursor.getString(indexSite);
-            textViewSite.setText(site);
+        TextView textViewSize = (TextView) view.findViewById(R.id.trailer_size_textview);
+        textViewSize.setText(cursor.getString(DetailMovieFragment.COL_VIDEO_SIZE) + "p");
 
-        }
+        TextView textViewIso_639 = (TextView) view.findViewById(R.id.trailer_iso_639_1_textview);
+        textViewIso_639.setText(cursor.getString(DetailMovieFragment.COL_VIDEO_ISO_639_1) + "-");
+
+        TextView textViewIso_3166 = (TextView) view.findViewById(R.id.trailer_iso_3166_1_textview);
+        textViewIso_3166.setText(cursor.getString(DetailMovieFragment.COL_VIDEO_ISO_3166_1));
+
+    }
 
 
 }

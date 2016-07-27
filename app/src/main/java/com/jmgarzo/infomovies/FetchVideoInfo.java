@@ -62,8 +62,25 @@ public class FetchVideoInfo extends AsyncTask<Void, Void, Void> {
 
             for (String id_web_movie : id_web_movies) {
 
-                insertVideoFromJSON(id_web_movie);
+                String jsonStrVideo = getStrFromAPIWebURL(buildVideoURL(id_web_movie));
+                try {
 
+                    if (jsonStrVideo != null && !jsonStrVideo.isEmpty()) {
+                        insertVideosToDB(jsonStrVideo, id_web_movie);
+                    }
+                } catch (JSONException e) {
+                    Log.e(LOG_TAG, e.toString());
+                }
+
+                String jsonStrReview = getStrFromAPIWebURL(buildReviewURL(id_web_movie));
+                try {
+
+                    if (jsonStrReview != null && !jsonStrReview.isEmpty()) {
+                        insertReviewToDB(jsonStrReview, id_web_movie);
+                    }
+                } catch (JSONException e) {
+                    Log.e(LOG_TAG, e.toString());
+                }
             }
 
         }
@@ -75,13 +92,7 @@ public class FetchVideoInfo extends AsyncTask<Void, Void, Void> {
     }
 
 
-    void insertVideoFromJSON(String id_web_movie) {
-
-//        http://api.themoviedb.org/3/movie/278/videos?api_key=3890bbe3b27964c4c01fe8863a852df5
-
-        HttpURLConnection urlConnection = null;
-        BufferedReader reader = null;
-
+    private URL buildVideoURL(String id_web_movie) {
         final String VIDEOS_DB_BASE_URL = "http://api.themoviedb.org/3/movie/";
         final String VIDEO_PATH = "/videos";
         final String API_KEY_PARAM = "api_key";
@@ -90,12 +101,45 @@ public class FetchVideoInfo extends AsyncTask<Void, Void, Void> {
         Uri buildUriVideo = Uri.parse(VIDEOS_DB_BASE_URL + id_web_movie + VIDEO_PATH).buildUpon()
                 .appendQueryParameter(API_KEY_PARAM, BuildConfig.THE_MOVIE_DB_API_KEY).build();
 
-        String videosJsonStr = null;
 
-
+        URL url = null;
         try {
-            URL url = new URL(buildUriVideo.toString());
-            Log.v(LOG_TAG, "Build URI " + buildUriVideo.toString());
+            url = new URL(buildUriVideo.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return url;
+    }
+
+
+    private URL buildReviewURL(String id_web_movie) {
+        final String REVIEW_DB_BASE_URL = "http://api.themoviedb.org/3/movie/";
+        final String REVIEW_PATH = "/reviews";
+        final String API_KEY_PARAM = "api_key";
+
+
+        Uri buildUriReview = Uri.parse(REVIEW_DB_BASE_URL + id_web_movie + REVIEW_PATH).buildUpon()
+                .appendQueryParameter(API_KEY_PARAM, BuildConfig.THE_MOVIE_DB_API_KEY).build();
+
+
+        URL url = null;
+        try {
+            url = new URL(buildUriReview.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return url;
+    }
+
+
+    private String getStrFromAPIWebURL(URL url) {
+
+        String jsonStr = null;
+        HttpURLConnection urlConnection = null;
+        BufferedReader reader = null;
+        try {
+//            URL url = new URL(buildUriReviews.toString());
+            Log.v(LOG_TAG, "Build URI " + url.toString());
 
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
@@ -115,8 +159,8 @@ public class FetchVideoInfo extends AsyncTask<Void, Void, Void> {
             if (buffer.length() == 0) {
             }
 
-            videosJsonStr = buffer.toString();
-            Log.v(LOG_TAG, videosJsonStr);
+            jsonStr = buffer.toString();
+            Log.v(LOG_TAG, jsonStr);
 
 
         } catch (MalformedURLException e) {
@@ -135,28 +179,25 @@ public class FetchVideoInfo extends AsyncTask<Void, Void, Void> {
                 }
             }
         }
-
-        try {
-            insertVideos(videosJsonStr, id_web_movie);
-        } catch (JSONException e) {
-            e.printStackTrace();
+        if (jsonStr == null) {
+            Log.v(LOG_TAG, "asdfa");
         }
-
+        return jsonStr;
 
     }
 
 
-    void insertVideos(String videosJsonStr, String id_web_movie) throws JSONException {
+    private void insertVideosToDB(String videosJsonStr, String id_web_movie) throws JSONException {
 
         JSONObject videosJson = new JSONObject(videosJsonStr);
         JSONArray videosArray = videosJson.getJSONArray(mContext.getString(R.string.video_results_key));
-        if (videosArray.length() > 0) {
+        if (null != videosArray && videosArray.length() > 0) {
             Vector<ContentValues> cVVector = new Vector<ContentValues>(videosArray.length());
 
             for (int i = 0; i < videosArray.length(); i++) {
                 JSONObject jsonVideo = videosArray.getJSONObject(i);
 
-                String id = jsonVideo.getString(mContext.getString(R.string.video_id_key_));
+                String id = jsonVideo.getString(mContext.getString(R.string.video_id_key));
                 String iso_639_1 = jsonVideo.getString(mContext.getString(R.string.video_iso_639_1_key));
                 String iso_3166_1 = jsonVideo.getString(mContext.getString(R.string.video_iso_3166_1_key));
                 String key = jsonVideo.getString(mContext.getString(R.string.video_key_key));
@@ -171,7 +212,7 @@ public class FetchVideoInfo extends AsyncTask<Void, Void, Void> {
                 String id_movie = "";
                 if (cursor.moveToFirst()) {
                     int id_index = cursor.getColumnIndex(MoviesContract.MoviesEntry._ID);
-                    id_movie=cursor.getString(id_index);
+                    id_movie = cursor.getString(id_index);
                 }
                 videoValues.put(MoviesContract.VideoEntry.MOVIE_KEY, id_movie);
                 videoValues.put(MoviesContract.VideoEntry.ID, checkNull(id));
@@ -185,6 +226,7 @@ public class FetchVideoInfo extends AsyncTask<Void, Void, Void> {
 
                 cVVector.add(videoValues);
 
+                cursor.close();
 
             }
 
@@ -192,6 +234,53 @@ public class FetchVideoInfo extends AsyncTask<Void, Void, Void> {
                 ContentValues[] cvArray = new ContentValues[cVVector.size()];
                 cVVector.toArray(cvArray);
                 mContext.getContentResolver().bulkInsert(MoviesContract.VideoEntry.CONTENT_URI, cvArray);
+            }
+        }
+
+
+    }
+
+
+    private void insertReviewToDB(String reviewJsonStr, String id_web_movie) throws JSONException {
+
+        JSONObject reviewJson = new JSONObject(reviewJsonStr);
+        JSONArray reviewArray = reviewJson.getJSONArray(mContext.getString(R.string.review_results_key));
+        if (reviewArray.length() > 0) {
+            Vector<ContentValues> cVVector = new Vector<ContentValues>(reviewArray.length());
+
+            for (int i = 0; i < reviewArray.length(); i++) {
+                JSONObject jsonVideo = reviewArray.getJSONObject(i);
+
+                String id = jsonVideo.getString(mContext.getString(R.string.review_id_key));
+                String author = jsonVideo.getString(mContext.getString(R.string.review_author_key));
+                String content = jsonVideo.getString(mContext.getString(R.string.review_content_key));
+                String url = jsonVideo.getString(mContext.getString(R.string.review_url_key));
+
+                ContentValues reviewValues = new ContentValues();
+
+                Cursor cursor = mContext.getContentResolver().query(MoviesContract.MoviesEntry.buildMovieWithWebId(id_web_movie), null, null, null, null);
+                String id_movie = "";
+                if (cursor.moveToFirst()) {
+                    int id_index = cursor.getColumnIndex(MoviesContract.MoviesEntry._ID);
+                    id_movie = cursor.getString(id_index);
+                }
+                reviewValues.put(MoviesContract.ReviewEntry.MOVIE_KEY, id_movie);
+                reviewValues.put(MoviesContract.ReviewEntry.ID, checkNull(id));
+                reviewValues.put(MoviesContract.ReviewEntry.AUTHOR, checkNull(author));
+                reviewValues.put(MoviesContract.ReviewEntry.CONTENT, checkNull(content));
+                reviewValues.put(MoviesContract.ReviewEntry.URL, checkNull(url));
+
+
+                cVVector.add(reviewValues);
+
+                cursor.close();
+
+            }
+
+            if (cVVector.size() > 0) {
+                ContentValues[] cvArray = new ContentValues[cVVector.size()];
+                cVVector.toArray(cvArray);
+                mContext.getContentResolver().bulkInsert(MoviesContract.ReviewEntry.CONTENT_URI, cvArray);
             }
         }
 

@@ -2,8 +2,10 @@ package com.jmgarzo.infomovies;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.util.Log;
 
 import com.jmgarzo.infomovies.data.MoviesContract;
@@ -13,9 +15,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -31,13 +37,16 @@ public class FetchTheMovieDBInfo extends AsyncTask<String, Void, Void> {
 
     private final Context mContext;
     private String TOP_RATE_PARAM = "top_rate";
-
+    Cursor cursorMoviesIds;
     public FetchTheMovieDBInfo(Context context) {
         mContext = context;
     }
 
     @Override
     protected Void doInBackground(String... params) {
+
+
+        cursorMoviesIds = mContext.getContentResolver().query(MoviesContract.MoviesEntry.CONTENT_URI,new String[]{MoviesContract.MoviesEntry.MOVIE_WEB_ID},null,null,null);
 
         if (params.length == 0) {
             return null;
@@ -185,10 +194,10 @@ public class FetchTheMovieDBInfo extends AsyncTask<String, Void, Void> {
             String originalLanguage;
             String title;
             String backdropPath;
-            String popularity;
-            String voteCount;
+            Double popularity;
+            Integer voteCount;
             String video;
-            String voteAverage;
+            Double voteAverage;
 
 
             JSONObject jsonMovie = moviesArray.getJSONObject(i);
@@ -203,10 +212,10 @@ public class FetchTheMovieDBInfo extends AsyncTask<String, Void, Void> {
             originalLanguage = jsonMovie.getString(mContext.getString(R.string.mdb_original_language_key));
             title = jsonMovie.getString((mContext.getString(R.string.mdb_title_key)));
             backdropPath = jsonMovie.getString(mContext.getString(R.string.mdb_backdrop_path_key));
-            popularity = jsonMovie.getString(mContext.getString(R.string.mdb_popularity_key));
-            voteCount = jsonMovie.getString(mContext.getString(R.string.mdb_vote_count_key));
+            popularity = jsonMovie.getDouble(mContext.getString(R.string.mdb_popularity_key));
+            voteCount = jsonMovie.getInt(mContext.getString(R.string.mdb_vote_count_key));
             video = jsonMovie.getString(mContext.getString(R.string.mdb_video_key));
-            voteAverage = jsonMovie.getString(mContext.getString(R.string.mdb_vote_average_key));
+            voteAverage = jsonMovie.getDouble(mContext.getString(R.string.mdb_vote_average_key));
 
 //                map.put(getString(R.string.mdb_movie_web_id_key), movieWebId);
 //                map.put(getString(R.string.mdb_poster_path_key), posterPath);
@@ -222,7 +231,6 @@ public class FetchTheMovieDBInfo extends AsyncTask<String, Void, Void> {
 
             URL url = pathPosterToURL(posterPath);
             movieValues.put(MoviesContract.MoviesEntry.POSTER_PATH, checkNull(url.toString()));
-
             movieValues.put(MoviesContract.MoviesEntry.ADULT, checkNull(adult));
             movieValues.put(MoviesContract.MoviesEntry.OVERVIEW, checkNull(overview));
             movieValues.put(MoviesContract.MoviesEntry.RELEASE_DATE, checkNull(releaseDate));
@@ -239,8 +247,6 @@ public class FetchTheMovieDBInfo extends AsyncTask<String, Void, Void> {
 //                imageToFile(url.toString(),movieWebId,context);
 
             cVVector.add(movieValues);
-
-
         }
 
         //add to database
@@ -252,8 +258,7 @@ public class FetchTheMovieDBInfo extends AsyncTask<String, Void, Void> {
 
 
         }
-        FetchVideoInfo fetchVideoInfo = new FetchVideoInfo(mContext);
-        fetchVideoInfo.execute();
+
 
         // return resultList;
     }
@@ -261,6 +266,19 @@ public class FetchTheMovieDBInfo extends AsyncTask<String, Void, Void> {
     private String checkNull(String value) {
         if (null == value) {
             return "";
+        }
+        return value;
+    }
+    private double checkNull(Double value){
+        if (null==value){
+            return 0;
+        }
+        return value;
+     }
+
+    private double checkNull(Integer value){
+        if (null==value){
+            return 0;
         }
         return value;
     }
@@ -301,6 +319,41 @@ public class FetchTheMovieDBInfo extends AsyncTask<String, Void, Void> {
 
     }
 
+    private void saveImage(URL url,String name) {
+
+       // URL url = new URL("file://some/path/anImage.png");
+        InputStream input = null;
+        try {
+            input = url.openStream();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            //The sdcard directory e.g. '/sdcard' can be used directly, or
+            //more safely abstracted with getExternalStorageDirectory()
+            File storagePath = Environment.getDataDirectory();
+            OutputStream output = new FileOutputStream(new File(storagePath, name));
+            try {
+                byte[] buffer = new byte[1024];
+                int bytesRead = 0;
+                while ((bytesRead = input.read(buffer, 0, buffer.length)) >= 0) {
+                    output.write(buffer, 0, bytesRead);
+                }
+            } finally {
+                output.close();
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                input.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 //        @Override
 //        protected void onPostExecute(ArrayList<HashMap<String, String>> hashMaps) {

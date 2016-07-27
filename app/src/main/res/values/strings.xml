@@ -33,7 +33,7 @@
 
     <!--strings about video json -->
     <string name="video_results_key" translatable="false">results</string>
-    <string name="video_id_key_" translatable="false">id</string>
+    <string name="video_id_key" translatable="false">id</string>
     <string name="video_iso_639_1_key" translatable="false">iso_639_1</string>
     <string name="video_iso_3166_1_key" translatable="false">iso_3166_1</string>
     <string name="video_key_key" translatable="false">key</string>
@@ -41,8 +41,17 @@
     <string name="video_site_key" translatable="false">site</string>
     <string name="video_size_key" translatable="false">size</string>
     <string name="video_type_key" translatable="false">type </string>
+
+    <!--strings about review json -->
+
+    <string name="review_results_key" translatable="false">results</string>
+    <string name="review_id_key" translatable="false">id</string>
+    <string name="review_author_key" translatable="false">author</string>
+    <string name="review_content_key" translatable="false">content</string>
+    <string name="review_url_key" translatable="false">url</string>
     
-    
+   <!--Fragment Detail-->
+    <string name="overview_label">Overview</string>
 
 
 </resources>
