@@ -1,32 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <ImageView
-        android:id="@+id/icon_review"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left"/>
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:id="@+id/review_item_layout"
+    android:paddingLeft="8dp">
+
+    <!--<ImageView-->
+    <!--android:id="@+id/icon_review"-->
+    <!--android:layout_width="48dp"-->
+    <!--android:layout_height="48dp"-->
+    <!--android:layout_marginBottom="16dp"-->
+    <!--android:layout_marginLeft="16dp"-->
+    <!--android:layout_marginRight="16dp"-->
+    <!--android:layout_marginTop="16dp"-->
+    <!--android:gravity="left"-->
+    <!--android:scaleType="centerInside" />-->
 
     <LinearLayout
-        android:paddingLeft="10dp"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="left"
+        android:layout_gravity="center_vertical"
         android:orientation="vertical"
-        >
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
 
         <TextView
             android:id="@+id/author_review_textview"
-            android:layout_width="wrap_content"
+            style="@style/Base.TextAppearance.AppCompat.Body2"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
+            android:gravity="left"
             />
+
         <TextView
             android:id="@+id/content_review_textview"
-            android:layout_width="wrap_content"
+            style="@style/Base.TextAppearance.AppCompat.Body1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
 
 
     </LinearLayout>

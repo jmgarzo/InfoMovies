@@ -2,11 +2,11 @@ package com.jmgarzo.infomovies;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -29,8 +29,8 @@ public class ReviewAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
 
-        ImageView imageView = (ImageView) view.findViewById(R.id.icon_review);
-        imageView.setImageResource(R.drawable.ic_comment_black_48dp );
+//        ImageView imageView = (ImageView) view.findViewById(R.id.icon_review);
+//        imageView.setImageResource(R.drawable.ic_comment_black_48dp );
 
         TextView authorTextView = (TextView) view.findViewById(R.id.author_review_textview);
         authorTextView.setText(cursor.getString(DetailMovieFragment.COL_REVIEW_AUTHOR));
@@ -38,6 +38,10 @@ public class ReviewAdapter extends CursorAdapter {
         TextView contentTextView = (TextView) view.findViewById(R.id.content_review_textview);
         contentTextView.setText(cursor.getString(DetailMovieFragment.COL_REVIEW_CONTENT));
 
+        Log.v("Trailer----------->", cursor.getString(DetailMovieFragment.COL_MOVIE_WEB_ID));
+
 
     }
+
+
 }

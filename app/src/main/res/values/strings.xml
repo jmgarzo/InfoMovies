@@ -49,9 +49,11 @@
     <string name="review_author_key" translatable="false">author</string>
     <string name="review_content_key" translatable="false">content</string>
     <string name="review_url_key" translatable="false">url</string>
-    
+
    <!--Fragment Detail-->
     <string name="overview_label">Overview</string>
+    <string name="trailer_label">Trailers</string>
+    <string name="review_label">Reviews</string>
 
 
 </resources>

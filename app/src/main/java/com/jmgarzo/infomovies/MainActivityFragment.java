@@ -9,9 +9,6 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -81,7 +78,8 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
+        //setHasOptionsMenu(true);
+
     }
 
     @Override
@@ -111,8 +109,12 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 //                                                    intent.putExtra(MoviesContract.MoviesEntry._ID,cursor.getString(COL_MOVIE_ID));
 //                                                    startActivity(intent);
 
+                                                    int height = mGridView.getMeasuredHeight();
+                                                    mGridView.smoothScrollToPositionFromTop(position, ((height / 2)));
+
                                                     ((Callback) getActivity())
                                                             .onItemSelected(MoviesContract.MoviesEntry.buildMovieWithWebId(cursor.getString(COL_MOVIE_WEB_ID)),cursor.getString(COL_MOVIE_ID));
+
                                                 }
                                             }
                                         }
@@ -150,22 +152,22 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     }
 
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        //super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_fragment_main, menu);
-
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//        //super.onCreateOptionsMenu(menu, inflater);
+//        inflater.inflate(R.menu.menu_fragment_main, menu);
+//
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        int id = item.getItemId();
+//
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
 
     private void updateSortBy() {
@@ -239,8 +241,8 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 //            }while (data.moveToNext());
 
 
-//        FetchVideoInfo fetchVideoInfo = new FetchVideoInfo(getActivity());
-//        fetchVideoInfo.execute();
+        FetchVideoInfo fetchVideoInfo = new FetchVideoInfo(getActivity());
+        fetchVideoInfo.execute();
 
     }
 

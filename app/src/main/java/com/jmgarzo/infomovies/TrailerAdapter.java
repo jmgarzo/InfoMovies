@@ -32,7 +32,9 @@ public class TrailerAdapter extends CursorAdapter {
         imageView.setImageResource(R.drawable.ic_play_circle_filled_black_48dp);
 
         TextView textViewTitle = (TextView) view.findViewById(R.id.trailer_title_textview);
-        textViewTitle.setText(cursor.getString(DetailMovieFragment.COL_VIDEO_NAME));
+        String text = cursor.getString(DetailMovieFragment.COL_VIDEO_NAME);
+        textViewTitle.setText(text);
+
 
         TextView textViewType = (TextView) view.findViewById(R.id.trailer_type_textview);
         textViewType.setText(cursor.getString(DetailMovieFragment.COL_VIDEO_TYPE)+ " / ");
@@ -40,11 +42,11 @@ public class TrailerAdapter extends CursorAdapter {
         TextView textViewSize = (TextView) view.findViewById(R.id.trailer_size_textview);
         textViewSize.setText(cursor.getString(DetailMovieFragment.COL_VIDEO_SIZE) + "p");
 
-        TextView textViewIso_639 = (TextView) view.findViewById(R.id.trailer_iso_639_1_textview);
-        textViewIso_639.setText(cursor.getString(DetailMovieFragment.COL_VIDEO_ISO_639_1) + "-");
-
-        TextView textViewIso_3166 = (TextView) view.findViewById(R.id.trailer_iso_3166_1_textview);
-        textViewIso_3166.setText(cursor.getString(DetailMovieFragment.COL_VIDEO_ISO_3166_1));
+//        TextView textViewIso_639 = (TextView) view.findViewById(R.id.trailer_iso_639_1_textview);
+//        textViewIso_639.setText(cursor.getString(DetailMovieFragment.COL_VIDEO_ISO_639_1) + "-");
+//
+//        TextView textViewIso_3166 = (TextView) view.findViewById(R.id.trailer_iso_3166_1_textview);
+//        textViewIso_3166.setText(cursor.getString(DetailMovieFragment.COL_VIDEO_ISO_3166_1));
 
     }
 

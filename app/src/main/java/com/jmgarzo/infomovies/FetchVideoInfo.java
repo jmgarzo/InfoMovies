@@ -43,6 +43,9 @@ public class FetchVideoInfo extends AsyncTask<Void, Void, Void> {
             return null;
         }*/
 
+        mContext.getContentResolver().delete(MoviesContract.ReviewEntry.CONTENT_URI, null, null);
+        mContext.getContentResolver().delete(MoviesContract.VideoEntry.CONTENT_URI, null, null);
+
         Cursor cursor = mContext.getContentResolver().query(MoviesContract.MoviesEntry.CONTENT_URI, null, null, null, null);
 
         ArrayList<String> id_web_movies = null;
@@ -280,6 +283,7 @@ public class FetchVideoInfo extends AsyncTask<Void, Void, Void> {
             if (cVVector.size() > 0) {
                 ContentValues[] cvArray = new ContentValues[cVVector.size()];
                 cVVector.toArray(cvArray);
+
                 mContext.getContentResolver().bulkInsert(MoviesContract.ReviewEntry.CONTENT_URI, cvArray);
             }
         }

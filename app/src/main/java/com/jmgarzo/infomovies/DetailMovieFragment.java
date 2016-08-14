@@ -9,11 +9,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -22,7 +21,6 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.jmgarzo.infomovies.data.MoviesContract;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -39,6 +37,7 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
     private static final String LOG_TAG = DetailMovieFragment.class.getSimpleName();
 
     static final String DETAIL_URI = "URI";
+    static final String TWO_PANELS = "TO_PANNELS";
 
 
     private static final int DETAIL_LOADER = 0;
@@ -46,20 +45,20 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
     private static final int DETAIL_REVIEW_LOADER = 2;
 
     private static final String[] MOVIE_COLUMNS = {
-            MoviesContract.MoviesEntry.TABLE_NAME + "." + MoviesContract.MoviesEntry._ID,
-            MoviesContract.MoviesEntry.POSTER_PATH,
-            MoviesContract.MoviesEntry.ADULT,
-            MoviesContract.MoviesEntry.OVERVIEW,
-            MoviesContract.MoviesEntry.RELEASE_DATE,
-            MoviesContract.MoviesEntry.MOVIE_WEB_ID,
-            MoviesContract.MoviesEntry.ORIGINAL_TITLE,
-            MoviesContract.MoviesEntry.ORIGINAL_LANGUAGE,
-            MoviesContract.MoviesEntry.TITLE,
-            MoviesContract.MoviesEntry.BACKDROP_PATH,
-            MoviesContract.MoviesEntry.POPULARITY,
-            MoviesContract.MoviesEntry.VOTE_COUNT,
-            MoviesContract.MoviesEntry.VIDEO,
-            MoviesContract.MoviesEntry.VOTE_AVERAGE
+            com.jmgarzo.infomovies.data.MoviesContract.MoviesEntry.TABLE_NAME + "." + com.jmgarzo.infomovies.data.MoviesContract.MoviesEntry._ID,
+            com.jmgarzo.infomovies.data.MoviesContract.MoviesEntry.POSTER_PATH,
+            com.jmgarzo.infomovies.data.MoviesContract.MoviesEntry.ADULT,
+            com.jmgarzo.infomovies.data.MoviesContract.MoviesEntry.OVERVIEW,
+            com.jmgarzo.infomovies.data.MoviesContract.MoviesEntry.RELEASE_DATE,
+            com.jmgarzo.infomovies.data.MoviesContract.MoviesEntry.MOVIE_WEB_ID,
+            com.jmgarzo.infomovies.data.MoviesContract.MoviesEntry.ORIGINAL_TITLE,
+            com.jmgarzo.infomovies.data.MoviesContract.MoviesEntry.ORIGINAL_LANGUAGE,
+            com.jmgarzo.infomovies.data.MoviesContract.MoviesEntry.TITLE,
+            com.jmgarzo.infomovies.data.MoviesContract.MoviesEntry.BACKDROP_PATH,
+            com.jmgarzo.infomovies.data.MoviesContract.MoviesEntry.POPULARITY,
+            com.jmgarzo.infomovies.data.MoviesContract.MoviesEntry.VOTE_COUNT,
+            com.jmgarzo.infomovies.data.MoviesContract.MoviesEntry.VIDEO,
+            com.jmgarzo.infomovies.data.MoviesContract.MoviesEntry.VOTE_AVERAGE
     };
 
     static final int COL_MOVIE_ID = 0;
@@ -80,16 +79,16 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
 
     private static final String[] VIDEO_COLUNMS =
             {
-                    MoviesContract.VideoEntry.TABLE_NAME + "." + MoviesContract.VideoEntry._ID,
-                    MoviesContract.VideoEntry.MOVIE_KEY,
-                    MoviesContract.VideoEntry.ID,
-                    MoviesContract.VideoEntry.ISO_639_1,
-                    MoviesContract.VideoEntry.ISO_3166_1,
-                    MoviesContract.VideoEntry.KEY,
-                    MoviesContract.VideoEntry.NAME,
-                    MoviesContract.VideoEntry.SITE,
-                    MoviesContract.VideoEntry.SIZE,
-                    MoviesContract.VideoEntry.TYPE
+                    com.jmgarzo.infomovies.data.MoviesContract.VideoEntry.TABLE_NAME + "." + com.jmgarzo.infomovies.data.MoviesContract.VideoEntry._ID,
+                    com.jmgarzo.infomovies.data.MoviesContract.VideoEntry.MOVIE_KEY,
+                    com.jmgarzo.infomovies.data.MoviesContract.VideoEntry.ID,
+                    com.jmgarzo.infomovies.data.MoviesContract.VideoEntry.ISO_639_1,
+                    com.jmgarzo.infomovies.data.MoviesContract.VideoEntry.ISO_3166_1,
+                    com.jmgarzo.infomovies.data.MoviesContract.VideoEntry.KEY,
+                    com.jmgarzo.infomovies.data.MoviesContract.VideoEntry.NAME,
+                    com.jmgarzo.infomovies.data.MoviesContract.VideoEntry.SITE,
+                    com.jmgarzo.infomovies.data.MoviesContract.VideoEntry.SIZE,
+                    com.jmgarzo.infomovies.data.MoviesContract.VideoEntry.TYPE
             };
 
     static final int COL_VIDEO_ID = 0;
@@ -106,12 +105,12 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
 
     private static final String[] REVIEW_COLUNMS =
             {
-                    MoviesContract.ReviewEntry.TABLE_NAME + "." + MoviesContract.ReviewEntry._ID,
-                    MoviesContract.ReviewEntry.MOVIE_KEY,
-                    MoviesContract.ReviewEntry.ID,
-                    MoviesContract.ReviewEntry.AUTHOR,
-                    MoviesContract.ReviewEntry.CONTENT,
-                    MoviesContract.ReviewEntry.URL,
+                    com.jmgarzo.infomovies.data.MoviesContract.ReviewEntry.TABLE_NAME + "." + com.jmgarzo.infomovies.data.MoviesContract.ReviewEntry._ID,
+                    com.jmgarzo.infomovies.data.MoviesContract.ReviewEntry.MOVIE_KEY,
+                    com.jmgarzo.infomovies.data.MoviesContract.ReviewEntry.ID,
+                    com.jmgarzo.infomovies.data.MoviesContract.ReviewEntry.AUTHOR,
+                    com.jmgarzo.infomovies.data.MoviesContract.ReviewEntry.CONTENT,
+                    com.jmgarzo.infomovies.data.MoviesContract.ReviewEntry.URL,
             };
 
     static final int COL_REVIEW_ID = 0;
@@ -128,25 +127,48 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
     private ReviewAdapter mReviewAdapter;
     private Uri mUri;
     private String mIdMovie;
+    private boolean mTwoPanels;
+
+    public DetailMovieFragment() {
+        setHasOptionsMenu(true);
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+
+        mTwoPanels = false;
         Bundle argument = getArguments();
+
         if (argument != null) {
             mUri = argument.getParcelable(DetailMovieFragment.DETAIL_URI);
-            mIdMovie = argument.getString(MoviesContract.MoviesEntry._ID);
+            mIdMovie = argument.getString(com.jmgarzo.infomovies.data.MoviesContract.MoviesEntry._ID);
+            mTwoPanels = argument.getBoolean(TWO_PANELS);
+
+            Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar_detail);
+            ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+
+            if (!mTwoPanels) {
+                ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+            }
         }
 
+
         View rootView = inflater.inflate(R.layout.fragment_detail_movie, container, false);
+
+        hasOptionsMenu();
+
+
         mTrailerAdapter = new TrailerAdapter(getActivity(), null, 0);
+
 
         listViewTrailers = (ListView) rootView.findViewById(R.id.listview_trailers);
         listViewTrailers.setAdapter(mTrailerAdapter);
@@ -175,7 +197,6 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
         });
 
 
-
         return rootView;
     }
 
@@ -187,33 +208,6 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
     }
 
 
-    private static void setListViewHeightBasedOnChildren(ListView listView) {
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter == null)
-            return;
-
-        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
-        int totalHeight = 0;
-        View view = null;
-        for (int i = 0; i < listAdapter.getCount(); i++) {
-            view = listAdapter.getView(i, view, listView);
-            if (i == 0)
-                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewPager.LayoutParams.WRAP_CONTENT));
-
-            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-            totalHeight += view.getMeasuredHeight();
-        }
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-        listView.setLayoutParams(params);
-    }
-
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         getLoaderManager().initLoader(DETAIL_LOADER, null, this);
@@ -222,16 +216,14 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
         super.onActivityCreated(savedInstanceState);
     }
 
-    void onLocationChanged( String newLocation ) {
+    void onSortChanged() {
         // replace the uri, since the sort by  has changed
         Uri uri = mUri;
         if (null != uri) {
-//            Uri updatedUri = MoviesContract.MoviesEntry.b(newLocation, date);
-//            mUri = updatedUri;
+            ;
             getLoaderManager().restartLoader(DETAIL_LOADER, null, this);
         }
     }
-
 
 
     @Override
@@ -261,7 +253,7 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
             case DETAIL_TRAILER_LOADER: {
                 return new CursorLoader(
                         getActivity(),
-                        MoviesContract.VideoEntry.buildVideoWithMovieId(mIdMovie),
+                        com.jmgarzo.infomovies.data.MoviesContract.VideoEntry.buildVideoWithMovieId(mIdMovie),
                         VIDEO_COLUNMS,
                         null,
                         null,
@@ -271,19 +263,25 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
             }
 
             case DETAIL_REVIEW_LOADER: {
+                Log.v(LOG_TAG, "IdMovie " + mIdMovie);
+
                 return new CursorLoader(
                         getActivity(),
-                        MoviesContract.ReviewEntry.buildReviewWithMovieId(mIdMovie),
+                        com.jmgarzo.infomovies.data.MoviesContract.ReviewEntry.buildReviewWithMovieId(mIdMovie),
                         REVIEW_COLUNMS,
                         null,
                         null,
                         null
                 );
 
+
             }
         }
+
+
         return null;
     }
+
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
@@ -296,57 +294,232 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
             case DETAIL_LOADER: {
 
 
-                getActivity().setTitle(data.getString(COL_TITLE));
+                if (!mTwoPanels) {
+                    ImageView imageViewPoster = (ImageView) getView().findViewById(R.id.poster_image);
+                    Picasso.with(getContext()).load(data.getString(COL_POSTER_PATH)).into(imageViewPoster);
 
-                ImageView imageViewPoster = (ImageView) getView().findViewById(R.id.img_poster);
-                Picasso.with(getContext()).load(data.getString(COL_POSTER_PATH)).into(imageViewPoster);
-
-                TextView overviewLabel = (TextView) getView().findViewById(R.id.overview_label);
-                overviewLabel.setText(getString(R.string.overview_label));
+                } else {
+                    TextView titleTexView = (TextView) getView().findViewById(R.id.txt_title);
+                    titleTexView.setText(data.getString(COL_TITLE));
+                }
 
 
                 TextView txtOverview = (TextView) getView().findViewById(R.id.overview_text);
                 txtOverview.setText(data.getString(COL_OVERVIEW));
 
+                if (txtOverview != null && txtOverview.getText() != "") {
+                    TextView overviewLabel = (TextView) getView().findViewById(R.id.overview_label);
+                    overviewLabel.setText(getString(R.string.overview_label));
+                    overviewLabel.setVisibility(View.VISIBLE);
+                }
+
                 TextView txtReleaseDate = (TextView) getView().findViewById(R.id.txt_release_date);
                 txtReleaseDate.setText(data.getString(COL_RELEASE_DATE));
 
                 TextView txtVoteAverage = (TextView) getView().findViewById(R.id.txt_vote_average);
-                txtVoteAverage.setText(data.getString(COL_VOTE_AVERAGE) + "/ 10");
+                txtVoteAverage.setText(data.getString(COL_VOTE_AVERAGE) + " / 10");
 
+//                TextView trailerLabel = (TextView) getView().findViewById(R.id.trailer_label);
+//                trailerLabel.setText(R.string.trailer_label);
+//                trailerLabel.setVisibility(View.INVISIBLE);
+//
+//                TextView reviewLabel = (TextView) getView().findViewById(R.id.review_label);
+//                reviewLabel.setText(R.string.review_label);
+//                reviewLabel.setVisibility(View.INVISIBLE);
                 break;
             }
             case DETAIL_TRAILER_LOADER: {
+                if (data.moveToFirst())
 
-                mTrailerAdapter.swapCursor(data);
-                setListViewHeightBasedOnChildren(listViewTrailers);
+                    mTrailerAdapter.swapCursor(data);
+
+
+                if (data.moveToFirst()) {
+                    TextView trailerLabel = (TextView) getView().findViewById(R.id.trailer_label);
+                    trailerLabel.setText(getString(R.string.trailer_label));
+                    trailerLabel.setVisibility(View.VISIBLE);
+                }
+                setListViewHeightBasedOnChildren2(listViewTrailers);
                 break;
+
             }
 
-            case DETAIL_REVIEW_LOADER:{
+            case DETAIL_REVIEW_LOADER: {
                 mReviewAdapter.swapCursor(data);
-                setListViewHeightBasedOnChildren(listViewReview);
+                if (data.moveToFirst()) {
+                    TextView reviewLabel = (TextView) getView().findViewById(R.id.review_label);
+                    reviewLabel.setText(getString(R.string.review_label));
+                    reviewLabel.setVisibility(View.VISIBLE);
+                }
+                setListViewHeightBasedOnChildren2(listViewReview);
+
+
+                //sv.getMeasuredHeight();
+
+
+//                ListAdapter listAdapter = listViewReview.getAdapter();
+
+//                ViewGroup.LayoutParams params = listViewReview.getLayoutParams();
+//                params.height = mReviewAdapter.getHeight();
+//
+//                listViewReview.setLayoutParams(params);
                 break;
             }
         }
 
 
     }
+
+    public void setListViewHeightBasedOnChildren2(ListView listView) {
+
+        ListAdapter listAdapter = listView.getAdapter();
+
+        if (listAdapter == null) return;
+        if (listAdapter.getCount() <= 1) return;
+
+
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.AT_MOST);
+        int totalHeight = 0;
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = 0;
+        listView.setLayoutParams(params);
+        listView.requestLayout();
+
+        View view = null;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            view = listAdapter.getView(i, view, listView);
+            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            totalHeight += view.getMeasuredHeight();
+        }
+        params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount())) + 8;
+        listView.setLayoutParams(params);
+        listView.requestLayout();
+
+    }
+
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
 
         switch (loader.getId()) {
             case DETAIL_TRAILER_LOADER: {
+
                 mTrailerAdapter.swapCursor(null);
+                getLoaderManager().restartLoader(DETAIL_TRAILER_LOADER, null, this);
+
                 break;
             }
             case DETAIL_REVIEW_LOADER: {
                 mReviewAdapter.swapCursor(null);
+                getLoaderManager().restartLoader(DETAIL_REVIEW_LOADER, null, this);
+
                 break;
             }
         }
     }
 
+    @Override
+    public void onPause() {
+
+        mReviewAdapter.swapCursor(null);
+        mTrailerAdapter.swapCursor(null);
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        if (null != getLoaderManager().getLoader(DETAIL_TRAILER_LOADER) &&
+                null != getLoaderManager().getLoader(DETAIL_REVIEW_LOADER)) {
+            getLoaderManager().restartLoader(DETAIL_REVIEW_LOADER, null, this);
+            getLoaderManager().restartLoader(DETAIL_TRAILER_LOADER, null, this);
+        }
+        super.onResume();
+
+    }
+
+
+    //   private static void setListViewHeightBasedOnChildren(ListView listView) {
+//        ListAdapter listAdapter = listView.getAdapter();
+//        if (listAdapter == null)
+//            return;
+//
+//        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
+//        int totalHeight = 0;
+//        View view = null;
+//        for (int i = 0; i < listAdapter.getCount(); i++) {
+//            view = listAdapter.getView(i, view, listView);
+//            if (i == 0)
+//                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewPager.LayoutParams.WRAP_CONTENT));
+//
+//            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+//            int paddingBottom = view.getPaddingBottom();
+//            int paddingTop = view.getPaddingTop();
+//            totalHeight += view.getMeasuredHeight();
+//        }
+//        ViewGroup.LayoutParams params = listView.getLayoutParams();
+//        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+//
+//        listView.setLayoutParams(params);
+//
+//    }
+//
+//
+//    private static void setListViewHeightBasedOnChildrenReview(ListView listView) {
+//        ListAdapter listAdapter = listView.getAdapter();
+//        if (listAdapter == null)
+//            return;
+//
+//        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
+//        int totalHeight = 0;
+//        int totalHeightViews = 0;
+//        View view = null;
+//        for (int i = 0; i < listAdapter.getCount(); i++) {
+//            view = listAdapter.getView(i, view, listView);
+//            if (i == 0)
+//                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewPager.LayoutParams.WRAP_CONTENT));
+//            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+//
+//
+//            totalHeight += view.getMeasuredHeightAndState();
+//        }
+//        ViewGroup.LayoutParams params = listView.getLayoutParams();
+//
+//        //params.height = totalHeight+  (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+//        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+//
+//
+//        listView.setLayoutParams(params);
+//
+//    }
+//
+//
+//    public static void getTotalHeightofListView(ListView listView) {
+//
+//        ListAdapter mAdapter = listView.getAdapter();
+//
+//        int totalHeight = 0;
+//
+//        for (int i = 0; i < mAdapter.getCount(); i++) {
+//            View mView = mAdapter.getView(i, null, listView);
+//
+//            mView.measure(
+//                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+//
+//                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+//
+//            totalHeight += mView.getMeasuredHeight();
+//            Log.w("HEIGHT" + i, String.valueOf(totalHeight));
+//
+//        }
+//
+//        ViewGroup.LayoutParams params = listView.getLayoutParams();
+//        params.height = totalHeight
+//                + (listView.getDividerHeight() * (mAdapter.getCount() - 1));
+//        listView.setLayoutParams(params);
+//        listView.requestLayout();
+//
+//    }
 
 }

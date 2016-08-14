@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityFragm
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -45,6 +46,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityFragm
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.movie_detail_container, new DetailMovieFragment(), DETAILFRAGMENT_TAG)
                         .commit();
+
+
             }
         } else {
             mTwoPane = false;
@@ -85,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityFragm
             Bundle args = new Bundle();
             args.putParcelable(DetailMovieFragment.DETAIL_URI, contentUri);
             args.putString(MoviesContract.MoviesEntry._ID,idMovie);
+            args.putBoolean(DetailMovieFragment.TWO_PANELS, mTwoPane);
 
 
             DetailMovieFragment fragment = new DetailMovieFragment();
@@ -113,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityFragm
             }
             DetailMovieFragment detailMovieFragment = (DetailMovieFragment) getSupportFragmentManager().findFragmentByTag(DETAILFRAGMENT_TAG);
             if (null != detailMovieFragment) {
-                detailMovieFragment.onLocationChanged(sortBy);
+                detailMovieFragment.onSortChanged();
             }
             mSortBy = sortBy;
         }
