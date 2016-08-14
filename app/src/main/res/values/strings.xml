@@ -55,5 +55,10 @@
     <string name="trailer_label">Trailers</string>
     <string name="review_label">Reviews</string>
 
+    <!-- SyncAdapter related -->
+    <string name="sync_account_type">infomovies.jmgarzo.com</string>
+    <string name="content_authority">com.jmgarzo.infomovies</string>
+
+
 
 </resources>
