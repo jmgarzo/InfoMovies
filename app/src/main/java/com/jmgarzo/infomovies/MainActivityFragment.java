@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.jmgarzo.infomovies.data.MoviesContract;
+import com.jmgarzo.infomovies.sync.MainInfoMoviesSyncAdapter;
 
 
 /**
@@ -171,9 +172,10 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 
 
     private void updateSortBy() {
-        FetchTheMovieDBInfo fetchTheMovieDBInfo = new FetchTheMovieDBInfo(getActivity());
-        String sortBy = Utility.getPreferredSortBy(getActivity());
-        fetchTheMovieDBInfo.execute(sortBy);
+//        FetchTheMovieDBInfo fetchTheMovieDBInfo = new FetchTheMovieDBInfo(getActivity());
+//        String sortBy = Utility.getPreferredSortBy(getActivity());
+//        fetchTheMovieDBInfo.execute(sortBy);
+        updateMovies();
     }
 
     void onSortChanged() {
@@ -190,9 +192,10 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     }
 
     private void updateMovies() {
-        FetchTheMovieDBInfo fetchTheMovieDBInfo = new FetchTheMovieDBInfo(getActivity());
-        String sortBy = Utility.getPreferredSortBy(getActivity());
-        fetchTheMovieDBInfo.execute(sortBy);
+//        FetchTheMovieDBInfo fetchTheMovieDBInfo = new FetchTheMovieDBInfo(getActivity());
+//        String sortBy = Utility.getPreferredSortBy(getActivity());
+//        fetchTheMovieDBInfo.execute(sortBy);
+          MainInfoMoviesSyncAdapter.syncImmediately(getActivity());
     }
 
     @Override
@@ -241,8 +244,11 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 //            }while (data.moveToNext());
 
 
-        FetchVideoInfo fetchVideoInfo = new FetchVideoInfo(getActivity());
-        fetchVideoInfo.execute();
+//        FetchVideoInfo fetchVideoInfo = new FetchVideoInfo(getActivity());
+//        fetchVideoInfo.execute();
+//
+
+
 
     }
 

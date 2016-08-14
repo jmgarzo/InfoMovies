@@ -9,7 +9,7 @@ import android.os.IBinder;
  */
 public class InfoMoviesSyncService extends Service {
     // Storage for an instance of the sync adapter
-    private static InfoMoviesSyncAdapter sSyncAdapter = null;
+    private static MainInfoMoviesSyncAdapter sSyncAdapter = null;
     // Object to use as a thread-safe lock
     private static final Object sSyncAdapterLock = new Object();
     /*
@@ -24,7 +24,7 @@ public class InfoMoviesSyncService extends Service {
          */
         synchronized (sSyncAdapterLock) {
             if (sSyncAdapter == null) {
-                sSyncAdapter = new InfoMoviesSyncAdapter(getApplicationContext(), true);
+                sSyncAdapter = new MainInfoMoviesSyncAdapter(getApplicationContext(), true);
             }
         }
     }
