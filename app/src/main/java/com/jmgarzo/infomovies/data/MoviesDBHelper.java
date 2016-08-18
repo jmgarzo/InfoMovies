@@ -71,6 +71,28 @@ public class MoviesDBHelper extends SQLiteOpenHelper {
                         MoviesContract.MoviesEntry.TABLE_NAME + " (" + MoviesContract.MoviesEntry._ID + " ) " +
                         ");";
         db.execSQL(SQL_CREATE_REVIEW_TABLE);
+
+
+        final String SQL_CREATE_FAVORITE_TABLE =
+                "CREATE TABLE " + MoviesContract.FavoriteEntry.TABLE_NAME + " ( " +
+                        MoviesContract.FavoriteEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT , " +
+                        MoviesContract.FavoriteEntry.POSTER_PATH + " TEXT NOT NULL, " +
+                        MoviesContract.FavoriteEntry.ADULT + " TEXT NOT NULL, " +
+                        MoviesContract.FavoriteEntry.OVERVIEW + " TEXT NOT NULL, " +
+                        MoviesContract.FavoriteEntry.RELEASE_DATE + " TEXT NOT NULL, " +
+                        MoviesContract.FavoriteEntry.MOVIE_WEB_ID + " TEXT NOT NULL UNIQUE, " +
+                        MoviesContract.FavoriteEntry.ORIGINAL_TITLE + " TEXT NOT NULL, " +
+                        MoviesContract.FavoriteEntry.ORIGINAL_LANGUAGE + " TEXT NOT NULL, " +
+                        MoviesContract.FavoriteEntry.TITLE + " TEXT NOT NULL, " +
+                        MoviesContract.FavoriteEntry.BACKDROP_PATH + " TEXT NOT NULL, " +
+                        MoviesContract.FavoriteEntry.POPULARITY + " REAL NOT NULL, " +
+                        MoviesContract.FavoriteEntry.VOTE_COUNT + " INTEGER NOT NULL, " +
+                        MoviesContract.FavoriteEntry.VIDEO + " TEXT NOT NULL, " +
+                        MoviesContract.FavoriteEntry.VOTE_AVERAGE + " REAL NOT NULL, " +
+                        MoviesContract.FavoriteEntry.ADD_DATE + " TEXT NOT NULL " +
+                        " );";
+
+        db.execSQL(SQL_CREATE_FAVORITE_TABLE);
     }
 
 
@@ -80,6 +102,7 @@ public class MoviesDBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + MoviesContract.MoviesEntry.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + MoviesContract.VideoEntry.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + MoviesContract.ReviewEntry.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + MoviesContract.FavoriteEntry.TABLE_NAME);
 
     }
 
