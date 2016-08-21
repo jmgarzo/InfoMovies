@@ -46,14 +46,60 @@ public class MainInfoMoviesSyncAdapter extends AbstractThreadedSyncAdapter {
     public MainInfoMoviesSyncAdapter(Context context, boolean autoInitialize) {
         super(context, autoInitialize);
     }
+
+    /**
+     * Helper method to get the fake account to be used with SyncAdapter, or make a new one
+     * if the fake account doesn't exist yet.  If we make a new account, we call the
+     * onAccountCreated method so we can initialize things.
+     *
+     * @param context The context used to access the account service
+     * @return a fake account.
+     */
+    public static Account getSyncAccount(Context context) {
+        // Get an instance of the Android account manager
+        AccountManager accountManager =
+                (AccountManager) context.getSystemService(Context.ACCOUNT_SERVICE);
+
+        // Create the account type and default account
+        Account newAccount = new Account(
+                context.getString(R.string.app_name), context.getString(R.string.sync_account_type));
+
+        // If the password doesn't exist, the account doesn't exist
+        if (null == accountManager.getPassword(newAccount)) {
+
+        /*
+         * Add the account and account type, no password or user data
+         * If successful, return the Account object, otherwise report an error.
+         */
+            if (!accountManager.addAccountExplicitly(newAccount, "", null)) {
+                return null;
+            }
+            /*
+             * If you don't set android:syncable="true" in
+             * in your <provider> element in the manifest,
+             * then call ContentResolver.setIsSyncable(account, AUTHORITY, 1)
+             * here.
+             */
+
+        }
+        return newAccount;
+    }
+
+    public static void syncImmediately(Context context) {
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
+        bundle.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
+        ContentResolver.requestSync(getSyncAccount(context),
+                context.getString(R.string.content_authority), bundle);
+    }
+
     @Override
     public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
 
         {
 
 
-            cursorMoviesIds = getContext().getContentResolver().query(MoviesContract.MoviesEntry.CONTENT_URI,new String[]{MoviesContract.MoviesEntry.MOVIE_WEB_ID},null,null,null);
-
+            cursorMoviesIds = getContext().getContentResolver().query(MoviesContract.MoviesEntry.CONTENT_URI, new String[]{MoviesContract.MoviesEntry.MOVIE_WEB_ID}, null, null, null);
 
 
             HttpURLConnection urlConnection = null;
@@ -174,57 +220,7 @@ public class MainInfoMoviesSyncAdapter extends AbstractThreadedSyncAdapter {
         }
 
 
-
     }
-
-
-
-    /**
-     * Helper method to get the fake account to be used with SyncAdapter, or make a new one
-     * if the fake account doesn't exist yet.  If we make a new account, we call the
-     * onAccountCreated method so we can initialize things.
-     *
-     * @param context The context used to access the account service
-     * @return a fake account.
-     */
-    public static Account getSyncAccount(Context context) {
-        // Get an instance of the Android account manager
-        AccountManager accountManager =
-                (AccountManager) context.getSystemService(Context.ACCOUNT_SERVICE);
-
-        // Create the account type and default account
-        Account newAccount = new Account(
-                context.getString(R.string.app_name), context.getString(R.string.sync_account_type));
-
-        // If the password doesn't exist, the account doesn't exist
-        if ( null == accountManager.getPassword(newAccount) ) {
-
-        /*
-         * Add the account and account type, no password or user data
-         * If successful, return the Account object, otherwise report an error.
-         */
-            if (!accountManager.addAccountExplicitly(newAccount, "", null)) {
-                return null;
-            }
-            /*
-             * If you don't set android:syncable="true" in
-             * in your <provider> element in the manifest,
-             * then call ContentResolver.setIsSyncable(account, AUTHORITY, 1)
-             * here.
-             */
-
-        }
-        return newAccount;
-    }
-
-    public static void syncImmediately(Context context) {
-        Bundle bundle = new Bundle();
-        bundle.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
-        bundle.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
-        ContentResolver.requestSync(getSyncAccount(context),
-                context.getString(R.string.content_authority), bundle);
-    }
-
 
     private void getMoviesDataFromJson(String moviesJsonStr, Context context) throws JSONException {
 
@@ -358,7 +354,7 @@ public class MainInfoMoviesSyncAdapter extends AbstractThreadedSyncAdapter {
 //            Uri builtUri = Uri.parse(IMAGE_URL_BASE).buildUpon()
 //                    .appendPath(SIZE_w185)
 //                    .appendPath(path.toString()).build();
-        String uri = IMAGE_URL_BASE + SIZE_w500 + path;
+        String uri = IMAGE_URL_BASE + SIZE_w185 + path;
         URL url = null;
         try {
             url = new URL(uri);
