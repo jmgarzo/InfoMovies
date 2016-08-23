@@ -39,7 +39,7 @@ import java.util.Vector;
  */
 public class MainInfoMoviesSyncAdapter extends AbstractThreadedSyncAdapter {
 
-    Cursor cursorMoviesIds;
+//    Cursor cursorMoviesIds;
     private String TOP_RATE_PARAM = "top_rate";
     private String LOG_TAG = MainInfoMoviesSyncAdapter.class.getSimpleName();
 
@@ -99,7 +99,7 @@ public class MainInfoMoviesSyncAdapter extends AbstractThreadedSyncAdapter {
         {
 
 
-            cursorMoviesIds = getContext().getContentResolver().query(MoviesContract.MoviesEntry.CONTENT_URI, new String[]{MoviesContract.MoviesEntry.MOVIE_WEB_ID}, null, null, null);
+//            cursorMoviesIds = getContext().getContentResolver().query(MoviesContract.MoviesEntry.CONTENT_URI, new String[]{MoviesContract.MoviesEntry.MOVIE_WEB_ID}, null, null, null);
 
 
             HttpURLConnection urlConnection = null;

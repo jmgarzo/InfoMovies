@@ -44,7 +44,7 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
     private static final int DETAIL_TRAILER_LOADER = 1;
     private static final int DETAIL_REVIEW_LOADER = 2;
 
-    private static final String[] MOVIE_COLUMNS = {
+    public static final String[] MOVIE_COLUMNS = {
             com.jmgarzo.infomovies.data.MoviesContract.MoviesEntry.TABLE_NAME + "." + com.jmgarzo.infomovies.data.MoviesContract.MoviesEntry._ID,
             com.jmgarzo.infomovies.data.MoviesContract.MoviesEntry.POSTER_PATH,
             com.jmgarzo.infomovies.data.MoviesContract.MoviesEntry.ADULT,

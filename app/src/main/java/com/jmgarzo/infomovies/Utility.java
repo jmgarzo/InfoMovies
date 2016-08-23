@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import java.text.DateFormat;
+import java.util.Date;
+
 /**
  * Created by jmgarzo on 19/07/2016.
  */
@@ -15,6 +18,10 @@ public class Utility {
         return pref.getString(context.getString(R.string.pref_sort_by_key),context.getString(R.string.pref_sort_by_defautl));
     }
 
+    static String formatDate(long dateInMilliseconds) {
+        Date date = new Date(dateInMilliseconds);
+        return DateFormat.getDateInstance().format(date);
+    }
 
 
 

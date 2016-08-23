@@ -51,7 +51,7 @@
     <string name="review_content_key" translatable="false">content</string>
     <string name="review_url_key" translatable="false">url</string>
 
-   <!--Fragment Detail-->
+    <!--Fragment Detail-->
     <string name="overview_label">Overview</string>
     <string name="trailer_label">Trailers</string>
     <string name="review_label">Reviews</string>
@@ -59,7 +59,7 @@
     <!-- SyncAdapter related -->
     <string name="sync_account_type">infomovies.jmgarzo.com</string>
     <string name="content_authority">com.jmgarzo.infomovies</string>
-
+    <string name="title_activity_prueba">prueba</string>
 
 
 </resources>

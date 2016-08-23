@@ -182,9 +182,7 @@ public class FetchVideoInfo2
                 }
             }
         }
-        if (jsonStr == null) {
-            Log.v(LOG_TAG, "asdfa");
-        }
+
         return jsonStr;
 
     }

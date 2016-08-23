@@ -41,7 +41,7 @@ public class MovieProvider extends ContentProvider {
 
         matcher.addURI(authority, MoviesContract.PATH_MOVIE, MOVIE);
         matcher.addURI(authority, MoviesContract.PATH_MOVIE + "/#", MOVIE_WITH_ID);
-        matcher.addURI(authority, MoviesContract.PATH_MOVIE + "/#", MOVIE_WITH_WEB_MOVIE_ID);
+        matcher.addURI(authority, MoviesContract.PATH_MOVIE + "/" + MoviesContract.MoviesEntry.MOVIE_WEB_ID + "/#", MOVIE_WITH_WEB_MOVIE_ID);
         matcher.addURI(authority, MoviesContract.PATH_MOVIE + "/*", PATH_POSTER);
         matcher.addURI(authority, MoviesContract.PATH_MOVIE + "/*", MOVIES_WEB_ID);
 
@@ -54,8 +54,8 @@ public class MovieProvider extends ContentProvider {
         matcher.addURI(authority, MoviesContract.PATH_REVIEW + "/*", REVIEW_WITH_MOVIE_ID);
 
         matcher.addURI(authority, MoviesContract.PATH_FAVORITE, FAVORITE);
-        matcher.addURI(authority, MoviesContract.PATH_FAVORITE + "/*", FAVORITE_WITH_ID);
-        matcher.addURI(authority, MoviesContract.PATH_FAVORITE + "/*", FAVORITE_WITH_MOVIE_ID);
+        matcher.addURI(authority, MoviesContract.PATH_FAVORITE + "/#", FAVORITE_WITH_ID);
+        matcher.addURI(authority, MoviesContract.PATH_FAVORITE + "/" + MoviesContract.FavoriteEntry.MOVIE_WEB_ID + "/*", FAVORITE_WITH_MOVIE_ID);
 
         return matcher;
     }
@@ -116,6 +116,7 @@ public class MovieProvider extends ContentProvider {
                         null,
                         sortOrder);
 
+
                 break;
             }
 
@@ -129,6 +130,7 @@ public class MovieProvider extends ContentProvider {
                         null,
                         sortOrder);
 
+
                 break;
             }
             case VIDEO: {
@@ -141,6 +143,7 @@ public class MovieProvider extends ContentProvider {
                         null,
                         null,
                         sortOrder);
+
                 break;
             }
             case VIDEO_WITH_MOVIE_ID: {
@@ -152,6 +155,7 @@ public class MovieProvider extends ContentProvider {
                         null,
                         null,
                         sortOrder);
+
                 break;
             }
             case REVIEW: {
@@ -164,6 +168,7 @@ public class MovieProvider extends ContentProvider {
                         null,
                         null,
                         sortOrder);
+
                 break;
             }
             case REVIEW_WITH_MOVIE_ID: {
@@ -175,6 +180,7 @@ public class MovieProvider extends ContentProvider {
                         null,
                         null,
                         sortOrder);
+
                 break;
             }
             case FAVORITE: {
@@ -187,6 +193,8 @@ public class MovieProvider extends ContentProvider {
                         null,
                         null,
                         sortOrder);
+
+                break;
             }
 
             case FAVORITE_WITH_ID: {
@@ -199,6 +207,8 @@ public class MovieProvider extends ContentProvider {
                         null,
                         null,
                         sortOrder);
+
+                break;
             }
 
             case FAVORITE_WITH_MOVIE_ID: {
@@ -207,10 +217,11 @@ public class MovieProvider extends ContentProvider {
                         MoviesContract.FavoriteEntry.TABLE_NAME,
                         projection,
                         MoviesContract.FavoriteEntry.MOVIE_WEB_ID + " = ? ",
-                        selectionArgs,
+                        new String[]{String.valueOf(ContentUris.parseId(uri))},
                         null,
                         null,
                         sortOrder);
+                break;
             }
             default: {
                 // By default, we assume a bad URI
@@ -219,6 +230,7 @@ public class MovieProvider extends ContentProvider {
 
         }
         retCursor.setNotificationUri(getContext().getContentResolver(), uri);
+
         return retCursor;
     }
 
@@ -231,7 +243,7 @@ public class MovieProvider extends ContentProvider {
             case MOVIE:
                 return MoviesContract.MoviesEntry.CONTENT_DIR_TYPE;
             case MOVIE_WITH_ID:
-                return MoviesContract.MoviesEntry.CONTENT_DIR_TYPE;
+                return MoviesContract.MoviesEntry.CONTENT_ITEM_TYPE;
             case PATH_POSTER:
                 return MoviesContract.MoviesEntry.CONTENT_ITEM_TYPE;
             case MOVIE_WITH_WEB_MOVIE_ID:
@@ -251,9 +263,9 @@ public class MovieProvider extends ContentProvider {
             case FAVORITE:
                 return MoviesContract.FavoriteEntry.CONTENT_DIR_TYPE;
             case FAVORITE_WITH_ID:
-                return MoviesContract.FavoriteEntry.CONTENT_DIR_TYPE;
+                return MoviesContract.FavoriteEntry.CONTENT_ITEM_TYPE;
             case FAVORITE_WITH_MOVIE_ID:
-                return MoviesContract.FavoriteEntry.CONTENT_DIR_TYPE;
+                return MoviesContract.FavoriteEntry.CONTENT_ITEM_TYPE;
             default: {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
             }

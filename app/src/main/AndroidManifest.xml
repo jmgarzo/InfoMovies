@@ -3,12 +3,9 @@
     package="com.jmgarzo.infomovies">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission
-        android:name="android.permission.READ_SYNC_SETTINGS"/>
-    <uses-permission
-        android:name="android.permission.WRITE_SYNC_SETTINGS"/>
-    <uses-permission
-        android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
 
     <application
         android:allowBackup="true"
@@ -24,6 +21,7 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -37,15 +35,15 @@
                 android:value="com.jmgarzo.infomovies.MainActivity" />
         </activity>
 
-        <!--<activity-->
-        <!--android:name=".SettingsActivity"-->
-        <!--android:label="@string/title_activity_settings"-->
-        <!--android:parentActivityName=".MainActivity"-->
-        <!--android:theme="@style/AppTheme.NoActionBar">-->
-        <!--<meta-data-->
-        <!--android:name="android.support.PARENT_ACTIVITY"-->
-        <!--android:value="com.jmgarzo.infomovies.MainActivity" />-->
-        <!--</activity>-->
+        <!-- <activity -->
+        <!-- android:name=".SettingsActivity" -->
+        <!-- android:label="@string/title_activity_settings" -->
+        <!-- android:parentActivityName=".MainActivity" -->
+        <!-- android:theme="@style/AppTheme.NoActionBar"> -->
+        <!-- <meta-data -->
+        <!-- android:name="android.support.PARENT_ACTIVITY" -->
+        <!-- android:value="com.jmgarzo.infomovies.MainActivity" /> -->
+        <!-- </activity> -->
         <activity
             android:name=".DetailMovie"
             android:label="@string/title_activity_detail_movie"
@@ -56,37 +54,35 @@
                 android:value="com.jmgarzo.infomovies.MainActivity" />
         </activity>
 
-
-        <service
-            android:name=".sync.InfoMoviesAuthenticatorService"
-            >
+        <service android:name=".sync.InfoMoviesAuthenticatorService">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />
             </intent-filter>
+
             <meta-data
                 android:name="android.accounts.AccountAuthenticator"
                 android:resource="@xml/authenticator" />
         </service>
 
         <provider
-            android:authorities="@string/content_authority"
             android:name=".data.MovieProvider"
+            android:authorities="@string/content_authority"
             android:exported="false"
             android:syncable="true" />
-
 
         <!-- The SyncAdapter service -->
         <service
             android:name=".sync.InfoMoviesSyncService"
-            android:exported="true"
-            >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.content.SyncAdapter" />
             </intent-filter>
+
             <meta-data
                 android:name="android.content.SyncAdapter"
                 android:resource="@xml/syncadapter" />
         </service>
+
     </application>
 
 </manifest>
