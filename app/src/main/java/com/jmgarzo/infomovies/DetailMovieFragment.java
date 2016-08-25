@@ -21,6 +21,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.jmgarzo.infomovies.data.MoviesContract;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -77,7 +78,7 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
     static final int COL_VOTE_AVERAGE = 13;
 
 
-    private static final String[] VIDEO_COLUNMS =
+    private static final String[] VIDEO_COLUMNS =
             {
                     com.jmgarzo.infomovies.data.MoviesContract.VideoEntry.TABLE_NAME + "." + com.jmgarzo.infomovies.data.MoviesContract.VideoEntry._ID,
                     com.jmgarzo.infomovies.data.MoviesContract.VideoEntry.MOVIE_KEY,
@@ -103,7 +104,7 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
     static final int COL_VIDEO_TYPE = 9;
 
 
-    private static final String[] REVIEW_COLUNMS =
+    private static final String[] REVIEW_COLUMNS =
             {
                     com.jmgarzo.infomovies.data.MoviesContract.ReviewEntry.TABLE_NAME + "." + com.jmgarzo.infomovies.data.MoviesContract.ReviewEntry._ID,
                     com.jmgarzo.infomovies.data.MoviesContract.ReviewEntry.MOVIE_KEY,
@@ -237,45 +238,48 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
             return null;
         }
 
-        switch (id) {
-            case DETAIL_LOADER: {
+        try {
+            switch (id) {
+                case DETAIL_LOADER: {
 
-                return new CursorLoader(
-                        getActivity(),
-                        mUri,
-                        MOVIE_COLUMNS,
-                        null,
-                        null,
-                        null
-                );
+
+                    return new CursorLoader(
+                            getActivity(),
+                            MoviesContract.MoviesEntry.buildMoviesWithIdUri(Long.parseLong(mIdMovie)),
+                            MOVIE_COLUMNS,
+                            null,
+                            null,
+                            null
+                    );
+                }
+
+                case DETAIL_TRAILER_LOADER: {
+                    return new CursorLoader(
+                            getActivity(),
+                            com.jmgarzo.infomovies.data.MoviesContract.VideoEntry.buildVideoWithMovieId(mIdMovie),
+                            VIDEO_COLUMNS,
+                            null,
+                            null,
+                            null
+                    );
+
+                }
+
+                case DETAIL_REVIEW_LOADER: {
+                    return new CursorLoader(
+                            getActivity(),
+                            com.jmgarzo.infomovies.data.MoviesContract.ReviewEntry.buildReviewWithMovieId(mIdMovie),
+                            REVIEW_COLUMNS,
+                            null,
+                            null,
+                            null
+                    );
+
+
+                }
             }
-
-            case DETAIL_TRAILER_LOADER: {
-                return new CursorLoader(
-                        getActivity(),
-                        com.jmgarzo.infomovies.data.MoviesContract.VideoEntry.buildVideoWithMovieId(mIdMovie),
-                        VIDEO_COLUNMS,
-                        null,
-                        null,
-                        null
-                );
-
-            }
-
-            case DETAIL_REVIEW_LOADER: {
-                Log.v(LOG_TAG, "IdMovie " + mIdMovie);
-
-                return new CursorLoader(
-                        getActivity(),
-                        com.jmgarzo.infomovies.data.MoviesContract.ReviewEntry.buildReviewWithMovieId(mIdMovie),
-                        REVIEW_COLUNMS,
-                        null,
-                        null,
-                        null
-                );
-
-
-            }
+        } catch (Exception e) {
+            Log.e(LOG_TAG, e.toString());
         }
 
 
@@ -352,17 +356,6 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
                     reviewLabel.setVisibility(View.VISIBLE);
                 }
                 setListViewHeightBasedOnChildren2(listViewReview);
-
-
-                //sv.getMeasuredHeight();
-
-
-//                ListAdapter listAdapter = listViewReview.getAdapter();
-
-//                ViewGroup.LayoutParams params = listViewReview.getLayoutParams();
-//                params.height = mReviewAdapter.getHeight();
-//
-//                listViewReview.setLayoutParams(params);
                 break;
             }
         }

@@ -44,7 +44,7 @@ public class MoviesDBHelper extends SQLiteOpenHelper {
                 "CREATE TABLE " + MoviesContract.VideoEntry.TABLE_NAME + " ( " +
                         MoviesContract.VideoEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT , " +
                         MoviesContract.VideoEntry.MOVIE_KEY + " INTEGER NOT NULL , " +
-                        MoviesContract.VideoEntry.ID + " TEXT NOT NULL, " +
+                        MoviesContract.VideoEntry.ID + " TEXT NOT NULL UNIQUE, " +
                         MoviesContract.VideoEntry.ISO_639_1 + " TEXT NOT NULL, " +
                         MoviesContract.VideoEntry.ISO_3166_1 + " TEXT NOT NULL, " +
                         MoviesContract.VideoEntry.KEY + " TEXT NOT NULL, " +
@@ -63,7 +63,7 @@ public class MoviesDBHelper extends SQLiteOpenHelper {
                 "CREATE TABLE " + MoviesContract.ReviewEntry.TABLE_NAME + " ( " +
                         MoviesContract.ReviewEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,  " +
                         MoviesContract.ReviewEntry.MOVIE_KEY + " INTEGER NOT NULL, " +
-                        MoviesContract.ReviewEntry.ID + " TEXT NOT NULL, " +
+                        MoviesContract.ReviewEntry.ID + " TEXT NOT NULL UNIQUE, " +
                         MoviesContract.ReviewEntry.AUTHOR + " TEXT NOT NULL, " +
                         MoviesContract.ReviewEntry.CONTENT + " TEXT NOT NULL, "+
                         MoviesContract.ReviewEntry.URL + " TEXT NOT NULL, " +
@@ -73,26 +73,59 @@ public class MoviesDBHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_CREATE_REVIEW_TABLE);
 
 
+        //FAVORITE
+
         final String SQL_CREATE_FAVORITE_TABLE =
-                "CREATE TABLE " + MoviesContract.FavoriteEntry.TABLE_NAME + " ( " +
-                        MoviesContract.FavoriteEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT , " +
-                        MoviesContract.FavoriteEntry.POSTER_PATH + " TEXT NOT NULL, " +
-                        MoviesContract.FavoriteEntry.ADULT + " TEXT NOT NULL, " +
-                        MoviesContract.FavoriteEntry.OVERVIEW + " TEXT NOT NULL, " +
-                        MoviesContract.FavoriteEntry.RELEASE_DATE + " TEXT NOT NULL, " +
-                        MoviesContract.FavoriteEntry.MOVIE_WEB_ID + " TEXT NOT NULL UNIQUE, " +
-                        MoviesContract.FavoriteEntry.ORIGINAL_TITLE + " TEXT NOT NULL, " +
-                        MoviesContract.FavoriteEntry.ORIGINAL_LANGUAGE + " TEXT NOT NULL, " +
-                        MoviesContract.FavoriteEntry.TITLE + " TEXT NOT NULL, " +
-                        MoviesContract.FavoriteEntry.BACKDROP_PATH + " TEXT NOT NULL, " +
-                        MoviesContract.FavoriteEntry.POPULARITY + " REAL NOT NULL, " +
-                        MoviesContract.FavoriteEntry.VOTE_COUNT + " INTEGER NOT NULL, " +
-                        MoviesContract.FavoriteEntry.VIDEO + " TEXT NOT NULL, " +
-                        MoviesContract.FavoriteEntry.VOTE_AVERAGE + " REAL NOT NULL, " +
-                        MoviesContract.FavoriteEntry.ADD_DATE + " TEXT NOT NULL " +
+                "CREATE TABLE " + MoviesContract.FavoriteMovieEntry.TABLE_NAME + " ( " +
+                        MoviesContract.FavoriteMovieEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT , " +
+                        MoviesContract.FavoriteMovieEntry.POSTER_PATH + " TEXT NOT NULL, " +
+                        MoviesContract.FavoriteMovieEntry.ADULT + " TEXT NOT NULL, " +
+                        MoviesContract.FavoriteMovieEntry.OVERVIEW + " TEXT NOT NULL, " +
+                        MoviesContract.FavoriteMovieEntry.RELEASE_DATE + " TEXT NOT NULL, " +
+                        MoviesContract.FavoriteMovieEntry.MOVIE_WEB_ID + " TEXT NOT NULL UNIQUE, " +
+                        MoviesContract.FavoriteMovieEntry.ORIGINAL_TITLE + " TEXT NOT NULL, " +
+                        MoviesContract.FavoriteMovieEntry.ORIGINAL_LANGUAGE + " TEXT NOT NULL, " +
+                        MoviesContract.FavoriteMovieEntry.TITLE + " TEXT NOT NULL, " +
+                        MoviesContract.FavoriteMovieEntry.BACKDROP_PATH + " TEXT NOT NULL, " +
+                        MoviesContract.FavoriteMovieEntry.POPULARITY + " REAL NOT NULL, " +
+                        MoviesContract.FavoriteMovieEntry.VOTE_COUNT + " INTEGER NOT NULL, " +
+                        MoviesContract.FavoriteMovieEntry.VIDEO + " TEXT NOT NULL, " +
+                        MoviesContract.FavoriteMovieEntry.VOTE_AVERAGE + " REAL NOT NULL, " +
+                        MoviesContract.FavoriteMovieEntry.ADD_DATE + " TEXT NOT NULL " +
                         " );";
 
         db.execSQL(SQL_CREATE_FAVORITE_TABLE);
+
+        final String SQL_CREATE_FAVORITE_VIDEO_TABLE =
+                "CREATE TABLE " + MoviesContract.FavoriteVideoEntry.TABLE_NAME + " ( " +
+                        MoviesContract.FavoriteVideoEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT , " +
+                        MoviesContract.FavoriteVideoEntry.MOVIE_KEY + " INTEGER NOT NULL , " +
+                        MoviesContract.FavoriteVideoEntry.ID + " TEXT NOT NULL, " +
+                        MoviesContract.FavoriteVideoEntry.ISO_639_1 + " TEXT NOT NULL, " +
+                        MoviesContract.FavoriteVideoEntry.ISO_3166_1 + " TEXT NOT NULL, " +
+                        MoviesContract.FavoriteVideoEntry.KEY + " TEXT NOT NULL, " +
+                        MoviesContract.FavoriteVideoEntry.NAME + " TEXT NOT NULL, " +
+                        MoviesContract.FavoriteVideoEntry.SITE + " TEXT NOT NULL, " +
+                        MoviesContract.FavoriteVideoEntry.SIZE + " TEXT NOT NULL, " +
+                        MoviesContract.FavoriteVideoEntry.TYPE + " TEXT NOT NULL, " +
+                        " FOREIGN KEY (" + MoviesContract.FavoriteVideoEntry.MOVIE_KEY + ") REFERENCES " +
+                        MoviesContract.FavoriteMovieEntry.TABLE_NAME + " (" + MoviesContract.FavoriteMovieEntry._ID + ") " +
+                        ");";
+
+        db.execSQL(SQL_CREATE_FAVORITE_VIDEO_TABLE);
+
+        final String SQL_CREATE_FACORITE_REVIEW_TABLE =
+                "CREATE TABLE " + MoviesContract.FavoriteReviewEntry.TABLE_NAME + " ( " +
+                        MoviesContract.FavoriteReviewEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,  " +
+                        MoviesContract.FavoriteReviewEntry.MOVIE_KEY + " INTEGER NOT NULL, " +
+                        MoviesContract.FavoriteReviewEntry.ID + " TEXT NOT NULL, " +
+                        MoviesContract.FavoriteReviewEntry.AUTHOR + " TEXT NOT NULL, " +
+                        MoviesContract.FavoriteReviewEntry.CONTENT + " TEXT NOT NULL, "+
+                        MoviesContract.FavoriteReviewEntry.URL + " TEXT NOT NULL, " +
+                        " FOREIGN KEY (" + MoviesContract.FavoriteReviewEntry.MOVIE_KEY + ") REFERENCES " +
+                        MoviesContract.FavoriteMovieEntry.TABLE_NAME + " (" + MoviesContract.FavoriteMovieEntry._ID + " ) " +
+                        ");";
+        db.execSQL(SQL_CREATE_FACORITE_REVIEW_TABLE);
     }
 
 
@@ -102,7 +135,7 @@ public class MoviesDBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + MoviesContract.MoviesEntry.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + MoviesContract.VideoEntry.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + MoviesContract.ReviewEntry.TABLE_NAME);
-        db.execSQL("DROP TABLE IF EXISTS " + MoviesContract.FavoriteEntry.TABLE_NAME);
+        //db.execSQL("DROP TABLE IF EXISTS " + MoviesContract.FavoriteMovieEntry.TABLE_NAME);
 
     }
 
