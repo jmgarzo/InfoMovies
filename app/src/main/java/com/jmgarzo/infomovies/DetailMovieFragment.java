@@ -38,7 +38,7 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
     private static final String LOG_TAG = DetailMovieFragment.class.getSimpleName();
 
     static final String DETAIL_URI = "URI";
-    static final String TWO_PANELS = "TO_PANNELS";
+    static final String TWO_PANELS = "TWO_PANELS";
 
 
     private static final int DETAIL_LOADER = 0;
@@ -78,7 +78,7 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
     static final int COL_VOTE_AVERAGE = 13;
 
 
-    private static final String[] VIDEO_COLUMNS =
+    public static final String[] VIDEO_COLUMNS =
             {
                     com.jmgarzo.infomovies.data.MoviesContract.VideoEntry.TABLE_NAME + "." + com.jmgarzo.infomovies.data.MoviesContract.VideoEntry._ID,
                     com.jmgarzo.infomovies.data.MoviesContract.VideoEntry.MOVIE_KEY,
@@ -104,14 +104,14 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
     static final int COL_VIDEO_TYPE = 9;
 
 
-    private static final String[] REVIEW_COLUMNS =
+    public static final String[] REVIEW_COLUMNS =
             {
                     com.jmgarzo.infomovies.data.MoviesContract.ReviewEntry.TABLE_NAME + "." + com.jmgarzo.infomovies.data.MoviesContract.ReviewEntry._ID,
                     com.jmgarzo.infomovies.data.MoviesContract.ReviewEntry.MOVIE_KEY,
                     com.jmgarzo.infomovies.data.MoviesContract.ReviewEntry.ID,
                     com.jmgarzo.infomovies.data.MoviesContract.ReviewEntry.AUTHOR,
                     com.jmgarzo.infomovies.data.MoviesContract.ReviewEntry.CONTENT,
-                    com.jmgarzo.infomovies.data.MoviesContract.ReviewEntry.URL,
+                    com.jmgarzo.infomovies.data.MoviesContract.ReviewEntry.URL
             };
 
     static final int COL_REVIEW_ID = 0;
@@ -433,86 +433,6 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
     }
 
 
-    //   private static void setListViewHeightBasedOnChildren(ListView listView) {
-//        ListAdapter listAdapter = listView.getAdapter();
-//        if (listAdapter == null)
-//            return;
-//
-//        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
-//        int totalHeight = 0;
-//        View view = null;
-//        for (int i = 0; i < listAdapter.getCount(); i++) {
-//            view = listAdapter.getView(i, view, listView);
-//            if (i == 0)
-//                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewPager.LayoutParams.WRAP_CONTENT));
-//
-//            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-//            int paddingBottom = view.getPaddingBottom();
-//            int paddingTop = view.getPaddingTop();
-//            totalHeight += view.getMeasuredHeight();
-//        }
-//        ViewGroup.LayoutParams params = listView.getLayoutParams();
-//        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-//
-//        listView.setLayoutParams(params);
-//
-//    }
-//
-//
-//    private static void setListViewHeightBasedOnChildrenReview(ListView listView) {
-//        ListAdapter listAdapter = listView.getAdapter();
-//        if (listAdapter == null)
-//            return;
-//
-//        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
-//        int totalHeight = 0;
-//        int totalHeightViews = 0;
-//        View view = null;
-//        for (int i = 0; i < listAdapter.getCount(); i++) {
-//            view = listAdapter.getView(i, view, listView);
-//            if (i == 0)
-//                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewPager.LayoutParams.WRAP_CONTENT));
-//            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-//
-//
-//            totalHeight += view.getMeasuredHeightAndState();
-//        }
-//        ViewGroup.LayoutParams params = listView.getLayoutParams();
-//
-//        //params.height = totalHeight+  (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-//        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-//
-//
-//        listView.setLayoutParams(params);
-//
-//    }
-//
-//
-//    public static void getTotalHeightofListView(ListView listView) {
-//
-//        ListAdapter mAdapter = listView.getAdapter();
-//
-//        int totalHeight = 0;
-//
-//        for (int i = 0; i < mAdapter.getCount(); i++) {
-//            View mView = mAdapter.getView(i, null, listView);
-//
-//            mView.measure(
-//                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
-//
-//                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
-//
-//            totalHeight += mView.getMeasuredHeight();
-//            Log.w("HEIGHT" + i, String.valueOf(totalHeight));
-//
-//        }
-//
-//        ViewGroup.LayoutParams params = listView.getLayoutParams();
-//        params.height = totalHeight
-//                + (listView.getDividerHeight() * (mAdapter.getCount() - 1));
-//        listView.setLayoutParams(params);
-//        listView.requestLayout();
-//
-//    }
+
 
 }

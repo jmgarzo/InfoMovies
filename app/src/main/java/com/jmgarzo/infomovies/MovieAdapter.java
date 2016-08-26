@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
 
+import com.jmgarzo.infomovies.data.MoviesContract;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -55,13 +56,24 @@ public class MovieAdapter extends CursorAdapter {
 
         ViewHolder holder = (ViewHolder) view.getTag();
 
-        String url = cursor.getString(MainActivityFragment.COL_POSTER_PATH);
+        if(Utility.isPreferenceSortByFavorite(context)){
+            int indexPosterPath = cursor.getColumnIndex(MoviesContract.FavoriteMovieEntry.POSTER_PATH);
+            String posterPath = cursor.getString(indexPosterPath);
 
-        Picasso.with(context)
-                .load(url)
-                .placeholder(R.drawable.placeholder)
-                .tag(context)
-                .into(holder.imageView);
+            Picasso.with(context)
+                    .load(posterPath)
+                    .placeholder(R.drawable.placeholder)
+                    .tag(context)
+                    .into(holder.imageView);
+        }else {
+
+            String url = cursor.getString(DetailMovieFragment.COL_POSTER_PATH);
+            Picasso.with(context)
+                    .load(url)
+                    .placeholder(R.drawable.placeholder)
+                    .tag(context)
+                    .into(holder.imageView);
+        }
 
 
 

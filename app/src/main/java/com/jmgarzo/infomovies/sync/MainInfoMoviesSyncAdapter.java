@@ -98,8 +98,9 @@ public class MainInfoMoviesSyncAdapter extends AbstractThreadedSyncAdapter {
 
         {
 
+            if(Utility.getPreferredSortBy(getContext()).equalsIgnoreCase(getContext().getString(R.string.pref_sort_by_favorite))){
 
-//            cursorMoviesIds = getContext().getContentResolver().query(MoviesContract.MoviesEntry.CONTENT_URI, new String[]{MoviesContract.MoviesEntry.MOVIE_WEB_ID}, null, null, null);
+            }
 
 
             HttpURLConnection urlConnection = null;

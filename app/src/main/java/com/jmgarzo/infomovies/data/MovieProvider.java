@@ -28,9 +28,21 @@ public class MovieProvider extends ContentProvider {
     static final int REVIEW_WITH_ID = 301;
     static final int REVIEW_WITH_MOVIE_ID = 302;
 
-    static final int FAVORITE = 400;
-    static final int FAVORITE_WITH_ID = 401;
-    static final int FAVORITE_WITH_MOVIE_ID = 402;
+    static final int FAVORITE_MOVIE = 400;
+    static final int FAVORITE_MOVIE_WITH_ID = 401;
+    static final int FAVORITE_MOVIE_WITH_MOVIE_ID = 402;
+
+    static final int FAVORITE_VIDEO = 500;
+    static final int FAVORITE_VIDEO_WITH_ID = 501;
+    static final int FAVORITE_VIDEO_WITH_MOVIE_ID = 502;
+
+    static final int FAVORITE_REVIEW = 600;
+    static final int FAVORITE_REVIEW_WITH_ID = 601;
+    static final int FAVORITE_REVIEW_WITH_MOVIE_ID = 602;
+
+
+
+
     private static final UriMatcher sUriMatcher = buildUriMatcher();
     private static String LOG_TAG = MovieProvider.class.getSimpleName();
     private MoviesDBHelper mOpenHelper;
@@ -52,9 +64,18 @@ public class MovieProvider extends ContentProvider {
         matcher.addURI(authority, MoviesContract.PATH_REVIEW + "/#", REVIEW_WITH_ID);
         matcher.addURI(authority, MoviesContract.PATH_REVIEW + "/" + MoviesContract.ReviewEntry.MOVIE_KEY + "/#", REVIEW_WITH_MOVIE_ID);
 
-        matcher.addURI(authority, MoviesContract.PATH_FAVORITE_MOVIE, FAVORITE);
-        matcher.addURI(authority, MoviesContract.PATH_FAVORITE_MOVIE + "/#", FAVORITE_WITH_ID);
-        matcher.addURI(authority, MoviesContract.PATH_FAVORITE_MOVIE + "/" + MoviesContract.FavoriteMovieEntry.MOVIE_WEB_ID + "/*", FAVORITE_WITH_MOVIE_ID);
+        matcher.addURI(authority, MoviesContract.PATH_FAVORITE_MOVIE, FAVORITE_MOVIE);
+        matcher.addURI(authority, MoviesContract.PATH_FAVORITE_MOVIE + "/#", FAVORITE_MOVIE_WITH_ID);
+        matcher.addURI(authority, MoviesContract.PATH_FAVORITE_MOVIE + "/" + MoviesContract.FavoriteMovieEntry.MOVIE_WEB_ID + "/#", FAVORITE_MOVIE_WITH_MOVIE_ID);
+
+        matcher.addURI(authority, MoviesContract.PATH_FAVORITE_VIDEO, FAVORITE_VIDEO);
+        matcher.addURI(authority, MoviesContract.PATH_FAVORITE_VIDEO + "/#", FAVORITE_VIDEO_WITH_ID);
+        matcher.addURI(authority, MoviesContract.PATH_FAVORITE_VIDEO + "/" + MoviesContract.FavoriteVideoEntry.MOVIE_KEY + "/#", FAVORITE_VIDEO_WITH_MOVIE_ID);
+
+        matcher.addURI(authority, MoviesContract.PATH_FAVORITE_REVIEW, FAVORITE_REVIEW);
+        matcher.addURI(authority, MoviesContract.PATH_FAVORITE_REVIEW + "/#", FAVORITE_REVIEW_WITH_ID);
+        matcher.addURI(authority, MoviesContract.PATH_FAVORITE_REVIEW + "/" + MoviesContract.FavoriteReviewEntry.MOVIE_KEY + "/#", FAVORITE_REVIEW_WITH_MOVIE_ID);
+
 
         return matcher;
     }
@@ -181,10 +202,10 @@ public class MovieProvider extends ContentProvider {
 
                 break;
             }
-            case FAVORITE: {
+            case FAVORITE_MOVIE: {
                 SQLiteDatabase db = mOpenHelper.getReadableDatabase();
                 retCursor = db.query(
-                        MoviesContract.ReviewEntry.TABLE_NAME,
+                        MoviesContract.FavoriteMovieEntry.TABLE_NAME,
                         projection,
                         selection,
                         selectionArgs,
@@ -195,7 +216,7 @@ public class MovieProvider extends ContentProvider {
                 break;
             }
 
-            case FAVORITE_WITH_ID: {
+            case FAVORITE_MOVIE_WITH_ID: {
                 SQLiteDatabase db = mOpenHelper.getReadableDatabase();
                 retCursor = db.query(
                         MoviesContract.FavoriteMovieEntry.TABLE_NAME,
@@ -209,7 +230,7 @@ public class MovieProvider extends ContentProvider {
                 break;
             }
 
-            case FAVORITE_WITH_MOVIE_ID: {
+            case FAVORITE_MOVIE_WITH_MOVIE_ID: {
                 SQLiteDatabase db = mOpenHelper.getReadableDatabase();
                 retCursor = db.query(
                         MoviesContract.FavoriteMovieEntry.TABLE_NAME,
@@ -258,11 +279,11 @@ public class MovieProvider extends ContentProvider {
                 return MoviesContract.ReviewEntry.CONTENT_ITEM_TYPE;
             case REVIEW_WITH_MOVIE_ID:
                 return MoviesContract.ReviewEntry.CONTENT_ITEM_TYPE;
-            case FAVORITE:
+            case FAVORITE_MOVIE:
                 return MoviesContract.FavoriteMovieEntry.CONTENT_DIR_TYPE;
-            case FAVORITE_WITH_ID:
+            case FAVORITE_MOVIE_WITH_ID:
                 return MoviesContract.FavoriteMovieEntry.CONTENT_ITEM_TYPE;
-            case FAVORITE_WITH_MOVIE_ID:
+            case FAVORITE_MOVIE_WITH_MOVIE_ID:
                 return MoviesContract.FavoriteMovieEntry.CONTENT_ITEM_TYPE;
             default: {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -306,7 +327,7 @@ public class MovieProvider extends ContentProvider {
                 }
                 break;
             }
-            case FAVORITE: {
+            case FAVORITE_MOVIE: {
                 long _id = db.insert(MoviesContract.FavoriteMovieEntry.TABLE_NAME, null, values);
                 if (_id > 0) {
                     returnUri = MoviesContract.FavoriteMovieEntry.buildFavoriteUri(_id);
@@ -343,7 +364,7 @@ public class MovieProvider extends ContentProvider {
                 numDeleted = db.delete(MoviesContract.ReviewEntry.TABLE_NAME, selection, selectionArgs);
                 break;
             }
-            case FAVORITE: {
+            case FAVORITE_MOVIE: {
                 numDeleted = db.delete(MoviesContract.FavoriteMovieEntry.TABLE_NAME, selection, selectionArgs);
                 break;
             }
@@ -416,7 +437,7 @@ public class MovieProvider extends ContentProvider {
                         new String[]{String.valueOf(ContentUris.parseId(uri))});
                 break;
             }
-            case FAVORITE: {
+            case FAVORITE_MOVIE: {
                 numUpdate = db.update(
                         MoviesContract.FavoriteMovieEntry.TABLE_NAME,
                         values,
@@ -424,7 +445,7 @@ public class MovieProvider extends ContentProvider {
                         selectionArgs);
                 break;
             }
-            case FAVORITE_WITH_ID: {
+            case FAVORITE_MOVIE_WITH_ID: {
                 numUpdate = db.update(
                         MoviesContract.FavoriteMovieEntry.TABLE_NAME,
                         values,
@@ -433,7 +454,7 @@ public class MovieProvider extends ContentProvider {
                 break;
             }
 
-            case FAVORITE_WITH_MOVIE_ID: {
+            case FAVORITE_MOVIE_WITH_MOVIE_ID: {
                 numUpdate = db.update(
                         MoviesContract.FavoriteMovieEntry.TABLE_NAME,
                         values,
@@ -580,7 +601,7 @@ public class MovieProvider extends ContentProvider {
                 return numInserted;
             }
 
-            case FAVORITE: {
+            case FAVORITE_MOVIE: {
                 db.beginTransaction();
                 numInserted = 0;
                 try {
@@ -619,6 +640,87 @@ public class MovieProvider extends ContentProvider {
                 }
                 return numInserted;
             }
+
+            case FAVORITE_VIDEO: {
+                db.beginTransaction();
+                numInserted = 0;
+                try {
+                    for (ContentValues value : values) {
+                        if (value == null) {
+                            throw new IllegalArgumentException("Cannot have null content values");
+                        }
+                        long _id = -1;
+                        try {
+                            _id = db.insertOrThrow(MoviesContract.FavoriteVideoEntry.TABLE_NAME,
+                                    null, value);
+                        } catch (SQLiteConstraintException e) {
+                            Log.w(LOG_TAG, "Attempting to insert " +
+                                    value.getAsString(
+                                            MoviesContract.FavoriteVideoEntry.ID)
+                                    + " but value is already in database.");
+                        }
+                        if (_id != -1) {
+                            numInserted++;
+                        }
+                    }
+                    if (numInserted > 0) {
+                        // If no errors, declare a successful transaction.
+                        // database will not populate if this is not called
+                        db.setTransactionSuccessful();
+                    }
+
+                } finally {
+                    // all transactions occur at once
+                    db.endTransaction();
+                }
+                if (numInserted > 0) {
+                    // if there was successful insertion, notify the content resolver that there
+                    // was a change
+                    getContext().getContentResolver().notifyChange(uri, null);
+                }
+                return numInserted;
+            }
+
+            case FAVORITE_REVIEW: {
+                db.beginTransaction();
+                numInserted = 0;
+                try {
+                    for (ContentValues value : values) {
+                        if (value == null) {
+                            throw new IllegalArgumentException("Cannot have null content values");
+                        }
+                        long _id = -1;
+                        try {
+                            _id = db.insertOrThrow(MoviesContract.FavoriteReviewEntry.TABLE_NAME,
+                                    null, value);
+                        } catch (SQLiteConstraintException e) {
+                            Log.w(LOG_TAG, "Attempting to insert " +
+                                    value.getAsString(
+                                            MoviesContract.FavoriteReviewEntry.ID)
+                                    + " but value is already in database.");
+                        }
+                        if (_id != -1) {
+                            numInserted++;
+                        }
+                    }
+                    if (numInserted > 0) {
+                        // If no errors, declare a successful transaction.
+                        // database will not populate if this is not called
+                        db.setTransactionSuccessful();
+                    }
+
+                } finally {
+                    // all transactions occur at once
+                    db.endTransaction();
+                }
+                if (numInserted > 0) {
+                    // if there was successful insertion, notify the content resolver that there
+                    // was a change
+                    getContext().getContentResolver().notifyChange(uri, null);
+                }
+                return numInserted;
+            }
+
             default:
                 return super.bulkInsert(uri, values);
         }

@@ -18,10 +18,18 @@ public class Utility {
         return pref.getString(context.getString(R.string.pref_sort_by_key),context.getString(R.string.pref_sort_by_defautl));
     }
 
+    public static boolean isPreferenceSortByFavorite(Context context){
+        if(getPreferredSortBy(context).equalsIgnoreCase(context.getString(R.string.pref_sort_by_favorite))){
+            return true;
+        }
+        return false;
+    }
+
     static String formatDate(long dateInMilliseconds) {
         Date date = new Date(dateInMilliseconds);
         return DateFormat.getDateInstance().format(date);
     }
+
 
 
 

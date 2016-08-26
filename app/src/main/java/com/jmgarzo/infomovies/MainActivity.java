@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityFragm
         super.onResume();
         String sortBy = Utility.getPreferredSortBy(this);
         // update the moviedetail in our second pane using the fragment manager
-        if (sortBy != null && !sortBy.equals(sortBy)) {
+        if (sortBy != null ) {
             MainActivityFragment mainActivityFragment = (MainActivityFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_main);
             if (null != mainActivityFragment) {
                 mainActivityFragment.onSortChanged();

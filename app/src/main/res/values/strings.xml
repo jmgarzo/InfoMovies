@@ -28,8 +28,10 @@
     <string name="pref_sort_by_most_popular" translatable="false">most_popular</string>
     <string name="pref_sort_by_defautl" translatable="false">most_popular</string>
     <string name="pref_sort_by_top_rate" translatable="false">top_rate</string>
+    <string name="pref_sort_by_favorite" translatable="false">favorite</string>
     <string name="pref_sort_by_most_popular_label">Most popular</string>
     <string name="pref_sort_by_top_rate_label">Top Rate</string>
+    <string name="pref_sort_by_favorite_label">Favorite</string>
     <string name="title_activity_detail_movie">DetailMovie</string>
 
     <!--strings about video json -->

@@ -83,9 +83,13 @@ public class MoviesContract {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
 
-        public static Uri buildVideoWithMovieId(String movieWebId) {
-            return CONTENT_URI.buildUpon().appendPath(VideoEntry.MOVIE_KEY).appendPath(movieWebId).build();
+        public static Uri buildVideoWithMovieId(String movieId) {
+            return CONTENT_URI.buildUpon().appendPath(VideoEntry.MOVIE_KEY).appendPath(movieId).build();
         }
+
+
+
+
 
 
     }
@@ -110,8 +114,8 @@ public class MoviesContract {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
 
-        public static Uri buildReviewWithMovieId(String movieWebId) {
-            return CONTENT_URI.buildUpon().appendPath(ReviewEntry.MOVIE_KEY).appendPath(movieWebId).build();
+        public static Uri buildReviewWithMovieId(String movieId) {
+            return CONTENT_URI.buildUpon().appendPath(ReviewEntry.MOVIE_KEY).appendPath(movieId).build();
         }
     }
 
