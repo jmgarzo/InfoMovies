@@ -46,7 +46,10 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
             MoviesContract.MoviesEntry.POPULARITY,
             MoviesContract.MoviesEntry.VOTE_COUNT,
             MoviesContract.MoviesEntry.VIDEO,
-            MoviesContract.MoviesEntry.VOTE_AVERAGE
+            MoviesContract.MoviesEntry.VOTE_AVERAGE,
+            MoviesContract.MoviesEntry.MOST_POPULAR,
+            MoviesContract.MoviesEntry.TOP_RATE
+
     };
 
     static final int COL_MOVIE_ID = 0;
@@ -63,6 +66,8 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     static final int COL_VOTE_COUNT = 11;
     static final int COL_VIDEO = 12;
     static final int COL_VOTE_AVERAGE = 13;
+    static final int COL_MOST_POPULAR = 14;
+    static final int COL_TOP_RATE = 15;
 
     public interface Callback {
         /**
@@ -79,6 +84,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        updateMovies();
         //setHasOptionsMenu(true);
 
     }
@@ -149,17 +155,18 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     @Override
     public void onStart() {
         super.onStart();
-        updateMovies();
+
     }
 
 
 
-    private void updateSortBy() {
-        updateMovies();
-    }
+//    private void updateSortBy() {
+////        updateMovies();
+//        g
+//    }
 
     void onSortChanged() {
-        updateSortBy();
+        //updateSortBy();
         getLoaderManager().restartLoader(MOVIE_LOADER, null, this);
 
     }
@@ -189,6 +196,21 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
                     null,
                     null);
 
+        }else if(Utility.isPreferenceSortByMostPopular(getContext())) {
+            return new CursorLoader(getActivity(),
+                    MoviesContract.MoviesEntry.buildMovieWithMostPopular("1"),
+                    DetailMovieFragment.MOVIE_COLUMNS,
+                    null,
+                    null,
+                    null);
+
+        }else if(Utility.isPreferenceSortByTopRate(getContext())) {
+            return new CursorLoader(getActivity(),
+                    MoviesContract.MoviesEntry.buildMovieWithTopRate("1"),
+                    DetailMovieFragment.MOVIE_COLUMNS,
+                    null,
+                    null,
+                    null);
         }else {
 
             return new CursorLoader(getActivity(),
@@ -198,6 +220,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
                     null,
                     null);
         }
+
     }
 
     @Override

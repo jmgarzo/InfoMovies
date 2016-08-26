@@ -41,6 +41,8 @@ public class MoviesContract {
         public static final String VOTE_COUNT = "vote_count";
         public static final String VIDEO = "video";
         public static final String VOTE_AVERAGE = "vote_average";
+        public static final String MOST_POPULAR = "most_popular";
+        public static final String TOP_RATE = "top_rate";
 
 
         public static final String CONTENT_DIR_TYPE =
@@ -54,6 +56,13 @@ public class MoviesContract {
 
         public static Uri buildMovieWithWebId(String movieWebId) {
             return CONTENT_URI.buildUpon().appendEncodedPath(MoviesEntry.MOVIE_WEB_ID).appendPath(movieWebId).build();
+        }
+
+        public static Uri buildMovieWithMostPopular(String mostPopular) {
+            return CONTENT_URI.buildUpon().appendEncodedPath(MoviesEntry.MOST_POPULAR).appendPath(mostPopular).build();
+        }
+        public static Uri buildMovieWithTopRate(String topRate) {
+            return CONTENT_URI.buildUpon().appendEncodedPath(MoviesEntry.TOP_RATE).appendPath(topRate).build();
         }
 
     }

@@ -40,7 +40,9 @@ import java.util.Vector;
 public class MainInfoMoviesSyncAdapter extends AbstractThreadedSyncAdapter {
 
 //    Cursor cursorMoviesIds;
+
     private String TOP_RATE_PARAM = "top_rate";
+
     private String LOG_TAG = MainInfoMoviesSyncAdapter.class.getSimpleName();
 
     public MainInfoMoviesSyncAdapter(Context context, boolean autoInitialize) {
@@ -103,8 +105,8 @@ public class MainInfoMoviesSyncAdapter extends AbstractThreadedSyncAdapter {
             }
 
 
-            HttpURLConnection urlConnection = null;
-            BufferedReader reader = null;
+
+
 
             String sortByPopularity = "popularity.desc";
             String sortByVoteAverage = "vote_average.desc";
@@ -144,73 +146,29 @@ public class MainInfoMoviesSyncAdapter extends AbstractThreadedSyncAdapter {
                     .appendQueryParameter(API_KEY_PARAM, BuildConfig.THE_MOVIE_DB_API_KEY)
                     .build();
 
+            Log.v(LOG_TAG, "Built URI " + buildUriTopRate.toString());
+            Log.v(LOG_TAG, "Built URI " + buildUriMostPopular.toString());
+
             // Uri build = Uri.parse("http://api.themoviedb.org/3/movie/popular?api_key=3890bbe3b27964c4c01fe8863a852df5").buildUpon().build();
 
-            String moviesJsonStr = null;
-            try {
 
 
-                URL url;
-                String sortByPreference = Utility.getPreferredSortBy(getContext());
-                if (sortByPreference.equalsIgnoreCase(MOST_POPULAR)) {
-                    url = new URL(buildUriMostPopular.toString());
-                } else if (sortByPreference.equalsIgnoreCase(TOP_RATE_PARAM)) {
-                    url = new URL(buildUriTopRate.toString());
-                } else {
-                    url = new URL(buildUriMostPopular.toString());
-                }
-                Log.v(LOG_TAG, "Built URI " + buildUriTopRate.toString());
-                Log.v(LOG_TAG, "Built URI " + buildUriMostPopular.toString());
-
-
-                urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setRequestMethod("GET");
-                urlConnection.connect();
-
-                InputStream inputStream = urlConnection.getInputStream();
-                StringBuffer buffer = new StringBuffer();
-                if (inputStream == null) {
-                    return;
-                }
-
-                reader = new BufferedReader(new InputStreamReader(inputStream));
-
-
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    buffer.append(line + "\n");
-                }
-
-                if (buffer.length() == 0) {
-                    return;
-                }
-
-                moviesJsonStr = buffer.toString();
-
-                Log.v(LOG_TAG, moviesJsonStr);
-
-
-            } catch (MalformedURLException e) {
-                Log.e(LOG_TAG, e.getMessage(), e);
-            } catch (IOException e) {
-                Log.e(LOG_TAG, e.getMessage(), e);
-                return;
-            } finally {
-                if (urlConnection != null) {
-                    urlConnection.disconnect();
-                }
-                if (reader != null) {
-                    try {
-                        reader.close();
-                    } catch (IOException e) {
-                        Log.e(LOG_TAG, "Error closing stream", e);
-                    }
-                }
-            }
 
 
             try {
-                getMoviesDataFromJson(moviesJsonStr, getContext());
+                String moviesJsonStrMostPopular = getJsonFromApi(buildUriMostPopular);
+
+                if(null!=moviesJsonStrMostPopular) {
+                    //We deleted the old data
+                    getContext().getContentResolver().delete(MoviesContract.MoviesEntry.CONTENT_URI, null, null);
+
+                    getMoviesDataFromJson(moviesJsonStrMostPopular, getContext().getString(R.string.pref_sort_by_most_popular), getContext());
+                }
+
+                String moviesJSonStrTopRate = getJsonFromApi(buildUriTopRate);
+                if(null!=moviesJSonStrTopRate){
+                    getMoviesDataFromJson(moviesJSonStrTopRate,getContext().getString(R.string.pref_sort_by_top_rate),getContext());
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -223,7 +181,76 @@ public class MainInfoMoviesSyncAdapter extends AbstractThreadedSyncAdapter {
 
     }
 
-    private void getMoviesDataFromJson(String moviesJsonStr, Context context) throws JSONException {
+
+    private String getJsonFromApi(Uri uri){
+        HttpURLConnection urlConnection = null;
+        BufferedReader reader = null;
+        String moviesJsonStr = null;
+
+        try {
+
+//            URL url;
+//            String sortByPreference = Utility.getPreferredSortBy(getContext());
+//            if (sortByPreference.equalsIgnoreCase(MOST_POPULAR)) {
+//                url = new URL(buildUriMostPopular.toString());
+//            } else if (sortByPreference.equalsIgnoreCase(TOP_RATE_PARAM)) {
+//                url = new URL(buildUriTopRate.toString());
+//            } else {
+//                url = new URL(buildUriMostPopular.toString());
+//            }
+            URL url = new URL(uri.toString());
+
+
+
+            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestMethod("GET");
+            urlConnection.connect();
+
+            InputStream inputStream = urlConnection.getInputStream();
+            StringBuffer buffer = new StringBuffer();
+            if (inputStream == null) {
+                return null;
+            }
+
+            reader = new BufferedReader(new InputStreamReader(inputStream));
+
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                buffer.append(line + "\n");
+            }
+
+            if (buffer.length() == 0) {
+                return null;
+            }
+
+            moviesJsonStr = buffer.toString();
+
+            Log.v(LOG_TAG, moviesJsonStr);
+
+
+        } catch (MalformedURLException e) {
+            Log.e(LOG_TAG, e.getMessage(), e);
+        } catch (IOException e) {
+            Log.e(LOG_TAG, e.getMessage(), e);
+            return null;
+        } finally {
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    Log.e(LOG_TAG, "Error closing stream", e);
+                }
+            }
+        }
+        return moviesJsonStr;
+
+    }
+
+    private void getMoviesDataFromJson(String moviesJsonStr,String sortBy, Context context) throws JSONException {
 
         ArrayList<HashMap<String, String>> resultList = new ArrayList<>();
 
@@ -254,6 +281,8 @@ public class MainInfoMoviesSyncAdapter extends AbstractThreadedSyncAdapter {
             Integer voteCount;
             String video;
             Double voteAverage;
+            int mostPopular=0;
+            int topRate=0;
 
 
             JSONObject jsonMovie = moviesArray.getJSONObject(i);
@@ -272,6 +301,12 @@ public class MainInfoMoviesSyncAdapter extends AbstractThreadedSyncAdapter {
             voteCount = jsonMovie.getInt(getContext().getString(R.string.mdb_vote_count_key));
             video = jsonMovie.getString(getContext().getString(R.string.mdb_video_key));
             voteAverage = jsonMovie.getDouble(getContext().getString(R.string.mdb_vote_average_key));
+            if(sortBy.equals(context.getString(R.string.pref_sort_by_most_popular))){
+                mostPopular = 1;
+            }
+            if(sortBy.equals(context.getString(R.string.pref_sort_by_top_rate))){
+                topRate = 1;
+            }
 
 //                map.put(getString(R.string.mdb_movie_web_id_key), movieWebId);
 //                map.put(getString(R.string.mdb_poster_path_key), posterPath);
@@ -299,6 +334,11 @@ public class MainInfoMoviesSyncAdapter extends AbstractThreadedSyncAdapter {
             movieValues.put(MoviesContract.MoviesEntry.VOTE_COUNT, checkNull(voteCount));
             movieValues.put(MoviesContract.MoviesEntry.VIDEO, checkNull(video));
             movieValues.put(MoviesContract.MoviesEntry.VOTE_AVERAGE, checkNull(voteAverage));
+            movieValues.put(MoviesContract.MoviesEntry.MOST_POPULAR, checkNull(mostPopular));
+            movieValues.put(MoviesContract.MoviesEntry.TOP_RATE, checkNull(topRate));
+
+
+
 
 //                imageToFile(url.toString(),movieWebId,context);
 
@@ -309,7 +349,6 @@ public class MainInfoMoviesSyncAdapter extends AbstractThreadedSyncAdapter {
         if (cVVector.size() > 0) {
             ContentValues[] cvArray = new ContentValues[cVVector.size()];
             cVVector.toArray(cvArray);
-            getContext().getContentResolver().delete(MoviesContract.MoviesEntry.CONTENT_URI, null, null);
             getContext().getContentResolver().bulkInsert(MoviesContract.MoviesEntry.CONTENT_URI, cvArray);
 
 

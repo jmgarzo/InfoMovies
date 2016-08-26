@@ -26,7 +26,7 @@ public class MoviesDBHelper extends SQLiteOpenHelper {
                         MoviesContract.MoviesEntry.ADULT + " TEXT NOT NULL, " +
                         MoviesContract.MoviesEntry.OVERVIEW + " TEXT NOT NULL, " +
                         MoviesContract.MoviesEntry.RELEASE_DATE + " TEXT NOT NULL, " +
-                        MoviesContract.MoviesEntry.MOVIE_WEB_ID + " TEXT NOT NULL UNIQUE, " +
+                        MoviesContract.MoviesEntry.MOVIE_WEB_ID + " TEXT NOT NULL, " +
                         MoviesContract.MoviesEntry.ORIGINAL_TITLE + " TEXT NOT NULL, " +
                         MoviesContract.MoviesEntry.ORIGINAL_LANGUAGE + " TEXT NOT NULL, " +
                         MoviesContract.MoviesEntry.TITLE + " TEXT NOT NULL, " +
@@ -34,7 +34,9 @@ public class MoviesDBHelper extends SQLiteOpenHelper {
                         MoviesContract.MoviesEntry.POPULARITY + " REAL NOT NULL, " +
                         MoviesContract.MoviesEntry.VOTE_COUNT + " INTEGER NOT NULL, " +
                         MoviesContract.MoviesEntry.VIDEO + " TEXT NOT NULL, " +
-                        MoviesContract.MoviesEntry.VOTE_AVERAGE + " REAL NOT NULL " +
+                        MoviesContract.MoviesEntry.VOTE_AVERAGE + " REAL NOT NULL, " +
+                        MoviesContract.MoviesEntry.MOST_POPULAR + " INTEGER NOT NULL , " +
+                        MoviesContract.MoviesEntry.TOP_RATE + " INTEGER NOT NULL  " +
                                 " );";
 
         db.execSQL(SQL_CREATE_MOVIE_TABLE);
@@ -82,7 +84,7 @@ public class MoviesDBHelper extends SQLiteOpenHelper {
                         MoviesContract.FavoriteMovieEntry.ADULT + " TEXT NOT NULL, " +
                         MoviesContract.FavoriteMovieEntry.OVERVIEW + " TEXT NOT NULL, " +
                         MoviesContract.FavoriteMovieEntry.RELEASE_DATE + " TEXT NOT NULL, " +
-                        MoviesContract.FavoriteMovieEntry.MOVIE_WEB_ID + " TEXT NOT NULL UNIQUE, " +
+                        MoviesContract.FavoriteMovieEntry.MOVIE_WEB_ID + " TEXT NOT NULL, " +
                         MoviesContract.FavoriteMovieEntry.ORIGINAL_TITLE + " TEXT NOT NULL, " +
                         MoviesContract.FavoriteMovieEntry.ORIGINAL_LANGUAGE + " TEXT NOT NULL, " +
                         MoviesContract.FavoriteMovieEntry.TITLE + " TEXT NOT NULL, " +

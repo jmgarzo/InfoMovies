@@ -19,6 +19,8 @@ public class MovieProvider extends ContentProvider {
     static final int MOVIE = 100;
     static final int MOVIE_WITH_ID = 101;
     static final int MOVIE_WITH_WEB_MOVIE_ID = 102;
+    static final int MOVIE_WITH_MOST_POPULAR = 103;
+    static final int MOVIE_WITH_TOP_RATE = 104;
 
     static final int VIDEO = 200;
     static final int VIDEO_WITH_ID = 201;
@@ -54,7 +56,12 @@ public class MovieProvider extends ContentProvider {
 
         matcher.addURI(authority, MoviesContract.PATH_MOVIE, MOVIE);
         matcher.addURI(authority, MoviesContract.PATH_MOVIE + "/#", MOVIE_WITH_ID);
+        //TODO: Comprobar si no hay que cambiar a # esta consulta
         matcher.addURI(authority, MoviesContract.PATH_MOVIE + "/" + MoviesContract.MoviesEntry.MOVIE_WEB_ID + "/*", MOVIE_WITH_WEB_MOVIE_ID);
+        matcher.addURI(authority, MoviesContract.PATH_MOVIE + "/" + MoviesContract.MoviesEntry.MOST_POPULAR + "/#", MOVIE_WITH_MOST_POPULAR);
+        matcher.addURI(authority, MoviesContract.PATH_MOVIE + "/" + MoviesContract.MoviesEntry.TOP_RATE + "/#", MOVIE_WITH_TOP_RATE);
+
+
 
         matcher.addURI(authority, MoviesContract.PATH_VIDEO, VIDEO);
         matcher.addURI(authority, MoviesContract.PATH_VIDEO + "/#", VIDEO_WITH_ID);
@@ -121,6 +128,28 @@ public class MovieProvider extends ContentProvider {
                         MoviesContract.MoviesEntry.TABLE_NAME,
                         projection,
                         MoviesContract.MoviesEntry.MOVIE_WEB_ID + " = ?",
+                        new String[]{String.valueOf(ContentUris.parseId(uri))},
+                        null,
+                        null,
+                        sortOrder);
+                break;
+
+            case MOVIE_WITH_MOST_POPULAR:
+                retCursor = mOpenHelper.getReadableDatabase().query(
+                        MoviesContract.MoviesEntry.TABLE_NAME,
+                        projection,
+                        MoviesContract.MoviesEntry.MOST_POPULAR + " = ? ",
+                        new String[]{String.valueOf(ContentUris.parseId(uri))},
+                        null,
+                        null,
+                        sortOrder);
+                break;
+
+            case MOVIE_WITH_TOP_RATE:
+                retCursor = mOpenHelper.getReadableDatabase().query(
+                        MoviesContract.MoviesEntry.TABLE_NAME,
+                        projection,
+                        MoviesContract.MoviesEntry.TOP_RATE + " = ?",
                         new String[]{String.valueOf(ContentUris.parseId(uri))},
                         null,
                         null,
