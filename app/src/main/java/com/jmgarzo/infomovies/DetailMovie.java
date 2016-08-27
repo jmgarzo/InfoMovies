@@ -158,8 +158,7 @@ public class DetailMovie extends AppCompatActivity {
 
             cv.put(MoviesContract.FavoriteMovieEntry.VOTE_COUNT, Integer.parseInt(cursor.getString(DetailMovieFragment.COL_VOTE_COUNT)));
 
-            cv.put(MoviesContract.FavoriteMovieEntry.VIDEO, cursor.getString(DetailMovieFragment.COL_VIDEO));
-            cv.put(MoviesContract.FavoriteMovieEntry.VOTE_AVERAGE, Double.parseDouble(cursor.getString(DetailMovieFragment.COL_VOTE_AVERAGE)));
+            cv.put(MoviesContract.FavoriteMovieEntry.VIDEO, cursor.getString(DetailMovieFragment.COL_VIDEO));cv.put(MoviesContract.FavoriteMovieEntry.VOTE_AVERAGE, Double.parseDouble(cursor.getString(DetailMovieFragment.COL_VOTE_AVERAGE)));
             cv.put(MoviesContract.FavoriteMovieEntry.RELEASE_DATE, cursor.getString(DetailMovieFragment.COL_RELEASE_DATE));
             cv.put(MoviesContract.FavoriteMovieEntry.ADD_DATE, Utility.formatDate(System.currentTimeMillis()));
             cursor.close();

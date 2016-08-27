@@ -449,11 +449,6 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
                 TextView txtOverview = (TextView) getView().findViewById(R.id.overview_text);
 
 
-                if (txtOverview != null && txtOverview.getText() != "") {
-                    TextView overviewLabel = (TextView) getView().findViewById(R.id.overview_label);
-                    overviewLabel.setText(getString(R.string.overview_label));
-                    overviewLabel.setVisibility(View.VISIBLE);
-                }
 
                 TextView txtReleaseDate = (TextView) getView().findViewById(R.id.txt_release_date);
                 TextView txtVoteAverage = (TextView) getView().findViewById(R.id.txt_vote_average);
@@ -468,6 +463,13 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
                     txtReleaseDate.setText(data.getString(COL_RELEASE_DATE));
                     txtVoteAverage.setText(data.getString(COL_VOTE_AVERAGE) + " / 10");
                 }
+
+                if (txtOverview != null && txtOverview.getText() != "") {
+                    TextView overviewLabel = (TextView) getView().findViewById(R.id.overview_label);
+                    overviewLabel.setText(getString(R.string.overview_label));
+                    overviewLabel.setVisibility(View.VISIBLE);
+                }
+
 //                TextView trailerLabel = (TextView) getView().findViewById(R.id.trailer_label);
 //                trailerLabel.setText(R.string.trailer_label);
 //                trailerLabel.setVisibility(View.INVISIBLE);
