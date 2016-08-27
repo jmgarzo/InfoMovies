@@ -59,7 +59,10 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
             com.jmgarzo.infomovies.data.MoviesContract.MoviesEntry.POPULARITY,
             com.jmgarzo.infomovies.data.MoviesContract.MoviesEntry.VOTE_COUNT,
             com.jmgarzo.infomovies.data.MoviesContract.MoviesEntry.VIDEO,
-            com.jmgarzo.infomovies.data.MoviesContract.MoviesEntry.VOTE_AVERAGE
+            com.jmgarzo.infomovies.data.MoviesContract.MoviesEntry.VOTE_AVERAGE,
+            MoviesContract.MoviesEntry.MOST_POPULAR,
+            MoviesContract.MoviesEntry.TOP_RATE
+
     };
 
     static final int COL_MOVIE_ID = 0;
@@ -76,6 +79,10 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
     static final int COL_VOTE_COUNT = 11;
     static final int COL_VIDEO = 12;
     static final int COL_VOTE_AVERAGE = 13;
+    static final int COL_MOST_POPULAR = 14;
+    static final int COL_TOP_RATE = 15;
+
+
 
 
     public static final String[] VIDEO_COLUMNS =
@@ -122,6 +129,88 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
     static final int COL_REVIEW_URL = 5;
 
 
+
+
+
+    public static final String[] FAVORITE_MOVIE_COLUMNS = {
+            com.jmgarzo.infomovies.data.MoviesContract.FavoriteMovieEntry.TABLE_NAME + "." + com.jmgarzo.infomovies.data.MoviesContract.FavoriteMovieEntry._ID,
+            com.jmgarzo.infomovies.data.MoviesContract.FavoriteMovieEntry.POSTER_PATH,
+            com.jmgarzo.infomovies.data.MoviesContract.FavoriteMovieEntry.ADULT,
+            com.jmgarzo.infomovies.data.MoviesContract.FavoriteMovieEntry.OVERVIEW,
+            com.jmgarzo.infomovies.data.MoviesContract.FavoriteMovieEntry.RELEASE_DATE,
+            com.jmgarzo.infomovies.data.MoviesContract.FavoriteMovieEntry.MOVIE_WEB_ID,
+            com.jmgarzo.infomovies.data.MoviesContract.FavoriteMovieEntry.ORIGINAL_TITLE,
+            com.jmgarzo.infomovies.data.MoviesContract.FavoriteMovieEntry.ORIGINAL_LANGUAGE,
+            com.jmgarzo.infomovies.data.MoviesContract.FavoriteMovieEntry.TITLE,
+            com.jmgarzo.infomovies.data.MoviesContract.FavoriteMovieEntry.BACKDROP_PATH,
+            com.jmgarzo.infomovies.data.MoviesContract.FavoriteMovieEntry.POPULARITY,
+            com.jmgarzo.infomovies.data.MoviesContract.FavoriteMovieEntry.VOTE_COUNT,
+            com.jmgarzo.infomovies.data.MoviesContract.FavoriteMovieEntry.VIDEO,
+            com.jmgarzo.infomovies.data.MoviesContract.FavoriteMovieEntry.VOTE_AVERAGE
+    };
+
+    static final int COL_FAVORITE_MOVIE_ID = 0;
+    static final int COL_FAVORITE_POSTER_PATH = 1;
+    static final int COL_FAVORITE_ADULT = 2;
+    static final int COL_FAVORITE_OVERVIEW = 3;
+    static final int COL_FAVORITE_RELEASE_DATE = 4;
+    static final int COL_FAVORITE_MOVIE_WEB_ID = 5;
+    static final int COL_FAVORITE_ORIGINAL_TITLE = 6;
+    static final int COL_FAVORITE_ORIGINAL_LANGUAGE = 7;
+    static final int COL_FAVORITE_TITLE = 8;
+    static final int COL_FAVORITE_BACKDROP_PATH = 9;
+    static final int COL_FAVORITE_POPULARITY = 10;
+    static final int COL_FAVORITE_VOTE_COUNT = 11;
+    static final int COL_FAVORITE_VIDEO = 12;
+    static final int COL_FAVORITE_VOTE_AVERAGE = 13;
+
+
+
+    public static final String[] FAVORITE_VIDEO_COLUMNS =
+            {
+                    com.jmgarzo.infomovies.data.MoviesContract.FavoriteVideoEntry.TABLE_NAME + "." + com.jmgarzo.infomovies.data.MoviesContract.FavoriteVideoEntry._ID,
+                    com.jmgarzo.infomovies.data.MoviesContract.FavoriteVideoEntry.MOVIE_KEY,
+                    com.jmgarzo.infomovies.data.MoviesContract.FavoriteVideoEntry.ID,
+                    com.jmgarzo.infomovies.data.MoviesContract.FavoriteVideoEntry.ISO_639_1,
+                    com.jmgarzo.infomovies.data.MoviesContract.FavoriteVideoEntry.ISO_3166_1,
+                    com.jmgarzo.infomovies.data.MoviesContract.FavoriteVideoEntry.KEY,
+                    com.jmgarzo.infomovies.data.MoviesContract.FavoriteVideoEntry.NAME,
+                    com.jmgarzo.infomovies.data.MoviesContract.FavoriteVideoEntry.SITE,
+                    com.jmgarzo.infomovies.data.MoviesContract.FavoriteVideoEntry.SIZE,
+                    com.jmgarzo.infomovies.data.MoviesContract.FavoriteVideoEntry.TYPE
+            };
+
+    static final int COL_FAVORITE_VIDEO_ID = 0;
+    static final int COL_FAVORITE_VIDEO_MOVIE_KEY = 1;
+    static final int COL_FAVORITE_VIDEO_WEB_ID = 2;
+    static final int COL_FAVORITE_VIDEO_ISO_639_1 = 3;
+    static final int COL_FAVORITE_VIDEO_ISO_3166_1 = 4;
+    static final int COL_FAVORITE_VIDEO_KEY = 5;
+    static final int COL_FAVORITE_VIDEO_NAME = 6;
+    static final int COL_FAVORITE_VIDEO_SITE = 7;
+    static final int COL_FAVORITE_VIDEO_SIZE = 8;
+    static final int COL_FAVORITE_VIDEO_TYPE = 9;
+
+
+    public static final String[] FAVORITE_REVIEW_COLUMNS =
+            {
+                    com.jmgarzo.infomovies.data.MoviesContract.FavoriteReviewEntry.TABLE_NAME + "." + com.jmgarzo.infomovies.data.MoviesContract.FavoriteReviewEntry._ID,
+                    com.jmgarzo.infomovies.data.MoviesContract.FavoriteReviewEntry.MOVIE_KEY,
+                    com.jmgarzo.infomovies.data.MoviesContract.FavoriteReviewEntry.ID,
+                    com.jmgarzo.infomovies.data.MoviesContract.FavoriteReviewEntry.AUTHOR,
+                    com.jmgarzo.infomovies.data.MoviesContract.FavoriteReviewEntry.CONTENT,
+                    com.jmgarzo.infomovies.data.MoviesContract.FavoriteReviewEntry.URL
+            };
+
+    static final int COL_FAVORITE_REVIEW_ID = 0;
+    static final int COL_FAVORITE_REVIEW_MOVIE_KEY = 1;
+    static final int COL_FAVORITE_REVIEW_WEB_ID_KEY = 2;
+    static final int COL_FAVORITE_REVIEW_AUTHOR = 3;
+    static final int COL_FAVORITE_REVIEW_CONTENT = 4;
+    static final int COL_FAVORITE_REVIEW_URL = 5;
+
+
+
     private ListView listViewTrailers;
     private ListView listViewReview;
     private TrailerAdapter mTrailerAdapter;
@@ -150,7 +239,12 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
 
         if (argument != null) {
             mUri = argument.getParcelable(DetailMovieFragment.DETAIL_URI);
-            mIdMovie = argument.getString(com.jmgarzo.infomovies.data.MoviesContract.MoviesEntry._ID);
+            if(Utility.isPreferenceSortByFavorite(getContext())){
+                mIdMovie = argument.getString(com.jmgarzo.infomovies.data.MoviesContract.FavoriteMovieEntry._ID);
+            }else {
+                mIdMovie = argument.getString(com.jmgarzo.infomovies.data.MoviesContract.MoviesEntry._ID);
+
+            }
             mTwoPanels = argument.getBoolean(TWO_PANELS);
 
             Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar_detail);
@@ -221,7 +315,6 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
         // replace the uri, since the sort by  has changed
         Uri uri = mUri;
         if (null != uri) {
-            ;
             getLoaderManager().restartLoader(DETAIL_LOADER, null, this);
         }
     }
@@ -239,43 +332,79 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
         }
 
         try {
-            switch (id) {
-                case DETAIL_LOADER: {
+            if(Utility.isPreferenceSortByFavorite(getContext())){
+                switch (id) {
+                    case DETAIL_LOADER: {
+                        return new CursorLoader(
+                                getActivity(),
+                                MoviesContract.FavoriteMovieEntry.buildFavoriteUri(Long.parseLong(mIdMovie)),
+                                FAVORITE_MOVIE_COLUMNS,
+                                null,
+                                null,
+                                null
+                        );
+                    }
+                    case DETAIL_TRAILER_LOADER: {
+                        return new CursorLoader(
+                                getActivity(),
+                                com.jmgarzo.infomovies.data.MoviesContract.FavoriteVideoEntry.buildFavoriteVideoWithMovieId(mIdMovie),
+                                FAVORITE_VIDEO_COLUMNS,
+                                null,
+                                null,
+                                null
+                        );
 
-
-                    return new CursorLoader(
-                            getActivity(),
-                            MoviesContract.MoviesEntry.buildMoviesWithIdUri(Long.parseLong(mIdMovie)),
-                            MOVIE_COLUMNS,
-                            null,
-                            null,
-                            null
-                    );
+                    }
+                    case DETAIL_REVIEW_LOADER: {
+                        return new CursorLoader(
+                                getActivity(),
+                                com.jmgarzo.infomovies.data.MoviesContract.FavoriteReviewEntry.buildFavoriteReviewWithMovieId(mIdMovie),
+                                FAVORITE_REVIEW_COLUMNS,
+                                null,
+                                null,
+                                null
+                        );
+                    }
                 }
-
-                case DETAIL_TRAILER_LOADER: {
-                    return new CursorLoader(
-                            getActivity(),
-                            com.jmgarzo.infomovies.data.MoviesContract.VideoEntry.buildVideoWithMovieId(mIdMovie),
-                            VIDEO_COLUMNS,
-                            null,
-                            null,
-                            null
-                    );
-
-                }
-
-                case DETAIL_REVIEW_LOADER: {
-                    return new CursorLoader(
-                            getActivity(),
-                            com.jmgarzo.infomovies.data.MoviesContract.ReviewEntry.buildReviewWithMovieId(mIdMovie),
-                            REVIEW_COLUMNS,
-                            null,
-                            null,
-                            null
-                    );
+            }else {
+                switch (id) {
+                    case DETAIL_LOADER: {
 
 
+                        return new CursorLoader(
+                                getActivity(),
+                                MoviesContract.MoviesEntry.buildMoviesWithIdUri(Long.parseLong(mIdMovie)),
+                                MOVIE_COLUMNS,
+                                null,
+                                null,
+                                null
+                        );
+                    }
+
+                    case DETAIL_TRAILER_LOADER: {
+                        return new CursorLoader(
+                                getActivity(),
+                                com.jmgarzo.infomovies.data.MoviesContract.VideoEntry.buildVideoWithMovieId(mIdMovie),
+                                VIDEO_COLUMNS,
+                                null,
+                                null,
+                                null
+                        );
+
+                    }
+
+                    case DETAIL_REVIEW_LOADER: {
+                        return new CursorLoader(
+                                getActivity(),
+                                com.jmgarzo.infomovies.data.MoviesContract.ReviewEntry.buildReviewWithMovieId(mIdMovie),
+                                REVIEW_COLUMNS,
+                                null,
+                                null,
+                                null
+                        );
+
+
+                    }
                 }
             }
         } catch (Exception e) {
@@ -300,16 +429,25 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
 
                 if (!mTwoPanels) {
                     ImageView imageViewPoster = (ImageView) getView().findViewById(R.id.poster_image);
-                    Picasso.with(getContext()).load(data.getString(COL_POSTER_PATH)).into(imageViewPoster);
+                    if(Utility.isPreferenceSortByFavorite(getContext())){
+                        Picasso.with(getContext()).load(data.getString(COL_FAVORITE_POSTER_PATH)).into(imageViewPoster);
+                    }else {
+                        Picasso.with(getContext()).load(data.getString(COL_POSTER_PATH)).into(imageViewPoster);
+                    }
 
                 } else {
                     TextView titleTexView = (TextView) getView().findViewById(R.id.txt_title);
-                    titleTexView.setText(data.getString(COL_TITLE));
+                    if(Utility.isPreferenceSortByFavorite(getContext())){
+                        titleTexView.setText(data.getString(COL_FAVORITE_TITLE));
+
+                    }else {
+                        titleTexView.setText(data.getString(COL_TITLE));
+                    }
                 }
 
 
                 TextView txtOverview = (TextView) getView().findViewById(R.id.overview_text);
-                txtOverview.setText(data.getString(COL_OVERVIEW));
+
 
                 if (txtOverview != null && txtOverview.getText() != "") {
                     TextView overviewLabel = (TextView) getView().findViewById(R.id.overview_label);
@@ -318,11 +456,18 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
                 }
 
                 TextView txtReleaseDate = (TextView) getView().findViewById(R.id.txt_release_date);
-                txtReleaseDate.setText(data.getString(COL_RELEASE_DATE));
-
                 TextView txtVoteAverage = (TextView) getView().findViewById(R.id.txt_vote_average);
-                txtVoteAverage.setText(data.getString(COL_VOTE_AVERAGE) + " / 10");
 
+
+                if(Utility.isPreferenceSortByFavorite(getContext())){
+                    txtOverview.setText(data.getString(COL_FAVORITE_OVERVIEW));
+                    txtReleaseDate.setText(data.getString(COL_FAVORITE_RELEASE_DATE));
+                    txtVoteAverage.setText(data.getString(COL_FAVORITE_VOTE_AVERAGE) + " / 10");
+                }else {
+                    txtOverview.setText(data.getString(COL_OVERVIEW));
+                    txtReleaseDate.setText(data.getString(COL_RELEASE_DATE));
+                    txtVoteAverage.setText(data.getString(COL_VOTE_AVERAGE) + " / 10");
+                }
 //                TextView trailerLabel = (TextView) getView().findViewById(R.id.trailer_label);
 //                trailerLabel.setText(R.string.trailer_label);
 //                trailerLabel.setVisibility(View.INVISIBLE);

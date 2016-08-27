@@ -27,7 +27,7 @@ public class ImageAdapter extends BaseAdapter {
         if(mData.moveToFirst()){
             mListPaths = new ArrayList<String>();
             do{
-                mListPaths.add(mData.getString(MainActivityFragment.COL_POSTER_PATH));
+                mListPaths.add(mData.getString(DetailMovieFragment.COL_POSTER_PATH));
             }while (mData.moveToNext());
 
         }

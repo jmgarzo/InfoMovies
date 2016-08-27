@@ -32,42 +32,42 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     private MovieAdapter mMovieAdapter;
     private GridView mGridView;
 
-    private static final String[] MOVIE_COLUMNS = {
-            MoviesContract.MoviesEntry.TABLE_NAME + "." + MoviesContract.MoviesEntry._ID,
-            MoviesContract.MoviesEntry.POSTER_PATH,
-            MoviesContract.MoviesEntry.ADULT,
-            MoviesContract.MoviesEntry.OVERVIEW,
-            MoviesContract.MoviesEntry.RELEASE_DATE,
-            MoviesContract.MoviesEntry.MOVIE_WEB_ID,
-            MoviesContract.MoviesEntry.ORIGINAL_TITLE,
-            MoviesContract.MoviesEntry.ORIGINAL_LANGUAGE,
-            MoviesContract.MoviesEntry.TITLE,
-            MoviesContract.MoviesEntry.BACKDROP_PATH,
-            MoviesContract.MoviesEntry.POPULARITY,
-            MoviesContract.MoviesEntry.VOTE_COUNT,
-            MoviesContract.MoviesEntry.VIDEO,
-            MoviesContract.MoviesEntry.VOTE_AVERAGE,
-            MoviesContract.MoviesEntry.MOST_POPULAR,
-            MoviesContract.MoviesEntry.TOP_RATE
-
-    };
-
-    static final int COL_MOVIE_ID = 0;
-    static final int COL_POSTER_PATH = 1;
-    static final int COL_ADULT = 2;
-    static final int COL_OVERVIEW = 3;
-    static final int COL_RELEASE_DATE = 4;
-    static final int COL_MOVIE_WEB_ID = 5;
-    static final int COL_ORIGINAL_TITLE = 6;
-    static final int COL_ORIGINAL_LANGUAGE = 7;
-    static final int COL_TITLE = 8;
-    static final int COL_BACKDROP_PATH = 9;
-    static final int COL_POPULARITY = 10;
-    static final int COL_VOTE_COUNT = 11;
-    static final int COL_VIDEO = 12;
-    static final int COL_VOTE_AVERAGE = 13;
-    static final int COL_MOST_POPULAR = 14;
-    static final int COL_TOP_RATE = 15;
+//    private static final String[] MOVIE_COLUMNS = {
+//            MoviesContract.MoviesEntry.TABLE_NAME + "." + MoviesContract.MoviesEntry._ID,
+//            MoviesContract.MoviesEntry.POSTER_PATH,
+//            MoviesContract.MoviesEntry.ADULT,
+//            MoviesContract.MoviesEntry.OVERVIEW,
+//            MoviesContract.MoviesEntry.RELEASE_DATE,
+//            MoviesContract.MoviesEntry.MOVIE_WEB_ID,
+//            MoviesContract.MoviesEntry.ORIGINAL_TITLE,
+//            MoviesContract.MoviesEntry.ORIGINAL_LANGUAGE,
+//            MoviesContract.MoviesEntry.TITLE,
+//            MoviesContract.MoviesEntry.BACKDROP_PATH,
+//            MoviesContract.MoviesEntry.POPULARITY,
+//            MoviesContract.MoviesEntry.VOTE_COUNT,
+//            MoviesContract.MoviesEntry.VIDEO,
+//            MoviesContract.MoviesEntry.VOTE_AVERAGE,
+//            MoviesContract.MoviesEntry.MOST_POPULAR,
+//            MoviesContract.MoviesEntry.TOP_RATE
+//
+//    };
+//
+//    static final int COL_MOVIE_ID = 0;
+//    static final int COL_POSTER_PATH = 1;
+//    static final int COL_ADULT = 2;
+//    static final int COL_OVERVIEW = 3;
+//    static final int COL_RELEASE_DATE = 4;
+//    static final int COL_MOVIE_WEB_ID = 5;
+//    static final int COL_ORIGINAL_TITLE = 6;
+//    static final int COL_ORIGINAL_LANGUAGE = 7;
+//    static final int COL_TITLE = 8;
+//    static final int COL_BACKDROP_PATH = 9;
+//    static final int COL_POPULARITY = 10;
+//    static final int COL_VOTE_COUNT = 11;
+//    static final int COL_VIDEO = 12;
+//    static final int COL_VOTE_AVERAGE = 13;
+//    static final int COL_MOST_POPULAR = 14;
+//    static final int COL_TOP_RATE = 15;
 
     public interface Callback {
         /**
@@ -119,8 +119,15 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
                                                     int height = mGridView.getMeasuredHeight();
                                                     mGridView.smoothScrollToPositionFromTop(position, ((height / 2)));
 
-                                                    ((Callback) getActivity())
-                                                            .onItemSelected(MoviesContract.MoviesEntry.buildMovieWithWebId(cursor.getString(COL_MOVIE_WEB_ID)),cursor.getString(COL_MOVIE_ID));
+                                                    if(Utility.isPreferenceSortByFavorite(getContext())){
+                                                        ((Callback) getActivity())
+                                                                .onItemSelected(MoviesContract.FavoriteMovieEntry
+                                                                        .buildFavoriteWithWebId(cursor.getString(DetailMovieFragment.COL_FAVORITE_MOVIE_WEB_ID)), cursor.getString(DetailMovieFragment.COL_FAVORITE_MOVIE_ID));
+                                                    }else {
+                                                        ((Callback) getActivity())
+                                                                .onItemSelected(MoviesContract.MoviesEntry
+                                                                        .buildMovieWithWebId(cursor.getString(DetailMovieFragment.COL_MOVIE_WEB_ID)), cursor.getString(DetailMovieFragment.COL_MOVIE_ID));
+                                                    }
 
                                                 }
                                             }

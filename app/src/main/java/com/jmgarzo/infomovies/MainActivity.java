@@ -87,8 +87,12 @@ public class MainActivity extends AppCompatActivity implements MainActivityFragm
             // fragment transaction.
             Bundle args = new Bundle();
             args.putParcelable(DetailMovieFragment.DETAIL_URI, contentUri);
-            args.putString(MoviesContract.MoviesEntry._ID,idMovie);
             args.putBoolean(DetailMovieFragment.TWO_PANELS, mTwoPane);
+            if(Utility.isPreferenceSortByFavorite(this)){
+                args.putString(MoviesContract.FavoriteMovieEntry._ID, idMovie);
+            }else {
+                args.putString(MoviesContract.MoviesEntry._ID, idMovie);
+            }
 
 
             DetailMovieFragment fragment = new DetailMovieFragment();
@@ -100,7 +104,11 @@ public class MainActivity extends AppCompatActivity implements MainActivityFragm
         } else {
             Intent intent = new Intent(this, DetailMovie.class)
                     .setData(contentUri);
-            intent.putExtra(MoviesContract.MoviesEntry._ID,idMovie);
+            if(Utility.isPreferenceSortByFavorite(this)){
+                intent.putExtra(MoviesContract.FavoriteMovieEntry._ID, idMovie);
+            }else {
+                intent.putExtra(MoviesContract.MoviesEntry._ID, idMovie);
+            }
             startActivity(intent);
         }
     }

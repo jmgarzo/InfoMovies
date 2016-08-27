@@ -18,6 +18,7 @@ import java.util.Vector;
 
 public class DetailMovie extends AppCompatActivity {
     private String idMovie;
+    private boolean selectedToDelete = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +41,18 @@ public class DetailMovie extends AppCompatActivity {
             // using a fragment transaction.
 
             Bundle arguments = new Bundle();
-            idMovie = getIntent().getStringExtra(MoviesContract.MoviesEntry._ID);
             arguments.putParcelable(DetailMovieFragment.DETAIL_URI, getIntent().getData());
-            arguments.putString(MoviesContract.MoviesEntry._ID, idMovie);
             DetailMovieFragment fragment = new DetailMovieFragment();
+
+            if (Utility.isPreferenceSortByFavorite(this)) {
+                idMovie = getIntent().getStringExtra(MoviesContract.FavoriteMovieEntry._ID);
+                arguments.putString(MoviesContract.FavoriteMovieEntry._ID, idMovie);
+
+            } else {
+                idMovie = getIntent().getStringExtra(MoviesContract.MoviesEntry._ID);
+                arguments.putString(MoviesContract.MoviesEntry._ID, idMovie);
+
+            }
             fragment.setArguments(arguments);
 
             getSupportFragmentManager().beginTransaction()
@@ -53,18 +62,10 @@ public class DetailMovie extends AppCompatActivity {
 
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
-        Cursor cursorMovie = getContentResolver().query(MoviesContract.MoviesEntry.buildMoviesWithIdUri(Long.parseLong(idMovie)), null, null, null, null);
-        if (cursorMovie.moveToFirst()) {
-            int index = cursorMovie.getColumnIndex(MoviesContract.MoviesEntry.MOVIE_WEB_ID);
-            String webMovieId = cursorMovie.getString(index);
-
-
-            Cursor cursorFavorite = getContentResolver().query(MoviesContract.FavoriteMovieEntry.buildFavoriteWithWebId(webMovieId), null, null, null, null);
-            if (cursorFavorite.moveToFirst()) {
-                fab.setImageResource(R.drawable.ic_favorite_white_24dp);
-            } else {
-                fab.setImageResource(R.drawable.ic_favorite_border_white_24dp);
-            }
+        if (isInFavorites(idMovie)) {
+            fab.setImageResource(R.drawable.ic_favorite_white_24dp);
+        } else {
+            fab.setImageResource(R.drawable.ic_favorite_border_white_24dp);
         }
 
 
@@ -75,12 +76,40 @@ public class DetailMovie extends AppCompatActivity {
                     //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     //                        .setAction("Action", null).show();
 
-                    copyToFavorites(fab);
+                    manageFab(fab);
 
                 }
             });
         }
         // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private boolean isInFavorites(String idMovie) {
+        boolean result;
+        if (Utility.isPreferenceSortByFavorite(this)) {
+            Cursor favoritesCursor = getContentResolver().query(
+                    MoviesContract.FavoriteMovieEntry.buildFavoriteUri(Long.parseLong(idMovie)),
+                    null,
+                    null,
+                    null,
+                    null
+            );
+            if (favoritesCursor.moveToFirst()) {
+                return true;
+            }
+        } else {
+            Cursor cursorMovie = getContentResolver().query(MoviesContract.MoviesEntry.buildMoviesWithIdUri(Long.parseLong(idMovie)), null, null, null, null);
+            if (cursorMovie.moveToFirst()) {
+                int index = cursorMovie.getColumnIndex(MoviesContract.MoviesEntry.MOVIE_WEB_ID);
+                String webMovieId = cursorMovie.getString(index);
+
+                Cursor cursorFavorite = getContentResolver().query(MoviesContract.FavoriteMovieEntry.buildFavoriteWithWebId(webMovieId), null, null, null, null);
+                if (cursorFavorite.moveToFirst()) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     @Override
@@ -138,40 +167,64 @@ public class DetailMovie extends AppCompatActivity {
         return cv;
     }
 
-    void copyToFavorites(FloatingActionButton fab) {
-        Cursor cursorMovie = getContentResolver().query(MoviesContract.MoviesEntry.buildMoviesWithIdUri(Long.parseLong(idMovie)), null, null, null, null);
-        if (cursorMovie.moveToFirst()) {
-            int index = cursorMovie.getColumnIndex(MoviesContract.MoviesEntry.MOVIE_WEB_ID);
-            String webMovieId = cursorMovie.getString(index);
+    void manageFab(FloatingActionButton fab) {
+        if (Utility.isPreferenceSortByFavorite(this)) {
+            //delelte
+            if (selectedToDelete) {
+                selectedToDelete = false;
+                fab.setImageResource(R.drawable.ic_favorite_white_24dp);
 
-
-            Cursor cursorFavorite = getContentResolver().query(MoviesContract.FavoriteMovieEntry.buildFavoriteWithWebId(webMovieId), null, null, null, null);
-            if (!cursorFavorite.moveToFirst()) {
-                ContentValues cv = getFavoriteMovieValues();
-                if (cv != null) {
-                    getContentResolver().insert(MoviesContract.FavoriteMovieEntry.CONTENT_URI, cv);
-                    fab.setImageResource(R.drawable.ic_favorite_white_24dp);
-                    addVideo();
-                    addReview();
-                }
             } else {
-                index = cursorFavorite.getColumnIndex(MoviesContract.MoviesEntry.MOVIE_WEB_ID);
-                String webMovieIdFavorite = cursorFavorite.getString(index);
-                getContentResolver().delete(MoviesContract.FavoriteMovieEntry.CONTENT_URI, MoviesContract.FavoriteMovieEntry.MOVIE_WEB_ID + " = ? ", new String[]{webMovieIdFavorite});
-                fab.setImageResource(R.drawable.ic_favorite_border_white_24dp);
+                if (isInFavorites(idMovie)) {
+                    selectedToDelete = true;
+                    fab.setImageResource(R.drawable.ic_favorite_border_white_24dp);
+
+                }
+
+            }
+
+        } else {
+
+
+            Cursor cursorMovie = getContentResolver().query(MoviesContract.MoviesEntry.buildMoviesWithIdUri(Long.parseLong(idMovie)), null, null, null, null);
+            if (cursorMovie.moveToFirst()) {
+                int index = cursorMovie.getColumnIndex(MoviesContract.MoviesEntry.MOVIE_WEB_ID);
+                String webMovieId = cursorMovie.getString(index);
+
+
+                Cursor cursorFavorite = getContentResolver().query(MoviesContract.FavoriteMovieEntry.buildFavoriteWithWebId(webMovieId), null, null, null, null);
+                if (!cursorFavorite.moveToFirst()) {
+                    ContentValues cv = getFavoriteMovieValues();
+                    if (cv != null) {
+                        getContentResolver().insert(MoviesContract.FavoriteMovieEntry.CONTENT_URI, cv);
+                        fab.setImageResource(R.drawable.ic_favorite_white_24dp);
+                        addVideo(webMovieId);
+                        addReview(webMovieId);
+                    }
+                } else {
+                    index = cursorFavorite.getColumnIndex(MoviesContract.MoviesEntry.MOVIE_WEB_ID);
+                    String webMovieIdFavorite = cursorFavorite.getString(index);
+                    getContentResolver().delete(MoviesContract.FavoriteMovieEntry.CONTENT_URI, MoviesContract.FavoriteMovieEntry.MOVIE_WEB_ID + " = ? ", new String[]{webMovieIdFavorite});
+                    fab.setImageResource(R.drawable.ic_favorite_border_white_24dp);
+                }
             }
         }
 
     }
 
-    void addVideo() {
+    void addVideo(String webMovieid) {
+
+
+        String favoriteMovieId = getFavoriteMovieId(webMovieid);
+
+
         Cursor cursor = getContentResolver().query(MoviesContract.VideoEntry.buildVideoWithMovieId(idMovie),
                 DetailMovieFragment.VIDEO_COLUMNS,
                 null,
                 null,
                 null);
 
-        Vector<ContentValues> vVContentValues = getFavoriteVideoValues(cursor);
+        Vector<ContentValues> vVContentValues = getFavoriteVideoValues(cursor, favoriteMovieId);
         if (vVContentValues != null) {
             if (vVContentValues.size() > 0) {
                 ContentValues[] cvArray = new ContentValues[vVContentValues.size()];
@@ -184,7 +237,7 @@ public class DetailMovie extends AppCompatActivity {
     }
 
 
-    private Vector<ContentValues> getFavoriteVideoValues(Cursor cursor) {
+    private Vector<ContentValues> getFavoriteVideoValues(Cursor cursor, String favoriteMovieId) {
         Vector vectorVideoValues = null;
         ContentValues cv = null;
         if (cursor.moveToFirst()) {
@@ -192,7 +245,7 @@ public class DetailMovie extends AppCompatActivity {
             do {
                 cv = new ContentValues();
 
-                cv.put(MoviesContract.FavoriteVideoEntry.MOVIE_KEY, cursor.getString(DetailMovieFragment.COL_VIDEO_MOVIE_KEY));
+                cv.put(MoviesContract.FavoriteVideoEntry.MOVIE_KEY, favoriteMovieId);
                 cv.put(MoviesContract.FavoriteVideoEntry.ID, cursor.getString(DetailMovieFragment.COL_VIDEO_WEB_ID));
                 cv.put(MoviesContract.FavoriteVideoEntry.ISO_639_1, cursor.getString(DetailMovieFragment.COL_VIDEO_ISO_639_1));
                 cv.put(MoviesContract.FavoriteVideoEntry.ISO_3166_1, cursor.getString(DetailMovieFragment.COL_VIDEO_ISO_3166_1));
@@ -210,14 +263,16 @@ public class DetailMovie extends AppCompatActivity {
         return vectorVideoValues;
     }
 
-    void addReview() {
+    void addReview(String webMovieid) {
+        String favoriteMovieId = getFavoriteMovieId(webMovieid);
+
         Cursor cursor = getContentResolver().query(MoviesContract.ReviewEntry.buildReviewWithMovieId(idMovie),
                 DetailMovieFragment.REVIEW_COLUMNS,
                 null,
                 null,
                 null);
 
-        Vector<ContentValues> vVContentValues = getFavoriteReviewValues(cursor);
+        Vector<ContentValues> vVContentValues = getFavoriteReviewValues(cursor, favoriteMovieId);
         if (vVContentValues != null) {
             if (vVContentValues.size() > 0) {
                 ContentValues[] cvArray = new ContentValues[vVContentValues.size()];
@@ -229,7 +284,7 @@ public class DetailMovie extends AppCompatActivity {
         }
     }
 
-    private Vector<ContentValues> getFavoriteReviewValues(Cursor cursor) {
+    private Vector<ContentValues> getFavoriteReviewValues(Cursor cursor, String favoriteMovieId) {
         Vector vectorReviewValues = null;
         ContentValues cv = null;
         if (cursor.moveToFirst()) {
@@ -237,7 +292,7 @@ public class DetailMovie extends AppCompatActivity {
             do {
                 cv = new ContentValues();
 
-                cv.put(MoviesContract.FavoriteReviewEntry.MOVIE_KEY, cursor.getString(DetailMovieFragment.COL_REVIEW_MOVIE_KEY));
+                cv.put(MoviesContract.FavoriteReviewEntry.MOVIE_KEY, favoriteMovieId);
                 cv.put(MoviesContract.FavoriteReviewEntry.ID, cursor.getString(DetailMovieFragment.COL_REVIEW_WEB_ID_KEY));
                 cv.put(MoviesContract.FavoriteReviewEntry.AUTHOR, cursor.getString(DetailMovieFragment.COL_REVIEW_AUTHOR));
                 cv.put(MoviesContract.FavoriteReviewEntry.CONTENT, cursor.getString(DetailMovieFragment.COL_REVIEW_CONTENT));
@@ -250,5 +305,25 @@ public class DetailMovie extends AppCompatActivity {
         return vectorReviewValues;
     }
 
+    private String getFavoriteMovieId(String webMovieId) {
+        Cursor favoriteCursor = getContentResolver().query(MoviesContract.FavoriteMovieEntry.buildFavoriteWithWebId(webMovieId),
+                DetailMovieFragment.FAVORITE_MOVIE_COLUMNS,
+                null,
+                null,
+                null);
+        String favoriteMovieId = "";
+        if (favoriteCursor.moveToFirst()) {
+            favoriteMovieId = favoriteCursor.getString(DetailMovieFragment.COL_FAVORITE_MOVIE_ID);
+        }
+        return favoriteMovieId;
+    }
 
+    @Override
+    protected void onStop() {
+        if (selectedToDelete) {
+            getContentResolver().delete(MoviesContract.FavoriteMovieEntry.CONTENT_URI, MoviesContract.FavoriteMovieEntry._ID + " = ? ", new String[]{idMovie});
+        }
+        super.onStop();
+
+    }
 }

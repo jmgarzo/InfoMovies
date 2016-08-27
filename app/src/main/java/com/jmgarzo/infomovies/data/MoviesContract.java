@@ -132,7 +132,7 @@ public class MoviesContract {
 
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_FAVORITE_MOVIE).build();
 
-        public static final String TABLE_NAME = "favorite";
+        public static final String TABLE_NAME = "favorite_movie";
 
         public static final String POSTER_PATH = "poster_path";
         public static final String ADULT = "adult";
@@ -189,9 +189,11 @@ public class MoviesContract {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
 
-        public static Uri buildFavoriteVideoWithMovieId(String movieWebId) {
-            return CONTENT_URI.buildUpon().appendPath(movieWebId).build();
+        public static Uri buildFavoriteVideoWithMovieId(String movieId) {
+            return CONTENT_URI.buildUpon().appendPath(FavoriteVideoEntry.MOVIE_KEY).appendPath(movieId).build();
         }
+
+
 
 
     }
@@ -215,8 +217,9 @@ public class MoviesContract {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
 
-        public static Uri buildFavoriteReviewWithMovieId(String movieWebId) {
-            return CONTENT_URI.buildUpon().appendPath(movieWebId).build();
+
+        public static Uri buildFavoriteReviewWithMovieId(String movieId) {
+            return CONTENT_URI.buildUpon().appendPath(FavoriteReviewEntry.MOVIE_KEY).appendPath(movieId).build();
         }
     }
 

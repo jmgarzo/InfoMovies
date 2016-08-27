@@ -33,12 +33,22 @@ public class ReviewAdapter extends CursorAdapter {
 //        imageView.setImageResource(R.drawable.ic_comment_black_48dp );
 
         TextView authorTextView = (TextView) view.findViewById(R.id.author_review_textview);
-        authorTextView.setText(cursor.getString(DetailMovieFragment.COL_REVIEW_AUTHOR));
+        if(Utility.isPreferenceSortByFavorite(context)){
+            authorTextView.setText(cursor.getString(DetailMovieFragment.COL_FAVORITE_REVIEW_AUTHOR));
+
+        }else {
+            authorTextView.setText(cursor.getString(DetailMovieFragment.COL_REVIEW_AUTHOR));
+        }
 
         TextView contentTextView = (TextView) view.findViewById(R.id.content_review_textview);
-        contentTextView.setText(cursor.getString(DetailMovieFragment.COL_REVIEW_CONTENT));
+        if(Utility.isPreferenceSortByFavorite(context)) {
+            contentTextView.setText(cursor.getString(DetailMovieFragment.COL_FAVORITE_REVIEW_CONTENT));
+        }else{
+            contentTextView.setText(cursor.getString(DetailMovieFragment.COL_REVIEW_CONTENT));
 
-        Log.v("Trailer----------->", cursor.getString(DetailMovieFragment.COL_MOVIE_WEB_ID));
+        }
+
+//        Log.v("Trailer----------->", cursor.getString(DetailMovieFragment.COL_MOVIE_WEB_ID));
 
 
     }

@@ -43,8 +43,6 @@ public class MovieProvider extends ContentProvider {
     static final int FAVORITE_REVIEW_WITH_MOVIE_ID = 602;
 
 
-
-
     private static final UriMatcher sUriMatcher = buildUriMatcher();
     private static String LOG_TAG = MovieProvider.class.getSimpleName();
     private MoviesDBHelper mOpenHelper;
@@ -62,7 +60,6 @@ public class MovieProvider extends ContentProvider {
         matcher.addURI(authority, MoviesContract.PATH_MOVIE + "/" + MoviesContract.MoviesEntry.TOP_RATE + "/#", MOVIE_WITH_TOP_RATE);
 
 
-
         matcher.addURI(authority, MoviesContract.PATH_VIDEO, VIDEO);
         matcher.addURI(authority, MoviesContract.PATH_VIDEO + "/#", VIDEO_WITH_ID);
         matcher.addURI(authority, MoviesContract.PATH_VIDEO + "/" + MoviesContract.VideoEntry.MOVIE_KEY + "/#", VIDEO_WITH_MOVIE_ID);
@@ -71,9 +68,10 @@ public class MovieProvider extends ContentProvider {
         matcher.addURI(authority, MoviesContract.PATH_REVIEW + "/#", REVIEW_WITH_ID);
         matcher.addURI(authority, MoviesContract.PATH_REVIEW + "/" + MoviesContract.ReviewEntry.MOVIE_KEY + "/#", REVIEW_WITH_MOVIE_ID);
 
+        //FAVORITE
         matcher.addURI(authority, MoviesContract.PATH_FAVORITE_MOVIE, FAVORITE_MOVIE);
         matcher.addURI(authority, MoviesContract.PATH_FAVORITE_MOVIE + "/#", FAVORITE_MOVIE_WITH_ID);
-        matcher.addURI(authority, MoviesContract.PATH_FAVORITE_MOVIE + "/" + MoviesContract.FavoriteMovieEntry.MOVIE_WEB_ID + "/#", FAVORITE_MOVIE_WITH_MOVIE_ID);
+        matcher.addURI(authority, MoviesContract.PATH_FAVORITE_MOVIE + "/" + MoviesContract.FavoriteMovieEntry.MOVIE_WEB_ID + "/*", FAVORITE_MOVIE_WITH_MOVIE_ID);
 
         matcher.addURI(authority, MoviesContract.PATH_FAVORITE_VIDEO, FAVORITE_VIDEO);
         matcher.addURI(authority, MoviesContract.PATH_FAVORITE_VIDEO + "/#", FAVORITE_VIDEO_WITH_ID);
@@ -123,7 +121,7 @@ public class MovieProvider extends ContentProvider {
                         sortOrder);
                 break;
             }
-            case MOVIE_WITH_WEB_MOVIE_ID:
+            case MOVIE_WITH_WEB_MOVIE_ID: {
                 retCursor = mOpenHelper.getReadableDatabase().query(
                         MoviesContract.MoviesEntry.TABLE_NAME,
                         projection,
@@ -133,8 +131,9 @@ public class MovieProvider extends ContentProvider {
                         null,
                         sortOrder);
                 break;
+            }
 
-            case MOVIE_WITH_MOST_POPULAR:
+            case MOVIE_WITH_MOST_POPULAR: {
                 retCursor = mOpenHelper.getReadableDatabase().query(
                         MoviesContract.MoviesEntry.TABLE_NAME,
                         projection,
@@ -144,8 +143,9 @@ public class MovieProvider extends ContentProvider {
                         null,
                         sortOrder);
                 break;
+            }
 
-            case MOVIE_WITH_TOP_RATE:
+            case MOVIE_WITH_TOP_RATE: {
                 retCursor = mOpenHelper.getReadableDatabase().query(
                         MoviesContract.MoviesEntry.TABLE_NAME,
                         projection,
@@ -155,6 +155,7 @@ public class MovieProvider extends ContentProvider {
                         null,
                         sortOrder);
                 break;
+            }
 
             case VIDEO: {
                 SQLiteDatabase db = mOpenHelper.getReadableDatabase();
@@ -231,6 +232,9 @@ public class MovieProvider extends ContentProvider {
 
                 break;
             }
+
+
+            //FAVORITE
             case FAVORITE_MOVIE: {
                 SQLiteDatabase db = mOpenHelper.getReadableDatabase();
                 retCursor = db.query(
@@ -251,7 +255,7 @@ public class MovieProvider extends ContentProvider {
                         MoviesContract.FavoriteMovieEntry.TABLE_NAME,
                         projection,
                         MoviesContract.FavoriteMovieEntry._ID + " = ? ",
-                        selectionArgs,
+                        new String[]{String.valueOf(ContentUris.parseId(uri))},
                         null,
                         null,
                         sortOrder);
@@ -269,6 +273,82 @@ public class MovieProvider extends ContentProvider {
                         null,
                         null,
                         sortOrder);
+                break;
+            }
+
+            case FAVORITE_VIDEO: {
+                SQLiteDatabase db = mOpenHelper.getReadableDatabase();
+                retCursor = db.query(
+                        MoviesContract.FavoriteVideoEntry.TABLE_NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder);
+
+                break;
+            }
+            case FAVORITE_VIDEO_WITH_ID: {
+
+                retCursor = mOpenHelper.getReadableDatabase().query(
+                        MoviesContract.FavoriteVideoEntry.TABLE_NAME,
+                        projection,
+                        MoviesContract.FavoriteVideoEntry._ID + " = ? ",
+                        new String[]{String.valueOf(ContentUris.parseId(uri))},
+                        null,
+                        null,
+                        sortOrder);
+                break;
+            }
+            case FAVORITE_VIDEO_WITH_MOVIE_ID: {
+                retCursor = mOpenHelper.getReadableDatabase().query(
+                        MoviesContract.FavoriteVideoEntry.TABLE_NAME,
+                        projection,
+                        MoviesContract.FavoriteVideoEntry.MOVIE_KEY + " = ? ",
+                        new String[]{String.valueOf(ContentUris.parseId(uri))},
+                        null,
+                        null,
+                        sortOrder);
+
+                break;
+            }
+            case FAVORITE_REVIEW: {
+                SQLiteDatabase db = mOpenHelper.getReadableDatabase();
+                retCursor = db.query(
+                        MoviesContract.FavoriteReviewEntry.TABLE_NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder);
+
+                break;
+            }
+
+            case FAVORITE_REVIEW_WITH_ID: {
+                retCursor = mOpenHelper.getReadableDatabase().query(
+                        MoviesContract.FavoriteReviewEntry.TABLE_NAME,
+                        projection,
+                        MoviesContract.FavoriteReviewEntry._ID + " = ? ",
+                        new String[]{String.valueOf(ContentUris.parseId(uri))},
+                        null,
+                        null,
+                        sortOrder);
+                break;
+            }
+
+            case FAVORITE_REVIEW_WITH_MOVIE_ID: {
+                retCursor = mOpenHelper.getReadableDatabase().query(
+                        MoviesContract.FavoriteReviewEntry.TABLE_NAME,
+                        projection,
+                        MoviesContract.FavoriteReviewEntry.MOVIE_KEY + " = ? ",
+                        new String[]{String.valueOf(ContentUris.parseId(uri))},
+                        null,
+                        null,
+                        sortOrder);
+
                 break;
             }
             default: {
@@ -313,6 +393,20 @@ public class MovieProvider extends ContentProvider {
             case FAVORITE_MOVIE_WITH_ID:
                 return MoviesContract.FavoriteMovieEntry.CONTENT_ITEM_TYPE;
             case FAVORITE_MOVIE_WITH_MOVIE_ID:
+                return MoviesContract.FavoriteMovieEntry.CONTENT_ITEM_TYPE;
+
+            case FAVORITE_VIDEO:
+                return MoviesContract.FavoriteMovieEntry.CONTENT_DIR_TYPE;
+            case FAVORITE_VIDEO_WITH_ID:
+                return MoviesContract.FavoriteMovieEntry.CONTENT_ITEM_TYPE;
+            case FAVORITE_VIDEO_WITH_MOVIE_ID:
+                return MoviesContract.FavoriteMovieEntry.CONTENT_ITEM_TYPE;
+
+            case FAVORITE_REVIEW:
+                return MoviesContract.FavoriteMovieEntry.CONTENT_DIR_TYPE;
+            case FAVORITE_REVIEW_WITH_ID:
+                return MoviesContract.FavoriteMovieEntry.CONTENT_ITEM_TYPE;
+            case FAVORITE_REVIEW_WITH_MOVIE_ID:
                 return MoviesContract.FavoriteMovieEntry.CONTENT_ITEM_TYPE;
             default: {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
