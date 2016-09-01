@@ -5,7 +5,12 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.StringTokenizer;
 
 /**
  * Created by jmgarzo on 19/07/2016.
@@ -42,6 +47,34 @@ public class Utility {
     static String formatDate(long dateInMilliseconds) {
         Date date = new Date(dateInMilliseconds);
         return DateFormat.getDateInstance().format(date);
+    }
+
+    static String getMonthAndYear (String dateStr)  {
+
+//        Calendar cal = Calendar.getInstance();
+//        SimpleDateFormat sdf = new SimpleDateFormat("YYYY/MM/dd");
+//        try {
+//            cal.setTime(sdf.parse(date));// all done
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//         cal.getTime()
+
+
+        DateFormat fromFormat = new SimpleDateFormat("yyyy-MM-dd");
+        //fromFormat.setLenient(false);
+        DateFormat toFormat = new SimpleDateFormat("MM-yyyy");
+        toFormat.setLenient(false);
+        Date date = null;
+        try {
+            date = fromFormat.parse(dateStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return "";
+        }
+        System.out.println(toFormat.format(date));
+
+        return toFormat.format(date);
     }
 
 
