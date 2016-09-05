@@ -12,6 +12,7 @@
     <dimen name="headline_font_size">24sp</dimen>
     <dimen name="title_font_size">20sp</dimen>
     <dimen name="subheading_font_size">16sp</dimen>
+    <dimen name="appbar_padding_top">8dp</dimen>
 </resources>
 
 

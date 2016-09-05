@@ -20,7 +20,7 @@
     <string name="mdb_vote_average_key" translatable="false">vote_average</string>
 
 
-    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_settings">SettingsSettings</string>
 
     <!-- Strings related to Settings -->
     <string name="pref_sort_by_label">Sort by</string>
@@ -62,6 +62,13 @@
     <string name="sync_account_type">infomovies.jmgarzo.com</string>
     <string name="content_authority">com.jmgarzo.infomovies</string>
     <string name="title_activity_prueba">prueba</string>
+    <string name="title_activity_tabs">TabsActivity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+
+    <!-- Tab Related -->
+    <string name="tab_title_most_popular">Most Popular</string>
+    <string name="tab_title_top_rate">Top Rate</string>
+    <string name="tab_title_favorites">Favorites</string>
 
 
 </resources>

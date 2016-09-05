@@ -1,13 +1,17 @@
 package com.jmgarzo.infomovies;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.content.SharedPreferencesCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,12 +29,15 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 
 
     private static final int MOVIE_LOADER = 0;
-    private String TOP_RATE_PARAM = "top_rate";
-    private String MOST_POPULAR = "most_popular";
+    //    private String TOP_RATE_PARAM = "top_rate";
+//    private String MOST_POPULAR = "most_popular";
+    private static final String ARG_SECTION_NUMBER = "section_number";
 
 
     private MovieAdapter mMovieAdapter;
     private GridView mGridView;
+    private int selectionTab;
+
 
 //    private static final String[] MOVIE_COLUMNS = {
 //            MoviesContract.MoviesEntry.TABLE_NAME + "." + MoviesContract.MoviesEntry._ID,
@@ -69,11 +76,12 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 //    static final int COL_MOST_POPULAR = 14;
 //    static final int COL_TOP_RATE = 15;
 
+
     public interface Callback {
         /**
          * DetailFragmentCallback for when an item has been selected.
          */
-        public void onItemSelected(Uri dateUri,String movie_id );
+        public void onItemSelected(Uri dateUri, String movie_id);
     }
 
 
@@ -81,10 +89,13 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     }
 
 
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         updateMovies();
+        selectionTab = 1;
         //setHasOptionsMenu(true);
 
     }
@@ -93,7 +104,33 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        mMovieAdapter = new MovieAdapter(getActivity(),null,0);
+        selectionTab = getArguments().getInt(ARG_SECTION_NUMBER);
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+        switch (selectionTab) {
+            case 1: {
+                pref.edit().putString(getActivity().getString(R.string.pref_sort_by_key), getActivity().getString(R.string.pref_sort_by_most_popular)).apply();
+                getLoaderManager().restartLoader(MOVIE_LOADER, null, this);
+
+                break;
+            }
+            case 2: {
+                pref.edit().putString(getActivity().getString(R.string.pref_sort_by_key), getActivity().getString(R.string.pref_sort_by_top_rate)).apply();
+                getLoaderManager().restartLoader(MOVIE_LOADER, null, this);
+
+
+                break;
+            }
+            case 3: {
+                pref.edit().putString(getActivity().getString(R.string.pref_sort_by_key), getActivity().getString(R.string.pref_sort_by_favorite)).apply();
+                getLoaderManager().restartLoader(MOVIE_LOADER, null, this);
+
+
+                break;
+            }
+        }
+
+        mMovieAdapter = new MovieAdapter(getActivity(), null, 0);
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
 //        View view = inflater.inflate(R.layout.list_item_movie,container,false);
@@ -106,32 +143,32 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 
 
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                            @Override
-                                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                                Cursor cursor = (Cursor) parent.getItemAtPosition(position);
-                                                if (cursor != null) {
+                                             @Override
+                                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                                 Cursor cursor = (Cursor) parent.getItemAtPosition(position);
+                                                 if (cursor != null) {
 //                                                    Intent intent = new Intent(getActivity(), DetailMovie.class);
 ////                                                    intent.putExtra(getString(R.string.mdb_movie_web_id_key), cursor.getString(COL_MOVIE_WEB_ID));
 //                                                    intent.setData(MoviesContract.MoviesEntry.buildMovieWithWebId(cursor.getString(COL_MOVIE_WEB_ID)));
 //                                                    intent.putExtra(MoviesContract.MoviesEntry._ID,cursor.getString(COL_MOVIE_ID));
 //                                                    startActivity(intent);
 
-                                                    int height = mGridView.getMeasuredHeight();
-                                                    mGridView.smoothScrollToPositionFromTop(position, ((height / 2)));
+                                                     int height = mGridView.getMeasuredHeight();
+                                                     mGridView.smoothScrollToPositionFromTop(position, ((height / 2)));
 
-                                                    if(Utility.isPreferenceSortByFavorite(getContext())){
-                                                        ((Callback) getActivity())
-                                                                .onItemSelected(MoviesContract.FavoriteMovieEntry
-                                                                        .buildFavoriteWithWebId(cursor.getString(DetailMovieFragment.COL_FAVORITE_MOVIE_WEB_ID)), cursor.getString(DetailMovieFragment.COL_FAVORITE_MOVIE_ID));
-                                                    }else {
-                                                        ((Callback) getActivity())
-                                                                .onItemSelected(MoviesContract.MoviesEntry
-                                                                        .buildMovieWithWebId(cursor.getString(DetailMovieFragment.COL_MOVIE_WEB_ID)), cursor.getString(DetailMovieFragment.COL_MOVIE_ID));
-                                                    }
+                                                     if (Utility.isPreferenceSortByFavorite(getContext())) {
+                                                         ((Callback) getActivity())
+                                                                 .onItemSelected(MoviesContract.FavoriteMovieEntry
+                                                                         .buildFavoriteWithWebId(cursor.getString(DetailMovieFragment.COL_FAVORITE_MOVIE_WEB_ID)), cursor.getString(DetailMovieFragment.COL_FAVORITE_MOVIE_ID));
+                                                     } else {
+                                                         ((Callback) getActivity())
+                                                                 .onItemSelected(MoviesContract.MoviesEntry
+                                                                         .buildMovieWithWebId(cursor.getString(DetailMovieFragment.COL_MOVIE_WEB_ID)), cursor.getString(DetailMovieFragment.COL_MOVIE_ID));
+                                                     }
 
-                                                }
-                                            }
-                                        }
+                                                 }
+                                             }
+                                         }
 
         );
 
@@ -166,7 +203,6 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     }
 
 
-
 //    private void updateSortBy() {
 ////        updateMovies();
 //        g
@@ -187,7 +223,8 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 
     private void updateMovies() {
 
-        if(!Utility.isPreferenceSortByFavorite(getActivity())); {
+        if (!Utility.isPreferenceSortByFavorite(getActivity())) ;
+        {
             MainInfoMoviesSyncAdapter.syncImmediately(getActivity());
         }
     }
@@ -195,7 +232,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 
-        if(Utility.isPreferenceSortByFavorite(getActivity())){
+        if (Utility.isPreferenceSortByFavorite(getActivity())) {
             return new CursorLoader(getActivity(),
                     MoviesContract.FavoriteMovieEntry.CONTENT_URI,
                     null,
@@ -203,7 +240,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
                     null,
                     null);
 
-        }else if(Utility.isPreferenceSortByMostPopular(getContext())) {
+        } else if (Utility.isPreferenceSortByMostPopular(getContext())) {
             return new CursorLoader(getActivity(),
                     MoviesContract.MoviesEntry.buildMovieWithMostPopular("1"),
                     DetailMovieFragment.MOVIE_COLUMNS,
@@ -211,23 +248,25 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
                     null,
                     null);
 
-        }else if(Utility.isPreferenceSortByTopRate(getContext())) {
+        } else if (Utility.isPreferenceSortByTopRate(getContext())) {
             return new CursorLoader(getActivity(),
                     MoviesContract.MoviesEntry.buildMovieWithTopRate("1"),
                     DetailMovieFragment.MOVIE_COLUMNS,
                     null,
                     null,
                     null);
-        }else {
-
-            return new CursorLoader(getActivity(),
-                    MoviesContract.MoviesEntry.CONTENT_URI,
-                    DetailMovieFragment.MOVIE_COLUMNS,
-                    null,
-                    null,
-                    null);
         }
+//        else {
+//
+//            return new CursorLoader(getActivity(),
+//                    MoviesContract.MoviesEntry.CONTENT_URI,
+//                    DetailMovieFragment.MOVIE_COLUMNS,
+//                    null,
+//                    null,
+//                    null);
+//        }
 
+        return null;
     }
 
     @Override
@@ -247,5 +286,18 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     public void onResume() {
         super.onResume();
         //getLoaderManager().restartLoader(MOVIE_LOADER,null, this);
+    }
+
+
+    public static MainActivityFragment newInstance(int sectionNumber) {
+
+
+        MainActivityFragment fragment = new MainActivityFragment();
+
+            Bundle args = new Bundle();
+            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            fragment.setArguments(args);
+            return fragment;
+
     }
 }
