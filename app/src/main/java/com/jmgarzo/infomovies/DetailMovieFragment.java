@@ -457,11 +457,11 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
                 if(Utility.isPreferenceSortByFavorite(getContext())){
                     txtOverview.setText(data.getString(COL_FAVORITE_OVERVIEW));
                     txtReleaseDate.setText(Utility.getMonthAndYear(data.getString(COL_FAVORITE_RELEASE_DATE)));
-                    txtVoteAverage.setText(data.getString(COL_FAVORITE_VOTE_AVERAGE) + " / 10");
+                    txtVoteAverage.setText(data.getString(COL_FAVORITE_VOTE_AVERAGE));
                 }else {
                     txtOverview.setText(data.getString(COL_OVERVIEW));
                     txtReleaseDate.setText(Utility.getMonthAndYear(data.getString(COL_FAVORITE_RELEASE_DATE)));
-                    txtVoteAverage.setText(data.getString(COL_VOTE_AVERAGE) + " / 10");
+                    txtVoteAverage.setText(data.getString(COL_VOTE_AVERAGE));
                 }
 
                 if (txtOverview != null && txtOverview.getText() != "") {
