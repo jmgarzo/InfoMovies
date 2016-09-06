@@ -23,7 +23,7 @@
     android:layout_height="wrap_content"
     android:layout_columnWeight="1"
     android:alwaysDrawnWithCache="true"
-    android:background="#000000"
+    android:background="@color/cardview_light_background"
     android:clipChildren="true"
     android:gravity="top"
     android:horizontalSpacing="0dp"

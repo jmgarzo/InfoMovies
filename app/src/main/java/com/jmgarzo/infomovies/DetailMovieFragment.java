@@ -219,6 +219,8 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
     private String mIdMovie;
     private boolean mTwoPanels;
 
+    Toolbar mToolbar;
+
     public DetailMovieFragment() {
         setHasOptionsMenu(true);
     }
@@ -247,8 +249,9 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
             }
             mTwoPanels = argument.getBoolean(TWO_PANELS);
 
-            Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar_detail);
-            ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+            mToolbar= (Toolbar) getActivity().findViewById(R.id.toolbar_detail);
+            ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+
 
             if (!mTwoPanels) {
                 ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
