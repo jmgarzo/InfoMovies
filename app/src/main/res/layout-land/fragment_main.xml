@@ -8,7 +8,7 @@
     android:clipChildren="true"
     android:gravity="top"
     android:horizontalSpacing="0dp"
-    android:numColumns="2"
+    android:numColumns="3"
     android:padding="0dp"
     android:scrollingCache="true"
     android:smoothScrollbar="true"
