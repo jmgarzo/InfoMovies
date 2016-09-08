@@ -24,7 +24,7 @@ public class DetailMovie extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_movie);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_detail);
         setSupportActionBar(toolbar);
 
 
@@ -53,6 +53,8 @@ public class DetailMovie extends AppCompatActivity {
                 arguments.putString(MoviesContract.MoviesEntry._ID, idMovie);
 
             }
+
+            toolbar.setTitle(getTitle(idMovie));
             fragment.setArguments(arguments);
 
             getSupportFragmentManager().beginTransaction()
@@ -136,35 +138,64 @@ public class DetailMovie extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    ContentValues getFavoriteMovieValues() {
-        Cursor cursor = getContentResolver().query(MoviesContract.MoviesEntry.buildMoviesWithIdUri(Long.parseLong(idMovie)), DetailMovieFragment.MOVIE_COLUMNS, null, null, null);
+    String getTitle(String idMovie) {
+        String result = "";
+        if (Utility.isPreferenceSortByFavorite(this)) {
+            Cursor cursor = getContentResolver().query(MoviesContract.FavoriteMovieEntry.buildFavoriteUri(Long.parseLong(idMovie)),
+                    DetailMovieFragment.FAVORITE_MOVIE_COLUMNS,
+                    null,
+                    null,
+                    null);
+            if (cursor.moveToFirst()) {
+                result = cursor.getString(DetailMovieFragment.COL_FAVORITE_TITLE);
+            }
 
-        ContentValues cv = null;
-        if (cursor.moveToFirst()) {
-            cv = new ContentValues();
-            cv.put(MoviesContract.FavoriteMovieEntry.POSTER_PATH, cursor.getString(DetailMovieFragment.COL_POSTER_PATH));
-            cv.put(MoviesContract.FavoriteMovieEntry.ADULT, cursor.getString(DetailMovieFragment.COL_ADULT));
-            cv.put(MoviesContract.FavoriteMovieEntry.OVERVIEW, cursor.getString(DetailMovieFragment.COL_OVERVIEW));
-            cv.put(MoviesContract.FavoriteMovieEntry.RELEASE_DATE, cursor.getString(DetailMovieFragment.COL_RELEASE_DATE));
-            cv.put(MoviesContract.FavoriteMovieEntry.MOVIE_WEB_ID, cursor.getString(DetailMovieFragment.COL_MOVIE_WEB_ID));
-            cv.put(MoviesContract.FavoriteMovieEntry.ORIGINAL_TITLE, cursor.getString(DetailMovieFragment.COL_ORIGINAL_TITLE));
-            cv.put(MoviesContract.FavoriteMovieEntry.ORIGINAL_LANGUAGE, cursor.getString(DetailMovieFragment.COL_ORIGINAL_LANGUAGE));
+        } else {
+            Cursor cursor = getContentResolver().query(MoviesContract.MoviesEntry.buildMoviesWithIdUri(Long.parseLong(idMovie)),
+                    DetailMovieFragment.MOVIE_COLUMNS,
+                    null,
+                    null,
+                    null);
+            if (cursor.moveToFirst()) {
+                result = cursor.getString(DetailMovieFragment.COL_TITLE);
 
-            cv.put(MoviesContract.FavoriteMovieEntry.TITLE, cursor.getString(DetailMovieFragment.COL_TITLE));
-
-            cv.put(MoviesContract.FavoriteMovieEntry.BACKDROP_PATH, cursor.getString(DetailMovieFragment.COL_BACKDROP_PATH));
-
-            cv.put(MoviesContract.FavoriteMovieEntry.POPULARITY, Double.parseDouble(cursor.getString(DetailMovieFragment.COL_POPULARITY)));
-
-            cv.put(MoviesContract.FavoriteMovieEntry.VOTE_COUNT, Integer.parseInt(cursor.getString(DetailMovieFragment.COL_VOTE_COUNT)));
-
-            cv.put(MoviesContract.FavoriteMovieEntry.VIDEO, cursor.getString(DetailMovieFragment.COL_VIDEO));cv.put(MoviesContract.FavoriteMovieEntry.VOTE_AVERAGE, Double.parseDouble(cursor.getString(DetailMovieFragment.COL_VOTE_AVERAGE)));
-            cv.put(MoviesContract.FavoriteMovieEntry.RELEASE_DATE, cursor.getString(DetailMovieFragment.COL_RELEASE_DATE));
-            cv.put(MoviesContract.FavoriteMovieEntry.ADD_DATE, Utility.formatDate(System.currentTimeMillis()));
-            cursor.close();
+            }
         }
-        return cv;
+        return result;
+
     }
+
+
+        ContentValues getFavoriteMovieValues () {
+            Cursor cursor = getContentResolver().query(MoviesContract.MoviesEntry.buildMoviesWithIdUri(Long.parseLong(idMovie)), DetailMovieFragment.MOVIE_COLUMNS, null, null, null);
+
+            ContentValues cv = null;
+            if (cursor.moveToFirst()) {
+                cv = new ContentValues();
+                cv.put(MoviesContract.FavoriteMovieEntry.POSTER_PATH, cursor.getString(DetailMovieFragment.COL_POSTER_PATH));
+                cv.put(MoviesContract.FavoriteMovieEntry.ADULT, cursor.getString(DetailMovieFragment.COL_ADULT));
+                cv.put(MoviesContract.FavoriteMovieEntry.OVERVIEW, cursor.getString(DetailMovieFragment.COL_OVERVIEW));
+                cv.put(MoviesContract.FavoriteMovieEntry.RELEASE_DATE, cursor.getString(DetailMovieFragment.COL_RELEASE_DATE));
+                cv.put(MoviesContract.FavoriteMovieEntry.MOVIE_WEB_ID, cursor.getString(DetailMovieFragment.COL_MOVIE_WEB_ID));
+                cv.put(MoviesContract.FavoriteMovieEntry.ORIGINAL_TITLE, cursor.getString(DetailMovieFragment.COL_ORIGINAL_TITLE));
+                cv.put(MoviesContract.FavoriteMovieEntry.ORIGINAL_LANGUAGE, cursor.getString(DetailMovieFragment.COL_ORIGINAL_LANGUAGE));
+
+                cv.put(MoviesContract.FavoriteMovieEntry.TITLE, cursor.getString(DetailMovieFragment.COL_TITLE));
+
+                cv.put(MoviesContract.FavoriteMovieEntry.BACKDROP_PATH, cursor.getString(DetailMovieFragment.COL_BACKDROP_PATH));
+
+                cv.put(MoviesContract.FavoriteMovieEntry.POPULARITY, Double.parseDouble(cursor.getString(DetailMovieFragment.COL_POPULARITY)));
+
+                cv.put(MoviesContract.FavoriteMovieEntry.VOTE_COUNT, Integer.parseInt(cursor.getString(DetailMovieFragment.COL_VOTE_COUNT)));
+
+                cv.put(MoviesContract.FavoriteMovieEntry.VIDEO, cursor.getString(DetailMovieFragment.COL_VIDEO));
+                cv.put(MoviesContract.FavoriteMovieEntry.VOTE_AVERAGE, Double.parseDouble(cursor.getString(DetailMovieFragment.COL_VOTE_AVERAGE)));
+                cv.put(MoviesContract.FavoriteMovieEntry.RELEASE_DATE, cursor.getString(DetailMovieFragment.COL_RELEASE_DATE));
+                cv.put(MoviesContract.FavoriteMovieEntry.ADD_DATE, Utility.formatDate(System.currentTimeMillis()));
+                cursor.close();
+            }
+            return cv;
+        }
 
     void manageFab(FloatingActionButton fab) {
         if (Utility.isPreferenceSortByFavorite(this)) {
