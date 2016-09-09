@@ -61,7 +61,7 @@
         jar="/home/jmgarzo/Android/Udacity/InfoMovies/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
         jumboMode="true"
         revision="23.0.3"
-        sha1="65d07148d055c12ee638e84f0457521ad1311af7">
+        sha1="75d4b945f80eaa12ded575aa141ab2ff7499f8b0">
         <dex dex="/home/jmgarzo/Android/Udacity/InfoMovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_2b10a96a2cda320b8f838cede64af4d0055a9bb7/classes.dex" />
     </item>
     <item
@@ -75,7 +75,7 @@
         jar="/home/jmgarzo/Android/Udacity/InfoMovies/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
         jumboMode="true"
         revision="23.0.3"
-        sha1="ff25b8fd021280b6aac77b3d7d2b085ca9e830c4">
+        sha1="810396da3c1402295b6d30fba0aba44d37fbd303">
         <dex dex="/home/jmgarzo/Android/Udacity/InfoMovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_072b0ab023500aaaadd58a886320650d58be66b5/classes.dex" />
     </item>
     <item
