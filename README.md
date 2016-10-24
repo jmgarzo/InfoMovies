@@ -1,8 +1,10 @@
 # InfoMovies
+
 ## Synopsis
 Final project for the course [Developing Android Apps](https://www.udacity.com/course/developing-android-apps--ud853)
 
 ##Project guideline
+
 ###1. User Interface - Layout
 - Movies are displayed in the main layout via a grid of their corresponding movie poster thumbnails
 - UI contains an element (e.g., a spinner or settings menu) to toggle the sort order of the movies by: most popular, highest rated, and favorites
@@ -36,6 +38,7 @@ Final project for the course [Developing Android Apps](https://www.udacity.com/c
 - App uses a share Intent to expose the external youtube URL for the trailer
 
 ##Motivation
+
 This project exist as a part of my professional portfolio about Android
 
 In this project I have learned:
@@ -47,7 +50,6 @@ In this project I have learned:
 - Create responsive user interfaces that work across a variety of screen sizes(Phones and tablet)
 - Keep your app running efficiently with the Use of AsyncTasks and Loaders
 
-### Who do I talk to? ###
+### Contact ###
 
-* Repo owner or admin
-* Other community or team contact
+jmgarzo.developer@gmail.com
