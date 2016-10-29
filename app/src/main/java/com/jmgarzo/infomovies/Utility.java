@@ -7,10 +7,7 @@ import android.preference.PreferenceManager;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.StringTokenizer;
 
 /**
  * Created by jmgarzo on 19/07/2016.
@@ -19,8 +16,41 @@ public class Utility {
 
     private final String LOG_TAG = Utility.class.getSimpleName();
     public static String getPreferredSortBy(Context context){
-        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        return pref.getString(context.getString(R.string.pref_sort_by_key),context.getString(R.string.pref_sort_by_defautl));
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        String defaultValue = context.getResources().getString(R.string.pref_sort_by_defautl);
+        String result = sharedPref.getString(context.getString(R.string.pref_sort_by_key), defaultValue);
+
+//        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+//        String result = pref.getString(context.getString(R.string.pref_sort_by_key),context.getString(R.string.pref_sort_by_defautl));
+        return result;
+
+    }
+
+    public static void setPrererenceShortByFavorite(Context context){
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(context.getString(R.string.pref_sort_by_key), context.getString(R.string.pref_sort_by_favorite) );
+        editor.commit();
+
+    }
+
+    public static void setPrererenceShortByTopRate(Context context){
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(context.getString(R.string.pref_sort_by_key), context.getString(R.string.pref_sort_by_top_rate) );
+        editor.commit();
+
+    }
+
+    public static void setPrererenceShortByMostPopular(Context context){
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(context.getString(R.string.pref_sort_by_key), context.getString(R.string.pref_sort_by_most_popular) );
+        editor.commit();
+
     }
 
     public static boolean isPreferenceSortByFavorite(Context context){

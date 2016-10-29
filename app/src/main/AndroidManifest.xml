@@ -6,17 +6,14 @@
     <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
     <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
 
-
-
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_icon01"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
-            android:name=".MainActivity"
+            android:name=".MainTabActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,20 +24,19 @@
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".MainTabActivity"
             android:theme="@style/SettingsTheme">
-
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jmgarzo.infomovies.MainActivity" />
+                android:value="com.jmgarzo.infomovies.MainTabActivity" />
         </activity>
         <activity
             android:name=".DetailMovie"
             android:label="@string/title_activity_detail_movie"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainTabActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jmgarzo.infomovies.MainActivity" />
+                android:value="com.jmgarzo.infomovies.MainTabActivity" />
         </activity>
 
         <service android:name=".sync.InfoMoviesAuthenticatorService">

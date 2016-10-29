@@ -2,88 +2,112 @@
 <items version="2" >
 
     <item
-        jar="/home/jmgarzo/Android/Udacity/InfoMovies/app/build/intermediates/exploded-aar/com.android.support/design/23.4.0/jars/classes.jar"
+        is-multidex="true"
+        jar="/home/jmgarzo/Android/Projects/infomovies/app/build/intermediates/exploded-aar/com.android.support/design/23.4.0/jars/classes.jar"
         jumboMode="true"
+        optimize="true"
         revision="23.0.3"
         sha1="5326d9a850d491714fef8cbfaa9ea3416f0bf0d2">
-        <dex dex="/home/jmgarzo/Android/Udacity/InfoMovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-design-23.4.0_9a818b4596ae707f3a91028773eab5a8655c60e3/classes.dex" />
+        <dex dex="/home/jmgarzo/Android/Projects/infomovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-design-23.4.0_72ddaf460f7c8b05ff9ab0053000a1e86d92f650/classes.dex" />
     </item>
     <item
-        jar="/home/jmgarzo/Android/Udacity/InfoMovies/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/jars/classes.jar"
+        is-multidex="true"
+        jar="/home/jmgarzo/Android/Projects/infomovies/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/jars/classes.jar"
         jumboMode="true"
-        revision="23.0.3"
-        sha1="c2c594cace5d83a3227b2b6e658ecbfd586d3ed9">
-        <dex dex="/home/jmgarzo/Android/Udacity/InfoMovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-vector-drawable-23.4.0_51331c9745d9b2fabd5e6c85e776ca0aa9f9c8bc/classes.dex" />
-    </item>
-    <item
-        jar="/home/jmgarzo/Android/Udacity/InfoMovies/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.4.0/jars/classes.jar"
-        jumboMode="true"
-        revision="23.0.3"
-        sha1="ec75036c3c52e451d0cde50a5aedaf5fd32354a0">
-        <dex dex="/home/jmgarzo/Android/Udacity/InfoMovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-recyclerview-v7-23.4.0_f4446fcdff357363c9c1bda619d2ee0b214a437f/classes.dex" />
-    </item>
-    <item
-        jar="/home/jmgarzo/Android/Udacity/InfoMovies/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.4.0/jars/classes.jar"
-        jumboMode="true"
-        revision="23.0.3"
-        sha1="de4db3785756bfb0915a9f59a9b3f2fea7407be4">
-        <dex dex="/home/jmgarzo/Android/Udacity/InfoMovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-animated-vector-drawable-23.4.0_411040b42e45762b5b86bd89a6c7d758009e2bbb/classes.dex" />
-    </item>
-    <item
-        jar="/home/jmgarzo/Android/Udacity/InfoMovies/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/23.4.0/jars/classes.jar"
-        jumboMode="true"
-        revision="23.0.3"
-        sha1="d9ecde39b460470e655de6e47c05573d2d5a8bfb">
-        <dex dex="/home/jmgarzo/Android/Udacity/InfoMovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-cardview-v7-23.4.0_2dc22aae5e61944cdcd5dc52db8406b3bcc006c2/classes.dex" />
-    </item>
-    <item
-        jar="/home/jmgarzo/Android/Udacity/InfoMovies/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/jars/libs/internal_impl-23.4.0.jar"
-        jumboMode="true"
-        revision="23.0.3"
-        sha1="ea3c07504d2c8f4b13aa17c45c1b68ed9c1c3674">
-        <dex dex="/home/jmgarzo/Android/Udacity/InfoMovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-23.4.0_6b0a035b7253b32371f4ccc54a7b9dfd3da91402/classes.dex" />
-    </item>
-    <item
-        jar="/home/jmgarzo/Android/Udacity/InfoMovies/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/jars/classes.jar"
-        jumboMode="true"
+        optimize="true"
         revision="23.0.3"
         sha1="67bd36ee9340ec7c254108936ad16b24bed160cc">
-        <dex dex="/home/jmgarzo/Android/Udacity/InfoMovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-23.4.0_efeefb0742a8ba26b49a5c6722144b9e63cb20db/classes.dex" />
+        <dex dex="/home/jmgarzo/Android/Projects/infomovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-23.4.0_b5c59c980211f6c20798e0cc9c0bfece5dc25c3b/classes.dex" />
     </item>
     <item
-        jar="/home/jmgarzo/.gradle/caches/modules-2/files-2.1/com.squareup.picasso/picasso/2.5.2/7446d06ec8d4f7ffcc53f1da37c95f200dcb9387/picasso-2.5.2.jar"
+        is-multidex="true"
+        jar="/home/jmgarzo/Android/Projects/infomovies/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.4.0/jars/classes.jar"
         jumboMode="true"
+        optimize="true"
         revision="23.0.3"
-        sha1="7446d06ec8d4f7ffcc53f1da37c95f200dcb9387">
-        <dex dex="/home/jmgarzo/Android/Udacity/InfoMovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/picasso-2.5.2_47d6559549d3c5378e9f752f17124cc3697e316c/classes.dex" />
+        sha1="de4db3785756bfb0915a9f59a9b3f2fea7407be4">
+        <dex dex="/home/jmgarzo/Android/Projects/infomovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-animated-vector-drawable-23.4.0_6e7d545ce29cf2d3e3a8d3b1f99aa33cccebc431/classes.dex" />
     </item>
     <item
-        jar="/home/jmgarzo/Android/Udacity/InfoMovies/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        is-multidex="true"
+        jar="/home/jmgarzo/Android/Projects/infomovies/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/jars/classes.jar"
         jumboMode="true"
+        optimize="true"
         revision="23.0.3"
-        sha1="d867d8f41ed8fd68e325c5c1462ca2d157fddcda">
-        <dex dex="/home/jmgarzo/Android/Udacity/InfoMovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_2b10a96a2cda320b8f838cede64af4d0055a9bb7/classes.dex" />
+        sha1="c2c594cace5d83a3227b2b6e658ecbfd586d3ed9">
+        <dex dex="/home/jmgarzo/Android/Projects/infomovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-vector-drawable-23.4.0_23913ca56a874b35ef154733ae5a26752eb56660/classes.dex" />
     </item>
     <item
-        jar="/mnt/sdk/Sdk/extras/android/m2repository/com/android/support/support-annotations/23.4.0/support-annotations-23.4.0.jar"
+        is-multidex="true"
+        jar="/home/jmgarzo/Android/Projects/infomovies/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/jars/libs/internal_impl-23.4.0.jar"
         jumboMode="true"
+        optimize="true"
         revision="23.0.3"
-        sha1="ffbe55fdb2bb456b1485831706a9eac3300bb6b8">
-        <dex dex="/home/jmgarzo/Android/Udacity/InfoMovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-23.4.0_ddfda9e77c930da0e17554232495b3af6200e1c1/classes.dex" />
+        sha1="ea3c07504d2c8f4b13aa17c45c1b68ed9c1c3674">
+        <dex dex="/home/jmgarzo/Android/Projects/infomovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-23.4.0_ef69343b29a034f052d683af32c8823764406edc/classes.dex" />
     </item>
     <item
-        jar="/home/jmgarzo/Android/Udacity/InfoMovies/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        is-multidex="true"
+        jar="/home/jmgarzo/Android/Projects/infomovies/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/jars/classes.jar"
         jumboMode="true"
-        revision="23.0.3"
-        sha1="f690a5dd931e09d7c682b52f487cc8394043d74c">
-        <dex dex="/home/jmgarzo/Android/Udacity/InfoMovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_072b0ab023500aaaadd58a886320650d58be66b5/classes.dex" />
-    </item>
-    <item
-        jar="/home/jmgarzo/Android/Udacity/InfoMovies/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/jars/classes.jar"
-        jumboMode="true"
+        optimize="true"
         revision="23.0.3"
         sha1="548f06de403a9409f00554b3ee12a9fdea0e236c">
-        <dex dex="/home/jmgarzo/Android/Udacity/InfoMovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-23.4.0_0e554af7823fa5a247a32dc2c70e908f34e34cba/classes.dex" />
+        <dex dex="/home/jmgarzo/Android/Projects/infomovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-23.4.0_ee6de627106770b32cad219bf1d46f95192fd5a1/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/jmgarzo/Android/Projects/infomovies/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.3"
+        sha1="b0bc0896584e9ed1965bcf61b0685e94adf5d8a9">
+        <dex dex="/home/jmgarzo/Android/Projects/infomovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_a8198f0c69c23dbed822e548f67ddd2a0f937ca5/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/jmgarzo/Android/Projects/infomovies/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.4.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.3"
+        sha1="ec75036c3c52e451d0cde50a5aedaf5fd32354a0">
+        <dex dex="/home/jmgarzo/Android/Projects/infomovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-recyclerview-v7-23.4.0_78e0057f1f3017908d1a9dbbf28d62979fe171fb/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/jmgarzo/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/23.4.0/support-annotations-23.4.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.3"
+        sha1="ffbe55fdb2bb456b1485831706a9eac3300bb6b8">
+        <dex dex="/home/jmgarzo/Android/Projects/infomovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-23.4.0_71666c9d5fa2c8c89fd86db6b1c75475db6d6fc5/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/jmgarzo/Android/Projects/infomovies/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.3"
+        sha1="d2c4f6bf225f39e50aca5957a9307f55b001749f">
+        <dex dex="/home/jmgarzo/Android/Projects/infomovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_27566d41d6a247a477b419e14febe020b689c3d8/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/jmgarzo/.gradle/caches/modules-2/files-2.1/com.squareup.picasso/picasso/2.5.2/7446d06ec8d4f7ffcc53f1da37c95f200dcb9387/picasso-2.5.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.3"
+        sha1="7446d06ec8d4f7ffcc53f1da37c95f200dcb9387">
+        <dex dex="/home/jmgarzo/Android/Projects/infomovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/picasso-2.5.2_47d6559549d3c5378e9f752f17124cc3697e316c/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/jmgarzo/Android/Projects/infomovies/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/23.4.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.3"
+        sha1="d9ecde39b460470e655de6e47c05573d2d5a8bfb">
+        <dex dex="/home/jmgarzo/Android/Projects/infomovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-cardview-v7-23.4.0_b25b9ec8bb7500628d13d00496fc2ccbf99acfa4/classes.dex" />
     </item>
 
 </items>
