@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.content.CursorLoader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -36,23 +35,29 @@ public class DetailMovie extends AppCompatActivity {
 //                    .commit();
 //        }
 
-        if (savedInstanceState == null) {
-            // Create the detail fragment and add it to the activity
-            // using a fragment transaction.
 
-            Bundle arguments = new Bundle();
-            arguments.putParcelable(DetailMovieFragment.DETAIL_URI, getIntent().getData());
-            DetailMovieFragment fragment = new DetailMovieFragment();
+        // Create the detail fragment and add it to the activity
+        // using a fragment transaction.
 
-            if (Utility.isPreferenceSortByFavorite(this)) {
-                idMovie = getIntent().getStringExtra(MoviesContract.FavoriteMovieEntry._ID);
-                arguments.putString(MoviesContract.FavoriteMovieEntry._ID, idMovie);
+        Bundle arguments = new Bundle();
+        arguments.putParcelable(DetailMovieFragment.DETAIL_URI, getIntent().getData());
+        DetailMovieFragment fragment = new DetailMovieFragment();
 
-            } else {
-                idMovie = getIntent().getStringExtra(MoviesContract.MoviesEntry._ID);
-                arguments.putString(MoviesContract.MoviesEntry._ID, idMovie);
+        if (Utility.isPreferenceSortByFavorite(this)) {
+            idMovie = getIntent().getStringExtra(MoviesContract.FavoriteMovieEntry._ID);
+            arguments.putString(MoviesContract.FavoriteMovieEntry._ID, idMovie);
 
-            }
+            toolbar.setTitle(getTitle(idMovie));
+            fragment.setArguments(arguments);
+
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.movie_detail_container, fragment)
+                    .commit();
+
+        } else {
+            idMovie = getIntent().getStringExtra(MoviesContract.MoviesEntry._ID);
+            arguments.putString(MoviesContract.MoviesEntry._ID, idMovie);
+
 
             toolbar.setTitle(getTitle(idMovie));
             fragment.setArguments(arguments);
@@ -75,9 +80,6 @@ public class DetailMovie extends AppCompatActivity {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    //                        .setAction("Action", null).show();
-
                     manageFab(fab);
 
                 }
@@ -166,40 +168,40 @@ public class DetailMovie extends AppCompatActivity {
     }
 
 
-        ContentValues getFavoriteMovieValues () {
-            Cursor cursor = getContentResolver().query(MoviesContract.MoviesEntry.buildMoviesWithIdUri(Long.parseLong(idMovie)), DetailMovieFragment.MOVIE_COLUMNS, null, null, null);
+    ContentValues getFavoriteMovieValues() {
+        Cursor cursor = getContentResolver().query(MoviesContract.MoviesEntry.buildMoviesWithIdUri(Long.parseLong(idMovie)), DetailMovieFragment.MOVIE_COLUMNS, null, null, null);
 
-            ContentValues cv = null;
-            if (cursor.moveToFirst()) {
-                cv = new ContentValues();
-                cv.put(MoviesContract.FavoriteMovieEntry.POSTER_PATH, cursor.getString(DetailMovieFragment.COL_POSTER_PATH));
-                cv.put(MoviesContract.FavoriteMovieEntry.ADULT, cursor.getString(DetailMovieFragment.COL_ADULT));
-                cv.put(MoviesContract.FavoriteMovieEntry.OVERVIEW, cursor.getString(DetailMovieFragment.COL_OVERVIEW));
-                cv.put(MoviesContract.FavoriteMovieEntry.RELEASE_DATE, cursor.getString(DetailMovieFragment.COL_RELEASE_DATE));
-                cv.put(MoviesContract.FavoriteMovieEntry.MOVIE_WEB_ID, cursor.getString(DetailMovieFragment.COL_MOVIE_WEB_ID));
-                cv.put(MoviesContract.FavoriteMovieEntry.ORIGINAL_TITLE, cursor.getString(DetailMovieFragment.COL_ORIGINAL_TITLE));
-                cv.put(MoviesContract.FavoriteMovieEntry.ORIGINAL_LANGUAGE, cursor.getString(DetailMovieFragment.COL_ORIGINAL_LANGUAGE));
+        ContentValues cv = null;
+        if (cursor.moveToFirst()) {
+            cv = new ContentValues();
+            cv.put(MoviesContract.FavoriteMovieEntry.POSTER_PATH, cursor.getString(DetailMovieFragment.COL_POSTER_PATH));
+            cv.put(MoviesContract.FavoriteMovieEntry.ADULT, cursor.getString(DetailMovieFragment.COL_ADULT));
+            cv.put(MoviesContract.FavoriteMovieEntry.OVERVIEW, cursor.getString(DetailMovieFragment.COL_OVERVIEW));
+            cv.put(MoviesContract.FavoriteMovieEntry.RELEASE_DATE, cursor.getString(DetailMovieFragment.COL_RELEASE_DATE));
+            cv.put(MoviesContract.FavoriteMovieEntry.MOVIE_WEB_ID, cursor.getString(DetailMovieFragment.COL_MOVIE_WEB_ID));
+            cv.put(MoviesContract.FavoriteMovieEntry.ORIGINAL_TITLE, cursor.getString(DetailMovieFragment.COL_ORIGINAL_TITLE));
+            cv.put(MoviesContract.FavoriteMovieEntry.ORIGINAL_LANGUAGE, cursor.getString(DetailMovieFragment.COL_ORIGINAL_LANGUAGE));
 
-                cv.put(MoviesContract.FavoriteMovieEntry.TITLE, cursor.getString(DetailMovieFragment.COL_TITLE));
+            cv.put(MoviesContract.FavoriteMovieEntry.TITLE, cursor.getString(DetailMovieFragment.COL_TITLE));
 
-                cv.put(MoviesContract.FavoriteMovieEntry.BACKDROP_PATH, cursor.getString(DetailMovieFragment.COL_BACKDROP_PATH));
+            cv.put(MoviesContract.FavoriteMovieEntry.BACKDROP_PATH, cursor.getString(DetailMovieFragment.COL_BACKDROP_PATH));
 
-                cv.put(MoviesContract.FavoriteMovieEntry.POPULARITY, Double.parseDouble(cursor.getString(DetailMovieFragment.COL_POPULARITY)));
+            cv.put(MoviesContract.FavoriteMovieEntry.POPULARITY, Double.parseDouble(cursor.getString(DetailMovieFragment.COL_POPULARITY)));
 
-                cv.put(MoviesContract.FavoriteMovieEntry.VOTE_COUNT, Integer.parseInt(cursor.getString(DetailMovieFragment.COL_VOTE_COUNT)));
+            cv.put(MoviesContract.FavoriteMovieEntry.VOTE_COUNT, Integer.parseInt(cursor.getString(DetailMovieFragment.COL_VOTE_COUNT)));
 
-                cv.put(MoviesContract.FavoriteMovieEntry.VIDEO, cursor.getString(DetailMovieFragment.COL_VIDEO));
-                cv.put(MoviesContract.FavoriteMovieEntry.VOTE_AVERAGE, Double.parseDouble(cursor.getString(DetailMovieFragment.COL_VOTE_AVERAGE)));
-                cv.put(MoviesContract.FavoriteMovieEntry.RELEASE_DATE, cursor.getString(DetailMovieFragment.COL_RELEASE_DATE));
-                cv.put(MoviesContract.FavoriteMovieEntry.ADD_DATE, Utility.formatDate(System.currentTimeMillis()));
-                cursor.close();
-            }
-            return cv;
+            cv.put(MoviesContract.FavoriteMovieEntry.VIDEO, cursor.getString(DetailMovieFragment.COL_VIDEO));
+            cv.put(MoviesContract.FavoriteMovieEntry.VOTE_AVERAGE, Double.parseDouble(cursor.getString(DetailMovieFragment.COL_VOTE_AVERAGE)));
+            cv.put(MoviesContract.FavoriteMovieEntry.RELEASE_DATE, cursor.getString(DetailMovieFragment.COL_RELEASE_DATE));
+            cv.put(MoviesContract.FavoriteMovieEntry.ADD_DATE, Utility.formatDate(System.currentTimeMillis()));
+            cursor.close();
         }
+        return cv;
+    }
 
     void manageFab(FloatingActionButton fab) {
         if (Utility.isPreferenceSortByFavorite(this)) {
-            //delelte
+            //delete
             if (selectedToDelete) {
                 selectedToDelete = false;
                 fab.setImageResource(R.drawable.ic_favorite_white_24dp);

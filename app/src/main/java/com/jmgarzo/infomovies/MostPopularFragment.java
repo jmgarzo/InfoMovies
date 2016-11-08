@@ -63,6 +63,7 @@ public class MostPopularFragment extends Fragment implements LoaderManager.Loade
                                                      ((MainActivityFragment.Callback) getActivity())
                                                              .onItemSelected(MoviesContract.MoviesEntry
                                                                      .buildMovieWithWebId(cursor.getString(DetailMovieFragment.COL_MOVIE_WEB_ID)), cursor.getString(DetailMovieFragment.COL_MOVIE_ID));
+
                                                  }
                                              }
                                          }

@@ -252,11 +252,8 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
             mToolbar= (Toolbar) getActivity().findViewById(R.id.toolbar_detail);
             ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
 
-
-            if (!mTwoPanels) {
                 ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-            }
         }
 
 
@@ -430,7 +427,7 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
             case DETAIL_LOADER: {
 
 
-                if (!mTwoPanels) {
+
                     ImageView imageViewPoster = (ImageView) getView().findViewById(R.id.poster_image);
                     if(Utility.isPreferenceSortByFavorite(getContext())){
                         Picasso.with(getContext()).load(data.getString(COL_FAVORITE_POSTER_PATH)).into(imageViewPoster);
@@ -438,15 +435,8 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
                         Picasso.with(getContext()).load(data.getString(COL_POSTER_PATH)).into(imageViewPoster);
                     }
 
-                } else {
-                    TextView titleTexView = (TextView) getView().findViewById(R.id.txt_title);
-                    if(Utility.isPreferenceSortByFavorite(getContext())){
-                        titleTexView.setText(data.getString(COL_FAVORITE_TITLE));
 
-                    }else {
-                        titleTexView.setText(data.getString(COL_TITLE));
-                    }
-                }
+
 
 
                 TextView txtOverview = (TextView) getView().findViewById(R.id.overview_text);
