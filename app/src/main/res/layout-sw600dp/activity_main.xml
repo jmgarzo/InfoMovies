@@ -6,7 +6,7 @@
     android:baselineAligned="false"
     android:divider="?android:attr/dividerHorizontal"
     android:orientation="vertical"
-    tools:context="com.jmgarzo.infomovies.MainActivity"
+    tools:context="com.jmgarzo.infomovies2.MainActivity"
     android:background="@color/windowBackground">
 
 
@@ -33,7 +33,7 @@
 
         <fragment
             android:id="@+id/fragment_main"
-            android:name="com.jmgarzo.infomovies.MainActivityFragment"
+            android:name="com.jmgarzo.infomovies2.MainActivityFragment"
             android:layout_width="200dp"
             android:layout_height="match_parent"
             tools:layout="@android:layout/list_content"

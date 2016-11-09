@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.jmgarzo.infomovies">
+    package="com.jmgarzo.infomovies2">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainTabActivity"
+            android:name="com.jmgarzo.infomovies2.MainTabActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,24 +24,24 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SettingsActivity"
+            android:name="com.jmgarzo.infomovies2.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName=".MainTabActivity"
+            android:parentActivityName="com.jmgarzo.infomovies2.MainTabActivity"
             android:theme="@style/SettingsTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jmgarzo.infomovies.MainTabActivity" />
+                android:value="com.jmgarzo.infomovies2.MainTabActivity" />
         </activity>
         <activity
-            android:name=".DetailMovie"
+            android:name="com.jmgarzo.infomovies2.DetailMovie"
             android:label="@string/title_activity_detail_movie"
-            android:parentActivityName=".MainTabActivity">
+            android:parentActivityName="com.jmgarzo.infomovies2.MainTabActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jmgarzo.infomovies.MainTabActivity" />
+                android:value="com.jmgarzo.infomovies2.MainTabActivity" />
         </activity>
 
-        <service android:name=".sync.InfoMoviesAuthenticatorService">
+        <service android:name="com.jmgarzo.infomovies2.sync.InfoMoviesAuthenticatorService">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />
             </intent-filter>
@@ -52,14 +52,14 @@
         </service>
 
         <provider
-            android:name=".data.MovieProvider"
+            android:name="com.jmgarzo.infomovies2.data.MovieProvider"
             android:authorities="@string/content_authority"
             android:exported="false"
             android:syncable="true" />
 
         <!-- The SyncAdapter service -->
         <service
-            android:name=".sync.InfoMoviesSyncService"
+            android:name="com.jmgarzo.infomovies2.sync.InfoMoviesSyncService"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.content.SyncAdapter" />
