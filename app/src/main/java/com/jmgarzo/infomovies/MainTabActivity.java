@@ -49,11 +49,11 @@ public class MainTabActivity extends AppCompatActivity implements MainActivityFr
     private void setupViewPager(ViewPager viewPager) {
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-
         adapter.addFragment(new MostPopularFragment(), getString(R.string.most_popular_tab_label));
         adapter.addFragment(new TopRateFragment(), getString(R.string.top_rate_tab_label));
         adapter.addFragment(new FavoriteFragment(), getString(R.string.favorite_tab_label));
         viewPager.setAdapter(adapter);
+
     }
 
     @Override
@@ -67,9 +67,10 @@ public class MainTabActivity extends AppCompatActivity implements MainActivityFr
         } else {
             intent.putExtra(MoviesContract.MoviesEntry._ID, idMovie);
         }
-        //adapter.saveState();
+
         startActivity(intent);
     }
+
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();

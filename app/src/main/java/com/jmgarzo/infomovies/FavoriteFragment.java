@@ -31,6 +31,8 @@ public class FavoriteFragment extends Fragment implements LoaderManager.LoaderCa
         // Required empty public constructor
     }
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -107,6 +109,7 @@ public class FavoriteFragment extends Fragment implements LoaderManager.LoaderCa
         Utility.setPrererenceShortByFavorite(getActivity());
         getLoaderManager().restartLoader(MOVIE_LOADER, null, this);
     }
+
 
     public interface Callback {
         /**

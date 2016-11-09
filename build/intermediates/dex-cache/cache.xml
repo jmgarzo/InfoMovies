@@ -7,7 +7,7 @@
         jumboMode="true"
         optimize="true"
         revision="23.0.3"
-        sha1="77280bc5355d572998571b72f015ff2146b1af7d">
+        sha1="8ca2d6917cb37ba28b3db27aaf5555bacda69166">
         <dex dex="/home/jmgarzo/Android/Projects/InfoMoviesBitbucket/infomovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_a84883f4ee273d43165bb5348e9c81d1696ebef7/classes.dex" />
     </item>
     <item
@@ -25,17 +25,8 @@
         jumboMode="true"
         optimize="true"
         revision="23.0.3"
-        sha1="0803978bf57c73926116ee420ed78cae1cab262b">
+        sha1="2571755d385dbfaccdf151093ec8ddc365206d70">
         <dex dex="/home/jmgarzo/Android/Projects/InfoMoviesBitbucket/infomovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_678fb0589fe26da7dc27a639223cf5b27f598abb/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/jmgarzo/Android/Projects/InfoMoviesBitbucket/infomovies/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.3"
-        sha1="67bd36ee9340ec7c254108936ad16b24bed160cc">
-        <dex dex="/home/jmgarzo/Android/Projects/InfoMoviesBitbucket/infomovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-23.4.0_fd5b915b214300009319817ebf9be0f1d3916cc1/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -45,6 +36,15 @@
         revision="23.0.3"
         sha1="5326d9a850d491714fef8cbfaa9ea3416f0bf0d2">
         <dex dex="/home/jmgarzo/Android/Projects/InfoMoviesBitbucket/infomovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-design-23.4.0_86e734a12aec53ccc61c0d69ab18f9656149b9f4/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/jmgarzo/Android/Projects/InfoMoviesBitbucket/infomovies/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.3"
+        sha1="67bd36ee9340ec7c254108936ad16b24bed160cc">
+        <dex dex="/home/jmgarzo/Android/Projects/InfoMoviesBitbucket/infomovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-23.4.0_fd5b915b214300009319817ebf9be0f1d3916cc1/classes.dex" />
     </item>
     <item
         is-multidex="true"
