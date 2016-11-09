@@ -1,0 +1,17 @@
+<GridView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/top_rate_gridview"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_columnWeight="1"
+    android:alwaysDrawnWithCache="true"
+    android:background="@color/cardview_light_background"
+    android:clipChildren="true"
+    android:gravity="top"
+    android:horizontalSpacing="0dp"
+    android:numColumns="3"
+    android:padding="0dp"
+    android:scrollingCache="true"
+    android:smoothScrollbar="true"
+    android:stretchMode="columnWidth"
+    android:verticalSpacing="0dp">
+</GridView>

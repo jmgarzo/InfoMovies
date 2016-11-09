@@ -36,6 +36,7 @@ public class MainTabActivity extends AppCompatActivity implements MainActivityFr
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);

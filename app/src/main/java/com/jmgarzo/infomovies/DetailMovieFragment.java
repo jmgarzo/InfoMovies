@@ -83,8 +83,6 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
     static final int COL_TOP_RATE = 15;
 
 
-
-
     public static final String[] VIDEO_COLUMNS =
             {
                     com.jmgarzo.infomovies.data.MoviesContract.VideoEntry.TABLE_NAME + "." + com.jmgarzo.infomovies.data.MoviesContract.VideoEntry._ID,
@@ -129,9 +127,6 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
     static final int COL_REVIEW_URL = 5;
 
 
-
-
-
     public static final String[] FAVORITE_MOVIE_COLUMNS = {
             com.jmgarzo.infomovies.data.MoviesContract.FavoriteMovieEntry.TABLE_NAME + "." + com.jmgarzo.infomovies.data.MoviesContract.FavoriteMovieEntry._ID,
             com.jmgarzo.infomovies.data.MoviesContract.FavoriteMovieEntry.POSTER_PATH,
@@ -163,7 +158,6 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
     static final int COL_FAVORITE_VOTE_COUNT = 11;
     static final int COL_FAVORITE_VIDEO = 12;
     static final int COL_FAVORITE_VOTE_AVERAGE = 13;
-
 
 
     public static final String[] FAVORITE_VIDEO_COLUMNS =
@@ -210,7 +204,6 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
     static final int COL_FAVORITE_REVIEW_URL = 5;
 
 
-
     private ListView listViewTrailers;
     private ListView listViewReview;
     private TrailerAdapter mTrailerAdapter;
@@ -241,18 +234,18 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
 
         if (argument != null) {
             mUri = argument.getParcelable(DetailMovieFragment.DETAIL_URI);
-            if(Utility.isPreferenceSortByFavorite(getContext())){
+            if (Utility.isPreferenceSortByFavorite(getContext())) {
                 mIdMovie = argument.getString(com.jmgarzo.infomovies.data.MoviesContract.FavoriteMovieEntry._ID);
-            }else {
+            } else {
                 mIdMovie = argument.getString(com.jmgarzo.infomovies.data.MoviesContract.MoviesEntry._ID);
 
             }
             mTwoPanels = argument.getBoolean(TWO_PANELS);
 
-            mToolbar= (Toolbar) getActivity().findViewById(R.id.toolbar_detail);
+            mToolbar = (Toolbar) getActivity().findViewById(R.id.toolbar_detail);
             ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
 
-                ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         }
 
@@ -332,7 +325,7 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
         }
 
         try {
-            if(Utility.isPreferenceSortByFavorite(getContext())){
+            if (Utility.isPreferenceSortByFavorite(getContext())) {
                 switch (id) {
                     case DETAIL_LOADER: {
                         return new CursorLoader(
@@ -366,7 +359,7 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
                         );
                     }
                 }
-            }else {
+            } else {
                 switch (id) {
                     case DETAIL_LOADER: {
 
@@ -427,31 +420,27 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
             case DETAIL_LOADER: {
 
 
+                ImageView imageViewPoster = (ImageView) getView().findViewById(R.id.poster_image);
 
-                    ImageView imageViewPoster = (ImageView) getView().findViewById(R.id.poster_image);
-                    if(Utility.isPreferenceSortByFavorite(getContext())){
-                        Picasso.with(getContext()).load(data.getString(COL_FAVORITE_POSTER_PATH)).into(imageViewPoster);
-                    }else {
-                        Picasso.with(getContext()).load(data.getString(COL_POSTER_PATH)).into(imageViewPoster);
-                    }
-
-
-
+                if (Utility.isPreferenceSortByFavorite(getContext())) {
+                    Picasso.with(getContext()).load(data.getString(COL_FAVORITE_POSTER_PATH)).into(imageViewPoster);
+                } else {
+                    Picasso.with(getContext()).load(data.getString(COL_POSTER_PATH)).into(imageViewPoster);
+                }
 
 
                 TextView txtOverview = (TextView) getView().findViewById(R.id.overview_text);
-
 
 
                 TextView txtReleaseDate = (TextView) getView().findViewById(R.id.txt_release_date);
                 TextView txtVoteAverage = (TextView) getView().findViewById(R.id.txt_vote_average);
 
 
-                if(Utility.isPreferenceSortByFavorite(getContext())){
+                if (Utility.isPreferenceSortByFavorite(getContext())) {
                     txtOverview.setText(data.getString(COL_FAVORITE_OVERVIEW));
                     txtReleaseDate.setText(Utility.getMonthAndYear(data.getString(COL_FAVORITE_RELEASE_DATE)));
                     txtVoteAverage.setText(data.getString(COL_FAVORITE_VOTE_AVERAGE));
-                }else {
+                } else {
                     txtOverview.setText(data.getString(COL_OVERVIEW));
                     txtReleaseDate.setText(Utility.getMonthAndYear(data.getString(COL_FAVORITE_RELEASE_DATE)));
                     txtVoteAverage.setText(data.getString(COL_VOTE_AVERAGE));
@@ -496,6 +485,7 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
                     reviewLabel.setVisibility(View.VISIBLE);
                 }
                 setListViewHeightBasedOnChildren2(listViewReview);
+
                 break;
             }
         }
@@ -517,7 +507,7 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
         ViewGroup.LayoutParams params = listView.getLayoutParams();
         params.height = 0;
         listView.setLayoutParams(params);
-        listView.requestLayout();
+        //listView.requestLayout();
 
         View view = null;
         for (int i = 0; i < listAdapter.getCount(); i++) {
@@ -528,7 +518,7 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
         params = listView.getLayoutParams();
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount())) + 8;
         listView.setLayoutParams(params);
-        listView.requestLayout();
+        //listView.requestLayout();
 
     }
 
@@ -571,8 +561,6 @@ public class DetailMovieFragment extends Fragment implements LoaderManager.Loade
         super.onResume();
 
     }
-
-
 
 
 }

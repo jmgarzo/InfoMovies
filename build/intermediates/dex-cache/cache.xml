@@ -7,7 +7,7 @@
         jumboMode="true"
         optimize="true"
         revision="23.0.3"
-        sha1="8ca2d6917cb37ba28b3db27aaf5555bacda69166">
+        sha1="9e22c18add5463d13d4d4a6bac58ed1d8b899f9e">
         <dex dex="/home/jmgarzo/Android/Projects/InfoMoviesBitbucket/infomovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_a84883f4ee273d43165bb5348e9c81d1696ebef7/classes.dex" />
     </item>
     <item
@@ -25,7 +25,7 @@
         jumboMode="true"
         optimize="true"
         revision="23.0.3"
-        sha1="2571755d385dbfaccdf151093ec8ddc365206d70">
+        sha1="e8cd7b1e776133a3c55acb716ddfc99ca4fce3e8">
         <dex dex="/home/jmgarzo/Android/Projects/InfoMoviesBitbucket/infomovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_678fb0589fe26da7dc27a639223cf5b27f598abb/classes.dex" />
     </item>
     <item
