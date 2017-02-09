@@ -13,6 +13,7 @@
     <string name="pref_sort_by_label_top_rated">Top rated</string>
     <string name="pref_sort_by_value_most_popular" translatable="false">most_popular</string>
     <string name="pref_sort_by_value_top_rated" translatable="false">top_rated</string>
+    <string name="pref_sort_by_default" translatable="false">most_popular</string>
 
 
 </resources>
