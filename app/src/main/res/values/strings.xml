@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">PopularMovies</string>
 
+    <string name="overview_label">Overview</string>
+
 
     <!--Settings strings-->
     <string name="title_activity_settings">Settings</string>

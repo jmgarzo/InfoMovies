@@ -11,7 +11,6 @@ import com.jmgarzo.udacity.popularmovies.Objects.Movie;
 import com.jmgarzo.udacity.popularmovies.utilities.NetworksUtils;
 import com.squareup.picasso.Picasso;
 
-import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -74,9 +73,9 @@ public class MovieGridViewAdapter extends RecyclerView.Adapter<MovieGridViewAdap
     @Override
     public void onBindViewHolder(MovieAdapterViewHolder holder, int position) {
 
-        URL posterUrl = NetworksUtils.buildPosterUrl(mMoviesList.get(position).getPosterPath());
+        String posterUrl = NetworksUtils.buildPosterThumbnail(mMoviesList.get(position).getPosterPath());
         Picasso.with(mContext)
-                .load(posterUrl.toString())
+                .load(posterUrl)
                 .placeholder(R.drawable.placeholder)
                 .tag(mContext)
                 .into(holder.mMovieThumb);

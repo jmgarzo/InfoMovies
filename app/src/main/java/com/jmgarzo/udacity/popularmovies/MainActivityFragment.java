@@ -138,8 +138,6 @@ public class MainActivityFragment extends Fragment implements MovieGridViewAdapt
             try {
                 moviesJson = new JSONObject(moviesJsonStr);
                 JSONArray moviesArray = moviesJson.getJSONArray(MOVIE_RESULTS);
-                String posterPath = "";
-                Integer id = null;
                 moviesList = new ArrayList<>();
                 for (int i = 0; i < moviesArray.length(); i++) {
                     JSONObject jsonMovie = moviesArray.getJSONObject(i);
