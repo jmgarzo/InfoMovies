@@ -22,7 +22,8 @@ public class NetworksUtils {
     private static final String LOG_TAG = NetworksUtils.class.getSimpleName();
 
     private static final String MOVIES_BASE_URL = "https://api.themoviedb.org/3/";
-    //"http://image.tmdb.org/t/p/";
+    private static final String IMAGE_BASE_URL ="http://image.tmdb.org/t/p/";
+
 
 
     private static final String MOST_POPULAR = "movie/popular";
@@ -62,7 +63,8 @@ public class NetworksUtils {
     }
 
     public static URL buildPosterUrl(String posterPath) {
-        Uri builtUri = Uri.parse(MOVIES_BASE_URL).buildUpon()
+
+        Uri builtUri = Uri.parse(IMAGE_BASE_URL).buildUpon()
                 .appendEncodedPath(SIZE_w185)
                 .appendEncodedPath(posterPath)
                 .build();

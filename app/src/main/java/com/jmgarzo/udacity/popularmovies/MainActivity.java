@@ -6,15 +6,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MainActivityFragment.Callback {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container, new MainActivityFragment())
+                    .commit();
+        }
 
-        FetchDataMovies fetchDataMovies = new FetchDataMovies();
-        fetchDataMovies.execute(this);
+
+
     }
 
     @Override
@@ -33,5 +38,13 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void OnItemSelected(int movieId) {
+        Intent intent = new Intent(this,Detail.class);
+        intent.putExtra(Intent.EXTRA_TEXT,Integer.toString(movieId));
+        startActivity(intent);
     }
 }
