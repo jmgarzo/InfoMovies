@@ -112,7 +112,7 @@ public class MainActivityFragment extends Fragment implements MovieGridViewAdapt
                 return null;
             }
 
-            URL moviesURL = NetworksUtils.buildURL(contexts[0]);
+            URL moviesURL = NetworksUtils.buildMainURL(contexts[0]);
 
             ArrayList<Movie> moviesList = null;
             try {

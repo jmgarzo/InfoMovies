@@ -1,31 +1,12 @@
 package com.jmgarzo.udacity.popularmovies.Objects;
 
-import java.util.ArrayList;
-
 /**
  * Created by jmgarzo on 13/02/17.
  */
 
 public class Movie {
 
-//    public static final String _ID = "_id";
-//
-//    //Data from JSON
-//    public static final String POSTER_PATH = "poster_path";
-//    public static final String ADULT = "adult";
-//    public static final String OVERVIEW = "overview";
-//    public static final String RELEASE_DATE = "release_date";
-//    //TODO:IF I have time store Genre_ids
-//    //public static final String GENRE_IDS = "genre_ids";
-//    public static final String MOVIE_WEB_ID = "movie_web_id";
-//    public static final String ORIGINAL_TITLE = "original_title";
-//    public static final String ORIGINAL_LANGUAGE = "original_language";
-//    public static final String TITLE = "title";
-//    public static final String BACKDROP_PATH = "backdrop_path";
-//    public static final String POPULARITY = "popularity";
-//    public static final String VOTE_COUNT = "vote_count";
-//    public static final String VIDEO = "video";
-//    public static final String VOTE_AVERAGE = "vote_average";
+
     private int id;
     private String posterPath;
     private boolean adult;
@@ -36,7 +17,7 @@ public class Movie {
     private String originalTitle;
     private String originalLanguage;
     private String title;
-    private String BackdropPath;
+    private String backdropPath;
     private double popularity;
     private int voteCount;
     private boolean video;
@@ -123,11 +104,11 @@ public class Movie {
     }
 
     public String getBackdropPath() {
-        return BackdropPath;
+        return backdropPath;
     }
 
     public void setBackdropPath(String backdropPath) {
-        BackdropPath = backdropPath;
+        this.backdropPath = backdropPath;
     }
 
     public double getPopularity() {

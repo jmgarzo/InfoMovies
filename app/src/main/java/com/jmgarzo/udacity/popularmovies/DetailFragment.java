@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,14 +14,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.jmgarzo.udacity.popularmovies.Objects.Movie;
+import com.jmgarzo.udacity.popularmovies.Objects.Review;
+import com.jmgarzo.udacity.popularmovies.Objects.Trailer;
 import com.jmgarzo.udacity.popularmovies.utilities.NetworksUtils;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -98,6 +97,8 @@ public class DetailFragment extends Fragment {
             //todo:eliminar solo pruebas
 
             Movie movie = NetworksUtils.getMovieFromJson(strings[0]);
+            //ArrayList<Trailer> trailer = NetworksUtils.getTrailersFromJson(strings[0]);
+            ArrayList<Review> reviews = NetworksUtils.getReviewsFromJson(strings[0]);
 
 
                 URL trailerUrl = NetworksUtils.buildTrailerUrl(strings[0]);

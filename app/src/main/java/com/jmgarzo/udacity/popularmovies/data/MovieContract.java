@@ -22,7 +22,7 @@ public class MovieContract {
         public static final String RELEASE_DATE = "release_date";
         //TODO:IF I have time store Genre_ids
         //public static final String GENRE_IDS = "genre_ids";
-        public static final String MOVIE_WEB_ID = "movie_web_id";
+        public static final String MOVIE_WEB_ID = "id";
         public static final String ORIGINAL_TITLE = "original_title";
         public static final String ORIGINAL_LANGUAGE = "original_language";
         public static final String TITLE = "title";
@@ -43,9 +43,11 @@ public class MovieContract {
 
     public static final class TrailerEntry implements BaseColumns{
 
-        public static final String TABLE_NAME = "video";
-        public static final String MOVIE_KEY = "id_movie";
-        public static final String ID = "id";
+        public static final String TABLE_NAME = "trailer";
+        public static final String _ID = "_id";
+
+
+        public static final String WEB_TRAILER_ID = "id";
         public static final String ISO_639_1 = "iso_639_1";
         public static final String ISO_3166_1 = "iso_3166_1";
         public static final String KEY = "key";
@@ -53,5 +55,20 @@ public class MovieContract {
         public static final String SITE = "site";
         public static final String SIZE = "size";
         public static final String TYPE = "type";
+    }
+
+    public static final class ReviewEntry implements BaseColumns{
+
+        public static final String TABLE_NAME = "review";
+        public static final String _ID ="_id";
+
+        public static final String WEB_REVIEW_ID = "id";
+        public static final String AUTHOR = "author";
+        public static final String CONTENT = "content";
+        public static final String URL = "url";
+
+
+
+
     }
 }
