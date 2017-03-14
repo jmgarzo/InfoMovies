@@ -40,7 +40,7 @@
             android:authorities="@string/content_authority"
             android:name=".data.PopularMoviesProvider"
             android:exported="false"
-            android:syncable="true" />
+            />
 
     </application>
 

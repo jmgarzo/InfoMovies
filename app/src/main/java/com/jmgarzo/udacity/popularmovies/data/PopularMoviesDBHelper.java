@@ -11,18 +11,15 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class PopularMoviesDBHelper extends SQLiteOpenHelper {
 
     public static final int DATABASE_VERSION = 1;
-    private static final String  DATABASE_NAME = "popular_movies.db";
+    private static final String DATABASE_NAME = "popular_movies.db";
 
 
-    public PopularMoviesDBHelper(Context context){
-        super(context,DATABASE_NAME,null,DATABASE_VERSION);
+    public PopularMoviesDBHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
-
-
 
         final String SQL_CREATE_MOVIE_TABLE =
                 "CREATE TABLE " + PopularMovieContract.MovieEntry.TABLE_NAME + " ( " +
@@ -44,7 +41,7 @@ public class PopularMoviesDBHelper extends SQLiteOpenHelper {
                         PopularMovieContract.MovieEntry.TIMESTAMP + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP " +
                         " );";
 
-
+        db.execSQL(SQL_CREATE_MOVIE_TABLE);
 
         final String SQL_CREATE_TRAILER_TABLE =
                 "CREATE TABLE " + PopularMovieContract.TrailerEntry.TABLE_NAME + " ( " +
@@ -63,13 +60,15 @@ public class PopularMoviesDBHelper extends SQLiteOpenHelper {
                         PopularMovieContract.MovieEntry.TABLE_NAME + " (" + PopularMovieContract.MovieEntry._ID + ") ON DELETE CASCADE " +
                         ");";
 
+        db.execSQL(SQL_CREATE_TRAILER_TABLE);
+
         final String SQL_CREATE_REVIEW_TABLE =
                 "CREATE TABLE " + PopularMovieContract.ReviewEntry.TABLE_NAME + " ( " +
                         PopularMovieContract.ReviewEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,  " +
                         PopularMovieContract.ReviewEntry.MOVIE_KEY + " INTEGER NOT NULL, " +
-                        PopularMovieContract.ReviewEntry.WEB_REVIEW_ID+ " TEXT NOT NULL UNIQUE, " +
+                        PopularMovieContract.ReviewEntry.WEB_REVIEW_ID + " TEXT NOT NULL UNIQUE, " +
                         PopularMovieContract.ReviewEntry.AUTHOR + " TEXT NOT NULL, " +
-                        PopularMovieContract.ReviewEntry.CONTENT + " TEXT NOT NULL, "+
+                        PopularMovieContract.ReviewEntry.CONTENT + " TEXT NOT NULL, " +
                         PopularMovieContract.ReviewEntry.URL + " TEXT NOT NULL, " +
                         " FOREIGN KEY (" + PopularMovieContract.ReviewEntry.MOVIE_KEY + ") REFERENCES " +
                         PopularMovieContract.MovieEntry.TABLE_NAME + " (" + PopularMovieContract.MovieEntry._ID + ") ON DELETE CASCADE " +
