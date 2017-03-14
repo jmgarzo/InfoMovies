@@ -1,16 +1,27 @@
 package com.jmgarzo.udacity.popularmovies.data;
 
+import android.content.ContentResolver;
+import android.net.Uri;
+import android.os.StrictMode;
 import android.provider.BaseColumns;
 
 /**
  * Created by jmgarzo on 02/03/17.
  */
 
-public class MovieContract {
+public class PopularMovieContract {
+    public static final String CONTENT_AUTHORITY ="com.jmgarzo.udacity.popularmovies";
+    public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
+
+    public static final String PATH_MOVIE="movie";
+    public static final String PATH_TRAILER="trailer";
+    public static final String PATH_REVIEW = "review";
+
+
+
 
     public static final class MovieEntry implements BaseColumns{
-
-
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_MOVIE).build();
 
         public static final String TABLE_NAME = "movie";
         public static final String _ID = "_id";
@@ -34,8 +45,12 @@ public class MovieContract {
 
         //to distinguish between most_popular, top_rate, and favorite
         public static final String REGISTRY_TYPE="registry_type";
-
         public static final String TIMESTAMP ="timestamp";
+
+        public static final String CONTENT_DIR_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + TABLE_NAME;
+        public static final String CONTENT_ITEM_TYPE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + TABLE_NAME;
 
 
 
@@ -43,9 +58,11 @@ public class MovieContract {
 
     public static final class TrailerEntry implements BaseColumns{
 
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_TRAILER).build();
+
         public static final String TABLE_NAME = "trailer";
         public static final String _ID = "_id";
-
+        public static final String MOVIE_KEY = "id_movie";
 
         public static final String WEB_TRAILER_ID = "id";
         public static final String ISO_639_1 = "iso_639_1";
@@ -55,20 +72,33 @@ public class MovieContract {
         public static final String SITE = "site";
         public static final String SIZE = "size";
         public static final String TYPE = "type";
+        public static final String REGISTRY_TYPE = "registry_type";
+
+        public static final String CONTENT_DIR_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + TABLE_NAME;
+        public static final String CONTENT_ITEM_TYPE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + TABLE_NAME;
     }
 
     public static final class ReviewEntry implements BaseColumns{
 
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_REVIEW).build();
+
         public static final String TABLE_NAME = "review";
         public static final String _ID ="_id";
+        public static final String MOVIE_KEY = "id_movie";
+
 
         public static final String WEB_REVIEW_ID = "id";
         public static final String AUTHOR = "author";
         public static final String CONTENT = "content";
         public static final String URL = "url";
+        public static final String REGISTRY_TYPE = "registry_type";
 
-
-
+        public static final String CONTENT_DIR_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + TABLE_NAME;
+        public static final String CONTENT_ITEM_TYPE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + TABLE_NAME;
 
     }
 }

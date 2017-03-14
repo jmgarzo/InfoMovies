@@ -142,7 +142,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="ccad536e1021e2faa36c7e1d517252d6276e49f8">
+        sha1="936300e93d23ae5f12a51869dfabaf9bc52e8c88">
         <dex dex="/home/jmgarzo/Android/Scholarship/PopularMovies/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_af2b3c4c9f497a9e595753e5bfbc6a84d2158087/classes.dex" />
     </item>
 

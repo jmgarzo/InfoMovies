@@ -35,6 +35,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jmgarzo.udacity.popularmovies.MainActivity" />
         </activity>
+
+        <provider
+            android:authorities="@string/content_authority"
+            android:name=".data.PopularMoviesProvider"
+            android:exported="false"
+            android:syncable="true" />
+
     </application>
 
 </manifest>

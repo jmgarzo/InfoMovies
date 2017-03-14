@@ -3,6 +3,8 @@
 
     <string name="overview_label">Overview</string>
 
+    <string name="content_authority">com.jmgarzo.udacity.popularmovies</string>
+
 
     <!--Settings strings-->
     <string name="title_activity_settings">Settings</string>

@@ -8,7 +8,7 @@ import com.jmgarzo.udacity.popularmovies.BuildConfig;
 import com.jmgarzo.udacity.popularmovies.Objects.Movie;
 import com.jmgarzo.udacity.popularmovies.Objects.Review;
 import com.jmgarzo.udacity.popularmovies.Objects.Trailer;
-import com.jmgarzo.udacity.popularmovies.data.MovieContract;
+import com.jmgarzo.udacity.popularmovies.data.PopularMovieContract;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -184,19 +184,19 @@ public class NetworksUtils {
         JSONObject movieJson = null;
         try {
             movieJson = new JSONObject(movieJsonStr);
-            movie.setPosterPath(movieJson.getString(MovieContract.MovieEntry.POSTER_PATH));
-            movie.setAdult(isAdult(movieJson.getString(MovieContract.MovieEntry.ADULT)));
-            movie.setOverview(movieJson.getString(MovieContract.MovieEntry.OVERVIEW));
-            movie.setReleaseDate(movieJson.getString(MovieContract.MovieEntry.RELEASE_DATE));
-            movie.setMovieWebId(movieJson.getString(MovieContract.MovieEntry.MOVIE_WEB_ID));
-            movie.setOriginalTitle(movieJson.getString(MovieContract.MovieEntry.ORIGINAL_TITLE));
-            movie.setOriginalLanguage(movieJson.getString(MovieContract.MovieEntry.ORIGINAL_LANGUAGE));
-            movie.setTitle(movieJson.getString(MovieContract.MovieEntry.TITLE));
-            movie.setBackdropPath(movieJson.getString(MovieContract.MovieEntry.BACKDROP_PATH));
-            movie.setPopularity(Double.valueOf(movieJson.getString(MovieContract.MovieEntry.POPULARITY)));
-            movie.setVoteCount(Integer.valueOf(movieJson.getString(MovieContract.MovieEntry.VOTE_COUNT)));
-            movie.setVideo(isVideo(movieJson.getString(MovieContract.MovieEntry.VIDEO)));
-            movie.setVoteAverage(Double.valueOf(movieJson.getString(MovieContract.MovieEntry.VOTE_AVERAGE)));
+            movie.setPosterPath(movieJson.getString(PopularMovieContract.MovieEntry.POSTER_PATH));
+            movie.setAdult(isAdult(movieJson.getString(PopularMovieContract.MovieEntry.ADULT)));
+            movie.setOverview(movieJson.getString(PopularMovieContract.MovieEntry.OVERVIEW));
+            movie.setReleaseDate(movieJson.getString(PopularMovieContract.MovieEntry.RELEASE_DATE));
+            movie.setMovieWebId(movieJson.getString(PopularMovieContract.MovieEntry.MOVIE_WEB_ID));
+            movie.setOriginalTitle(movieJson.getString(PopularMovieContract.MovieEntry.ORIGINAL_TITLE));
+            movie.setOriginalLanguage(movieJson.getString(PopularMovieContract.MovieEntry.ORIGINAL_LANGUAGE));
+            movie.setTitle(movieJson.getString(PopularMovieContract.MovieEntry.TITLE));
+            movie.setBackdropPath(movieJson.getString(PopularMovieContract.MovieEntry.BACKDROP_PATH));
+            movie.setPopularity(Double.valueOf(movieJson.getString(PopularMovieContract.MovieEntry.POPULARITY)));
+            movie.setVoteCount(Integer.valueOf(movieJson.getString(PopularMovieContract.MovieEntry.VOTE_COUNT)));
+            movie.setVideo(isVideo(movieJson.getString(PopularMovieContract.MovieEntry.VIDEO)));
+            movie.setVoteAverage(Double.valueOf(movieJson.getString(PopularMovieContract.MovieEntry.VOTE_AVERAGE)));
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -260,13 +260,13 @@ public class NetworksUtils {
 
                     JSONObject jsonTrailer = trailersArray.getJSONObject(i);
 
-                    trailer.setWebTrailerId(jsonTrailer.getString(MovieContract.TrailerEntry.WEB_TRAILER_ID));
-                    trailer.setIso_639_1(jsonTrailer.getString(MovieContract.TrailerEntry.ISO_639_1));
-                    trailer.setIso_3166_1(jsonTrailer.getString(MovieContract.TrailerEntry.ISO_3166_1));
-                    trailer.setKey(jsonTrailer.getString(MovieContract.TrailerEntry.KEY));
-                    trailer.setName(jsonTrailer.getString(MovieContract.TrailerEntry.NAME));
-                    trailer.setSize(jsonTrailer.getString(MovieContract.TrailerEntry.SIZE));
-                    trailer.setType(jsonTrailer.getString(MovieContract.TrailerEntry.TYPE));
+                    trailer.setWebTrailerId(jsonTrailer.getString(PopularMovieContract.TrailerEntry.WEB_TRAILER_ID));
+                    trailer.setIso_639_1(jsonTrailer.getString(PopularMovieContract.TrailerEntry.ISO_639_1));
+                    trailer.setIso_3166_1(jsonTrailer.getString(PopularMovieContract.TrailerEntry.ISO_3166_1));
+                    trailer.setKey(jsonTrailer.getString(PopularMovieContract.TrailerEntry.KEY));
+                    trailer.setName(jsonTrailer.getString(PopularMovieContract.TrailerEntry.NAME));
+                    trailer.setSize(jsonTrailer.getString(PopularMovieContract.TrailerEntry.SIZE));
+                    trailer.setType(jsonTrailer.getString(PopularMovieContract.TrailerEntry.TYPE));
 
                     arrayListTrailers.add(trailer);
 
@@ -341,10 +341,10 @@ public class NetworksUtils {
 
                     JSONObject jsonReview = reviewArray.getJSONObject(i);
 
-                    review.setWebReviewId(jsonReview.getString(MovieContract.ReviewEntry.WEB_REVIEW_ID));
-                    review.setAuthor(jsonReview.getString(MovieContract.ReviewEntry.AUTHOR));
-                    review.setContent(jsonReview.getString(MovieContract.ReviewEntry.CONTENT));
-                    review.setUrl(jsonReview.getString(MovieContract.ReviewEntry.URL));
+                    review.setWebReviewId(jsonReview.getString(PopularMovieContract.ReviewEntry.WEB_REVIEW_ID));
+                    review.setAuthor(jsonReview.getString(PopularMovieContract.ReviewEntry.AUTHOR));
+                    review.setContent(jsonReview.getString(PopularMovieContract.ReviewEntry.CONTENT));
+                    review.setUrl(jsonReview.getString(PopularMovieContract.ReviewEntry.URL));
 
                     arrayListReviews.add(review);
 
