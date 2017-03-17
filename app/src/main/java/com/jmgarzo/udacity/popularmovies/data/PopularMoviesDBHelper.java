@@ -66,10 +66,11 @@ public class PopularMoviesDBHelper extends SQLiteOpenHelper {
                 "CREATE TABLE " + PopularMovieContract.ReviewEntry.TABLE_NAME + " ( " +
                         PopularMovieContract.ReviewEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,  " +
                         PopularMovieContract.ReviewEntry.MOVIE_KEY + " INTEGER NOT NULL, " +
-                        PopularMovieContract.ReviewEntry.WEB_REVIEW_ID + " TEXT NOT NULL UNIQUE, " +
+                        PopularMovieContract.ReviewEntry.WEB_REVIEW_ID + " TEXT NOT NULL, " +
                         PopularMovieContract.ReviewEntry.AUTHOR + " TEXT NOT NULL, " +
                         PopularMovieContract.ReviewEntry.CONTENT + " TEXT NOT NULL, " +
                         PopularMovieContract.ReviewEntry.URL + " TEXT NOT NULL, " +
+                        PopularMovieContract.ReviewEntry.REGISTRY_TYPE + " TEXT NOT NULL, " +
                         " FOREIGN KEY (" + PopularMovieContract.ReviewEntry.MOVIE_KEY + ") REFERENCES " +
                         PopularMovieContract.MovieEntry.TABLE_NAME + " (" + PopularMovieContract.MovieEntry._ID + ") ON DELETE CASCADE " +
                         ");";

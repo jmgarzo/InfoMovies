@@ -17,6 +17,10 @@ public class PopularMovieContract {
     public static final String PATH_TRAILER="trailer";
     public static final String PATH_REVIEW = "review";
 
+    public static final String TOP_RATE_REGISTRY_TYPE="top_rate";
+    public static final String MOST_POPULAR_REGISTRY_TYPE = "most_popular";
+    public static final String FAVORITE_REGISTRY_TYPE = "favorite";
+
 
 
 
