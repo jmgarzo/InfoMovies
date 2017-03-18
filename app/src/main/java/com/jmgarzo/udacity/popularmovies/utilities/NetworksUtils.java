@@ -186,8 +186,13 @@ public class NetworksUtils {
 
     }
 
+    /**
+     * This method returns Top rate, and most popular movies from API
+     *
+     * @param context
+     * @return ArrayList<Movie>
+     */
     public static ArrayList<Movie> getMovies(Context context){
-
 
         URL moviesURLMostPopular = NetworksUtils.buildMainURL(context,MOST_POPULAR);
         URL moviesURLTopRate = NetworksUtils.buildMainURL(context,TOP_RATE);
@@ -202,8 +207,6 @@ public class NetworksUtils {
         } catch (IOException e) {
             Log.e(LOG_TAG, e.toString());
         }
-
-
 
         return moviesList;
     }

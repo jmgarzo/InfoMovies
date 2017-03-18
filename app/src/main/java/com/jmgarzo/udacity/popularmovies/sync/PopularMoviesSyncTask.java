@@ -20,9 +20,7 @@ public class PopularMoviesSyncTask {
 
         try {
 
-
             ArrayList<Movie> moviesList = NetworksUtils.getMovies(context);
-
 
             if (moviesList != null && moviesList.size() > 0) {
                 ContentValues[] contentValues = new ContentValues[moviesList.size()];
@@ -36,8 +34,6 @@ public class PopularMoviesSyncTask {
                         PopularMovieContract.MovieEntry.CONTENT_URI,
                         null,
                         null);
-
-
 
                 contentResolver.bulkInsert(PopularMovieContract.MovieEntry.CONTENT_URI,
                         contentValues);
