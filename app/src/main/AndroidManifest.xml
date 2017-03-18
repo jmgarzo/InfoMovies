@@ -37,10 +37,22 @@
         </activity>
 
         <provider
-            android:authorities="@string/content_authority"
             android:name=".data.PopularMoviesProvider"
-            android:exported="false"
-            />
+            android:authorities="@string/content_authority"
+            android:exported="false" />
+
+        <service
+            android:name=".sync.PopularMoviesSyncIntentService"
+            android:exported="false" />
+
+        <service android:name=".sync.PopularMoviesJobService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
+            </intent-filter>
+        </service>
+
+
 
     </application>
 

@@ -166,7 +166,7 @@ public class TestPopularMoviesProvider {
 
 
     @Test
-    public void testBulkInsert(){
+    public void testBulkMovieInsert(){
         ContentValues[] bulkInsertContentValues = TestUtilities.createBulkInsertTestMovieValues();
 
         int insertCount = mContext.getContentResolver().bulkInsert(

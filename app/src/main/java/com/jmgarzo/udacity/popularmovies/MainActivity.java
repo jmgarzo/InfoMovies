@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.jmgarzo.udacity.popularmovies.sync.PopularMoviesSyncUtils;
+
 public class MainActivity extends AppCompatActivity implements MainActivityFragment.Callback {
 
     @Override
@@ -17,6 +19,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityFragm
                     .add(R.id.container, new MainActivityFragment())
                     .commit();
         }
+
+        PopularMoviesSyncUtils.initialize(this);
 
 
 

@@ -74,7 +74,7 @@ public class MainActivityFragment extends Fragment implements MovieGridViewAdapt
     }
 
     private void loadMovieThumbs() {
-        new FetchDataMovies().execute(getActivity());
+       // new FetchDataMovies().execute(getActivity());
     }
 
     @Override
@@ -95,77 +95,79 @@ public class MainActivityFragment extends Fragment implements MovieGridViewAdapt
     }
 
 
-    public class FetchDataMovies extends AsyncTask<Context, Void, ArrayList<Movie>> {
+//    public class FetchDataMovies extends AsyncTask<Context, Void, ArrayList<Movie>> {
+//
+//        private String LOG_TAG = FetchDataMovies.class.getSimpleName();
+//
+//        @Override
+//        protected void onPreExecute() {
+//            super.onPreExecute();
+//            mLoadingIndicator.setVisibility(View.VISIBLE);
+//        }
+//
+//        @Override
+//        protected ArrayList<Movie> doInBackground(Context... contexts) {
+//
+//            if (contexts.length == 0) {
+//                return null;
+//            }
+//
+//            URL moviesURL = NetworksUtils.buildMainURL(contexts[0]);
+//
+//            ArrayList<Movie> moviesList = null;
+//            try {
+//                String jsonMoviesResponse = NetworksUtils.getResponseFromHttpUrl(moviesURL);
+//                moviesList = getMoviesFromJson(jsonMoviesResponse);
+//
+//            } catch (IOException e) {
+//                Log.e(LOG_TAG, e.toString());
+//            }
+//
+//
+//            return moviesList;
+//        }
+//
+//        private ArrayList<Movie> getMoviesFromJson(String moviesJsonStr) {
+//            final String MOVIE_RESULTS = "results";
+//            final String POSTER_PATH = "poster_path";
+//            final String ID = "id";
+//
+//            ArrayList<Movie> moviesList = null;
+//
+//            JSONObject moviesJson = null;
+//            try {
+//                moviesJson = new JSONObject(moviesJsonStr);
+//                JSONArray moviesArray = moviesJson.getJSONArray(MOVIE_RESULTS);
+//                moviesList = new ArrayList<>();
+//                for (int i = 0; i < moviesArray.length(); i++) {
+//                    JSONObject jsonMovie = moviesArray.getJSONObject(i);
+//                    Movie movie = new Movie();
+//                    movie.setId(jsonMovie.getInt(ID));
+//                    movie.setPosterPath(jsonMovie.getString(POSTER_PATH));
+//
+//                    moviesList.add(movie);
+//                }
+//
+//            } catch (JSONException e) {
+//                Log.e(LOG_TAG, e.toString());
+//            }
+//
+//            return moviesList;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(ArrayList<Movie> moviesList) {
+//            mLoadingIndicator.setVisibility(View.INVISIBLE);
+//            if (null != moviesList) {
+//                showMovieThumbs();
+//                mGridViewAdapter.setMovies(moviesList);
+//            } else {
+//                showErrorMessage();
+//            }
+//        }
+//    }
 
-        private String LOG_TAG = FetchDataMovies.class.getSimpleName();
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            mLoadingIndicator.setVisibility(View.VISIBLE);
-        }
-
-        @Override
-        protected ArrayList<Movie> doInBackground(Context... contexts) {
-
-            if (contexts.length == 0) {
-                return null;
-            }
-
-            URL moviesURL = NetworksUtils.buildMainURL(contexts[0]);
-
-            ArrayList<Movie> moviesList = null;
-            try {
-                String jsonMoviesResponse = NetworksUtils.getResponseFromHttpUrl(moviesURL);
-                moviesList = getMoviesFromJson(jsonMoviesResponse);
-
-            } catch (IOException e) {
-                Log.e(LOG_TAG, e.toString());
-            }
-
-
-            return moviesList;
-        }
-
-        private ArrayList<Movie> getMoviesFromJson(String moviesJsonStr) {
-            final String MOVIE_RESULTS = "results";
-            final String POSTER_PATH = "poster_path";
-            final String ID = "id";
-
-            ArrayList<Movie> moviesList = null;
-
-            JSONObject moviesJson = null;
-            try {
-                moviesJson = new JSONObject(moviesJsonStr);
-                JSONArray moviesArray = moviesJson.getJSONArray(MOVIE_RESULTS);
-                moviesList = new ArrayList<>();
-                for (int i = 0; i < moviesArray.length(); i++) {
-                    JSONObject jsonMovie = moviesArray.getJSONObject(i);
-                    Movie movie = new Movie();
-                    movie.setId(jsonMovie.getInt(ID));
-                    movie.setPosterPath(jsonMovie.getString(POSTER_PATH));
-
-                    moviesList.add(movie);
-                }
-
-            } catch (JSONException e) {
-                Log.e(LOG_TAG, e.toString());
-            }
-
-            return moviesList;
-        }
-
-        @Override
-        protected void onPostExecute(ArrayList<Movie> moviesList) {
-            mLoadingIndicator.setVisibility(View.INVISIBLE);
-            if (null != moviesList) {
-                showMovieThumbs();
-                mGridViewAdapter.setMovies(moviesList);
-            } else {
-                showErrorMessage();
-            }
-        }
-    }
 
 
 }

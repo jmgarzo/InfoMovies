@@ -1,5 +1,9 @@
 package com.jmgarzo.udacity.popularmovies.Objects;
 
+import android.content.ContentValues;
+
+import com.jmgarzo.udacity.popularmovies.data.PopularMovieContract;
+
 /**
  * Created by jmgarzo on 13/02/17.
  */
@@ -12,7 +16,6 @@ public class Movie {
     private boolean adult;
     private String overview;
     private String releaseDate;
-    private int gnereIds;
     private String movieWebId;
     private String originalTitle;
     private String originalLanguage;
@@ -22,6 +25,8 @@ public class Movie {
     private int voteCount;
     private boolean video;
     private double voteAverage;
+    private String registryType;
+    private String timestamp;
 
     public int getId() {
         return id;
@@ -61,14 +66,6 @@ public class Movie {
 
     public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
-    }
-
-    public int getGnereIds() {
-        return gnereIds;
-    }
-
-    public void setGnereIds(int gnereIds) {
-        this.gnereIds = gnereIds;
     }
 
     public String getMovieWebId() {
@@ -141,5 +138,45 @@ public class Movie {
 
     public void setVoteAverage(double voteAverage) {
         this.voteAverage = voteAverage;
+    }
+
+    public String getRegistryType() {
+        return registryType;
+    }
+
+    public void setRegistryType(String registryType) {
+        this.registryType = registryType;
+    }
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    /**
+     *
+     * @return a movie without _id and timestamp to make an insert
+     */
+    public ContentValues getContentValues(){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(PopularMovieContract.MovieEntry.POSTER_PATH,getPosterPath());
+        contentValues.put(PopularMovieContract.MovieEntry.ADULT,Boolean.toString(isAdult()));
+        contentValues.put(PopularMovieContract.MovieEntry.OVERVIEW,getOverview());
+        contentValues.put(PopularMovieContract.MovieEntry.RELEASE_DATE,getReleaseDate());
+        contentValues.put(PopularMovieContract.MovieEntry.MOVIE_WEB_ID,getMovieWebId());
+        contentValues.put(PopularMovieContract.MovieEntry.ORIGINAL_TITLE,getOriginalTitle());
+        contentValues.put(PopularMovieContract.MovieEntry.ORIGINAL_LANGUAGE,getOriginalLanguage());
+        contentValues.put(PopularMovieContract.MovieEntry.TITLE,getTitle());
+        contentValues.put(PopularMovieContract.MovieEntry.BACKDROP_PATH,getBackdropPath());
+        contentValues.put(PopularMovieContract.MovieEntry.POPULARITY,getPopularity());
+        contentValues.put(PopularMovieContract.MovieEntry.VOTE_COUNT,getVoteCount());
+        contentValues.put(PopularMovieContract.MovieEntry.VIDEO,Boolean.toString(isVideo()));
+        contentValues.put(PopularMovieContract.MovieEntry.VOTE_AVERAGE,getVoteAverage());
+        contentValues.put(PopularMovieContract.MovieEntry.REGISTRY_TYPE,getRegistryType());
+
+        return contentValues;
     }
 }

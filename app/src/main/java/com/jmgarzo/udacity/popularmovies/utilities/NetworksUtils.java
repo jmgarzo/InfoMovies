@@ -34,8 +34,8 @@ public class NetworksUtils {
     private static final String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/";
 
 
-    private static final String MOST_POPULAR = "movie/popular";
-    private static final String TOP_RATE = "movie/top_rated";
+    public static final String MOST_POPULAR = "movie/popular";
+    public static final String TOP_RATE = "movie/top_rated";
 
 
     private static final String API_KEY_PARAM = "api_key";
@@ -53,6 +53,31 @@ public class NetworksUtils {
     private static final String SIZE_w500 = "w500";
     private static final String SIZE_w780 = "w780";
 
+    private static final String POSTER_PATH = "poster_path";
+    private static final String ADULT = "adult";
+    private static final String OVERVIEW = "overview";
+    private static final String RELEASE_DATE = "release_date";
+    private static final String WEB_MOVIE_ID = "id";
+    private static final String ORIGINAL_TITLE = "original_title";
+    private static final String ORIGINAL_LANGUAGE = "original_language";
+    private static final String TITLE = "title";
+    private static final String BACKDROP_PATH = "backdrop_path";
+    private static final String POPULARITY = "popularity";
+    private static final String VOTE_COUNT = "vote_count";
+    private static final String VIDEO = "video" ;
+    private static final String VOTE_AVERAGE = "vote_average" ;
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * This method returns the URL for MOST_POPULAR or TOP_RATE query depending on Preferences
@@ -60,16 +85,16 @@ public class NetworksUtils {
      * @param context
      * @return URL
      */
-    public static URL buildMainURL(Context context) {
-        String sortBy = "";
-        if (SettingsUtils.isPreferenceSortByMostPopular(context)) {
-            sortBy = MOST_POPULAR;
-        } else if (SettingsUtils.isPreferenceSortByTopRated(context)) {
-            sortBy = TOP_RATE;
-        }
+    public static URL buildMainURL(Context context,String registryType) {
+//        String sortBy = "";
+//        if (SettingsUtils.isPreferenceSortByMostPopular(context)) {
+//            sortBy = MOST_POPULAR;
+//        } else if (SettingsUtils.isPreferenceSortByTopRated(context)) {
+//            sortBy = TOP_RATE;
+//        }
 
         Uri builtUri = Uri.parse(MOVIES_BASE_URL).buildUpon()
-                .appendEncodedPath(sortBy)
+                .appendEncodedPath(registryType)
                 .appendQueryParameter(API_KEY_PARAM, BuildConfig.THE_MOVIE_DB_API_KEY)
                 .build();
 
@@ -159,6 +184,66 @@ public class NetworksUtils {
         }
         return url;
 
+    }
+
+    public static ArrayList<Movie> getMovies(Context context){
+
+
+        URL moviesURLMostPopular = NetworksUtils.buildMainURL(context,MOST_POPULAR);
+        URL moviesURLTopRate = NetworksUtils.buildMainURL(context,TOP_RATE);
+
+        ArrayList<Movie> moviesList = null;
+        try {
+            String jsonMoviesResponse = NetworksUtils.getResponseFromHttpUrl(moviesURLMostPopular);
+            moviesList = getMoviesFromJson(jsonMoviesResponse,MOST_POPULAR);
+
+            jsonMoviesResponse=NetworksUtils.getResponseFromHttpUrl(moviesURLTopRate);
+            moviesList.addAll(getMoviesFromJson(jsonMoviesResponse,TOP_RATE));
+        } catch (IOException e) {
+            Log.e(LOG_TAG, e.toString());
+        }
+
+
+
+        return moviesList;
+    }
+
+    private static ArrayList<Movie> getMoviesFromJson(String moviesJsonStr,String registryType) {
+        final String MOVIE_RESULTS = "results";
+
+
+        ArrayList<Movie> moviesList = null;
+
+        JSONObject moviesJson = null;
+        try {
+            moviesJson = new JSONObject(moviesJsonStr);
+            JSONArray moviesArray = moviesJson.getJSONArray(MOVIE_RESULTS);
+            moviesList = new ArrayList<>();
+            for (int i = 0; i < moviesArray.length(); i++) {
+                JSONObject jsonMovie = moviesArray.getJSONObject(i);
+                Movie movie = new Movie();
+                movie.setPosterPath(jsonMovie.getString(POSTER_PATH));
+                movie.setAdult(Boolean.valueOf(jsonMovie.getString(ADULT)));
+                movie.setOverview(jsonMovie.getString(OVERVIEW));
+                movie.setReleaseDate(jsonMovie.getString(RELEASE_DATE));
+                movie.setMovieWebId(jsonMovie.getString(WEB_MOVIE_ID));
+                movie.setOriginalTitle(jsonMovie.getString(ORIGINAL_TITLE));
+                movie.setOriginalLanguage(jsonMovie.getString(ORIGINAL_LANGUAGE));
+                movie.setTitle(jsonMovie.getString(TITLE));
+                movie.setBackdropPath(jsonMovie.getString(BACKDROP_PATH));
+                movie.setPopularity(jsonMovie.getDouble(POPULARITY));
+                movie.setVoteCount(jsonMovie.getInt(VOTE_COUNT));
+                movie.setVideo(Boolean.valueOf(jsonMovie.getString(VIDEO)));
+                movie.setVoteAverage(jsonMovie.getDouble(VOTE_AVERAGE));
+                movie.setRegistryType(registryType);
+                moviesList.add(movie);
+            }
+
+        } catch (JSONException e) {
+            Log.e(LOG_TAG, e.toString());
+        }
+
+        return moviesList;
     }
 
     public static Movie getMovieFromJson(String idMovie) {
