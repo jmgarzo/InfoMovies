@@ -1,9 +1,13 @@
 package com.jmgarzo.udacity.popularmovies;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,7 +19,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.jmgarzo.udacity.popularmovies.Objects.Movie;
+import com.jmgarzo.udacity.popularmovies.data.PopularMovieContract;
 import com.jmgarzo.udacity.popularmovies.utilities.NetworksUtils;
+import com.jmgarzo.udacity.popularmovies.utilities.SettingsUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,9 +32,14 @@ import java.net.URL;
 import java.util.ArrayList;
 
 
-public class MainActivityFragment extends Fragment implements MovieGridViewAdapter.MovieGridViewAdapterOnClickHandler {
+public class MainActivityFragment extends Fragment implements
+        LoaderManager.LoaderCallbacks<Cursor>,
+        MovieGridViewAdapter.MovieGridViewAdapterOnClickHandler {
 
     private static final String TAG_LOG = MainActivityFragment.class.getSimpleName();
+
+    private static final int ID_MOVIES_LOADER = 14;
+
 
 
     private RecyclerView mRecyclerView;
@@ -36,6 +47,8 @@ public class MainActivityFragment extends Fragment implements MovieGridViewAdapt
 
     private TextView mErrorMenssageDisplay;
     private ProgressBar mLoadingIndicator;
+
+
 
     public interface Callback {
         public void OnItemSelected(int movieId);
@@ -63,12 +76,15 @@ public class MainActivityFragment extends Fragment implements MovieGridViewAdapt
 
         mRecyclerView.setHasFixedSize(true);
 
-        mGridViewAdapter = new MovieGridViewAdapter(this);
+        mGridViewAdapter = new MovieGridViewAdapter(getContext(),this);
 
         mRecyclerView.setAdapter(mGridViewAdapter);
 
         mLoadingIndicator = (ProgressBar) viewRoot.findViewById(R.id.pb_loading_indicator);
         loadMovieThumbs();
+
+        getActivity().getSupportLoaderManager().initLoader(ID_MOVIES_LOADER, null, this);
+
 
         return viewRoot;
     }
@@ -95,77 +111,48 @@ public class MainActivityFragment extends Fragment implements MovieGridViewAdapt
     }
 
 
-//    public class FetchDataMovies extends AsyncTask<Context, Void, ArrayList<Movie>> {
-//
-//        private String LOG_TAG = FetchDataMovies.class.getSimpleName();
-//
-//        @Override
-//        protected void onPreExecute() {
-//            super.onPreExecute();
-//            mLoadingIndicator.setVisibility(View.VISIBLE);
-//        }
-//
-//        @Override
-//        protected ArrayList<Movie> doInBackground(Context... contexts) {
-//
-//            if (contexts.length == 0) {
-//                return null;
-//            }
-//
-//            URL moviesURL = NetworksUtils.buildMainURL(contexts[0]);
-//
-//            ArrayList<Movie> moviesList = null;
-//            try {
-//                String jsonMoviesResponse = NetworksUtils.getResponseFromHttpUrl(moviesURL);
-//                moviesList = getMoviesFromJson(jsonMoviesResponse);
-//
-//            } catch (IOException e) {
-//                Log.e(LOG_TAG, e.toString());
-//            }
-//
-//
-//            return moviesList;
-//        }
-//
-//        private ArrayList<Movie> getMoviesFromJson(String moviesJsonStr) {
-//            final String MOVIE_RESULTS = "results";
-//            final String POSTER_PATH = "poster_path";
-//            final String ID = "id";
-//
-//            ArrayList<Movie> moviesList = null;
-//
-//            JSONObject moviesJson = null;
-//            try {
-//                moviesJson = new JSONObject(moviesJsonStr);
-//                JSONArray moviesArray = moviesJson.getJSONArray(MOVIE_RESULTS);
-//                moviesList = new ArrayList<>();
-//                for (int i = 0; i < moviesArray.length(); i++) {
-//                    JSONObject jsonMovie = moviesArray.getJSONObject(i);
-//                    Movie movie = new Movie();
-//                    movie.setId(jsonMovie.getInt(ID));
-//                    movie.setPosterPath(jsonMovie.getString(POSTER_PATH));
-//
-//                    moviesList.add(movie);
-//                }
-//
-//            } catch (JSONException e) {
-//                Log.e(LOG_TAG, e.toString());
-//            }
-//
-//            return moviesList;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(ArrayList<Movie> moviesList) {
-//            mLoadingIndicator.setVisibility(View.INVISIBLE);
-//            if (null != moviesList) {
-//                showMovieThumbs();
-//                mGridViewAdapter.setMovies(moviesList);
-//            } else {
-//                showErrorMessage();
-//            }
-//        }
-//    }
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        switch(id){
+
+            case ID_MOVIES_LOADER: {
+
+                String selectionArg="";
+                if(SettingsUtils.isPreferenceSortByMostPopular(getContext())){
+                    selectionArg= PopularMovieContract.MOST_POPULAR_REGISTRY_TYPE;
+                }else{
+                    selectionArg= PopularMovieContract.TOP_RATE_REGISTRY_TYPE;
+                }
+
+                return new CursorLoader(
+                        getContext(),
+                        PopularMovieContract.MovieEntry.CONTENT_URI,
+                        null,
+                        PopularMovieContract.MovieEntry.REGISTRY_TYPE + " = ?",
+                        new String[]{selectionArg},
+                        null);
+            }
+
+            default:
+                throw new RuntimeException("Loader Not Implemented: " + id);
+        }
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+
+        mGridViewAdapter.swapCursor(data);
+        //TODO:Quedan cosas por hacer para ajusar pantalla
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+
+        mGridViewAdapter.swapCursor(null);
+    }
+
+
+
 
 
 

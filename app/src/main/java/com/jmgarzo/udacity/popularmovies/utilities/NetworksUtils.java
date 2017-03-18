@@ -195,10 +195,10 @@ public class NetworksUtils {
         ArrayList<Movie> moviesList = null;
         try {
             String jsonMoviesResponse = NetworksUtils.getResponseFromHttpUrl(moviesURLMostPopular);
-            moviesList = getMoviesFromJson(jsonMoviesResponse,MOST_POPULAR);
+            moviesList = getMoviesFromJson(jsonMoviesResponse,PopularMovieContract.MOST_POPULAR_REGISTRY_TYPE);
 
             jsonMoviesResponse=NetworksUtils.getResponseFromHttpUrl(moviesURLTopRate);
-            moviesList.addAll(getMoviesFromJson(jsonMoviesResponse,TOP_RATE));
+            moviesList.addAll(getMoviesFromJson(jsonMoviesResponse,PopularMovieContract.TOP_RATE_REGISTRY_TYPE));
         } catch (IOException e) {
             Log.e(LOG_TAG, e.toString());
         }
