@@ -2,9 +2,12 @@ package com.jmgarzo.udacity.popularmovies;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.AsyncTask;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,20 +16,20 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.jmgarzo.udacity.popularmovies.Objects.Movie;
-import com.jmgarzo.udacity.popularmovies.Objects.Review;
-import com.jmgarzo.udacity.popularmovies.Objects.Trailer;
+import com.jmgarzo.udacity.popularmovies.data.PopularMovieContract;
+import com.jmgarzo.udacity.popularmovies.utilities.DataBaseUtils;
 import com.jmgarzo.udacity.popularmovies.utilities.NetworksUtils;
+import com.jmgarzo.udacity.popularmovies.utilities.SettingsUtils;
 import com.squareup.picasso.Picasso;
-
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class DetailFragment extends Fragment {
+public class DetailFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+
+    private static final int DETAIL_LOADER = 0;
+    private int movieId;
+
 
     private Activity mActivity;
     private ProgressBar mProgressBar;
@@ -57,11 +60,14 @@ public class DetailFragment extends Fragment {
 
         Intent intent = getActivity().getIntent();
         if (null != intent) {
-            String movieId = intent.getStringExtra(Intent.EXTRA_TEXT);
-            if (null != movieId && !"".equals(movieId)) {
-                new LoadDataFromUrl().execute(movieId);
+            String intentMovieId = intent.getStringExtra(Intent.EXTRA_TEXT);
+            if (null != intentMovieId && !"".equals(intentMovieId)) {
+                movieId = Integer.parseInt(intentMovieId);
             }
         }
+
+        getLoaderManager().initLoader(DETAIL_LOADER, null, this);
+
 
         return view;
 
@@ -77,60 +83,62 @@ public class DetailFragment extends Fragment {
         mErrorMenssageDetail.setVisibility(View.VISIBLE);
     }
 
-    public class LoadDataFromUrl extends AsyncTask<String, Void, Movie> {
-        private final String LOG_TAG = LoadDataFromUrl.class.getSimpleName();
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            mProgressBar.setVisibility(View.VISIBLE);
-        }
+        switch (id) {
+            case DETAIL_LOADER: {
 
-        @Override
-        protected Movie doInBackground(String... strings) {
-            if (strings.length == 0) {
-                return null;
+                String sortByPreference = SettingsUtils.getPreferredSortBy(getContext());
+                String selection = PopularMovieContract.MovieEntry._ID + "= ? AND "
+                        + PopularMovieContract.MovieEntry.REGISTRY_TYPE + " = ? ";
+
+
+                return new CursorLoader(getActivity(),
+                        PopularMovieContract.MovieEntry.CONTENT_URI,
+                        DataBaseUtils.MOVIE_COLUMS,
+                        selection,
+                        new String[]{Integer.toString(movieId),sortByPreference},
+                        null);
+
             }
-
-
-
-            //todo:eliminar solo pruebas
-
-            Movie movie = NetworksUtils.getMovieFromJson(strings[0]);
-            //ArrayList<Trailer> trailer = NetworksUtils.getTrailersFromJson(strings[0]);
-            ArrayList<Review> reviews = NetworksUtils.getReviewsFromJson(strings[0]);
-
-
-                URL trailerUrl = NetworksUtils.buildTrailerUrl(strings[0]);
-
-            try {
-                String jsonTrailerResponse = NetworksUtils.getResponseFromHttpUrl(trailerUrl);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-
-            return movie;
+            default:
+                throw new RuntimeException("Loader Not Implemented: " + id);
         }
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+
+        switch (loader.getId()) {
+            case DETAIL_LOADER: {
+                mProgressBar.setVisibility(View.INVISIBLE);
+                if (null != data && data.moveToFirst()) {
+                    showMovieData();
+                    mActivity.setTitle(data.getString(DataBaseUtils.COL_MOVIE_TITLE));
+                    releaseDate.setText(data.getString(DataBaseUtils.COL_MOVIE_RELEASE_DATE));
+                    Picasso.with(mActivity)
+                            .load(NetworksUtils.buildPosterDetail(data.getString(DataBaseUtils.COL_MOVIE_POSTER_PATH)))
+                            .placeholder(R.drawable.placeholder)
+                            .tag(mActivity)
+                            .into(postertImage);
+                    voteAverage.setText(data.getString(DataBaseUtils.COL_MOVIE_VOTE_AVERAGE).concat("/10"));
+                    overview.setText(data.getString(DataBaseUtils.COL_MOVIE_OVERVIEW));
+                } else {
+                    showErrorMessage();
 
 
-        @Override
-        protected void onPostExecute(Movie movie) {
-            mProgressBar.setVisibility(View.INVISIBLE);
-            if (null != movie) {
-                showMovieData();
-                mActivity.setTitle(movie.getTitle());
-                releaseDate.setText(movie.getReleaseDate());
-                Picasso.with(mActivity)
-                        .load(NetworksUtils.buildPosterDetail(movie.getPosterPath()).toString())
-                        .placeholder(R.drawable.placeholder)
-                        .tag(mActivity)
-                        .into(postertImage);
-                voteAverage.setText(Double.toString(movie.getVoteAverage()).concat("/10"));
-                overview.setText(movie.getOverview());
-            } else {
-                showErrorMessage();
+                }
+
+
             }
         }
     }
-}
+
+            @Override
+            public void onLoaderReset (Loader < Cursor > loader) {
+
+            }
+
+
+        }

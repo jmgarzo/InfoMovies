@@ -1,8 +1,6 @@
 package com.jmgarzo.udacity.popularmovies;
 
-import android.content.Context;
 import android.database.Cursor;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -11,25 +9,14 @@ import android.support.v4.content.Loader;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.jmgarzo.udacity.popularmovies.Objects.Movie;
 import com.jmgarzo.udacity.popularmovies.data.PopularMovieContract;
-import com.jmgarzo.udacity.popularmovies.utilities.NetworksUtils;
 import com.jmgarzo.udacity.popularmovies.utilities.SettingsUtils;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
 
 
 public class MainActivityFragment extends Fragment implements
@@ -41,13 +28,11 @@ public class MainActivityFragment extends Fragment implements
     private static final int ID_MOVIES_LOADER = 14;
 
 
-
     private RecyclerView mRecyclerView;
     private MovieGridViewAdapter mGridViewAdapter;
 
     private TextView mErrorMenssageDisplay;
     private ProgressBar mLoadingIndicator;
-
 
 
     public interface Callback {
@@ -76,7 +61,7 @@ public class MainActivityFragment extends Fragment implements
 
         mRecyclerView.setHasFixedSize(true);
 
-        mGridViewAdapter = new MovieGridViewAdapter(getContext(),this);
+        mGridViewAdapter = new MovieGridViewAdapter(getContext(), this);
 
         mRecyclerView.setAdapter(mGridViewAdapter);
 
@@ -90,7 +75,7 @@ public class MainActivityFragment extends Fragment implements
     }
 
     private void loadMovieThumbs() {
-       // new FetchDataMovies().execute(getActivity());
+        // new FetchDataMovies().execute(getActivity());
     }
 
     @Override
@@ -113,15 +98,15 @@ public class MainActivityFragment extends Fragment implements
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        switch(id){
+        switch (id) {
 
             case ID_MOVIES_LOADER: {
 
-                String selectionArg="";
-                if(SettingsUtils.isPreferenceSortByMostPopular(getContext())){
-                    selectionArg= PopularMovieContract.MOST_POPULAR_REGISTRY_TYPE;
-                }else{
-                    selectionArg= PopularMovieContract.TOP_RATE_REGISTRY_TYPE;
+                String selectionArg = "";
+                if (SettingsUtils.isPreferenceSortByMostPopular(getContext())) {
+                    selectionArg = PopularMovieContract.MOST_POPULAR_REGISTRY_TYPE;
+                } else {
+                    selectionArg = PopularMovieContract.TOP_RATE_REGISTRY_TYPE;
                 }
 
                 return new CursorLoader(
@@ -150,11 +135,6 @@ public class MainActivityFragment extends Fragment implements
 
         mGridViewAdapter.swapCursor(null);
     }
-
-
-
-
-
 
 
 }

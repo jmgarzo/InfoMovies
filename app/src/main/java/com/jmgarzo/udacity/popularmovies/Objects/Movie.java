@@ -162,6 +162,7 @@ public class Movie {
      */
     public ContentValues getContentValues(){
         ContentValues contentValues = new ContentValues();
+
         contentValues.put(PopularMovieContract.MovieEntry.POSTER_PATH,getPosterPath());
         contentValues.put(PopularMovieContract.MovieEntry.ADULT,Boolean.toString(isAdult()));
         contentValues.put(PopularMovieContract.MovieEntry.OVERVIEW,getOverview());

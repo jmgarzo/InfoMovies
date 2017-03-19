@@ -2,7 +2,6 @@ package com.jmgarzo.udacity.popularmovies.data;
 
 import android.content.ContentResolver;
 import android.net.Uri;
-import android.os.StrictMode;
 import android.provider.BaseColumns;
 
 /**
@@ -17,7 +16,9 @@ public class PopularMovieContract {
     public static final String PATH_TRAILER="trailer";
     public static final String PATH_REVIEW = "review";
 
-    public static final String TOP_RATE_REGISTRY_TYPE="top_rate";
+    //This value must be the same that @string.xml pref_sort_by_label_top_rated
+    public static final String TOP_RATE_REGISTRY_TYPE="top_rated";
+    //This value must be the same that @string.xml pref_sort_by_value_most_popular
     public static final String MOST_POPULAR_REGISTRY_TYPE = "most_popular";
     public static final String FAVORITE_REGISTRY_TYPE = "favorite";
 

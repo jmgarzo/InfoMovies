@@ -311,7 +311,7 @@ public class NetworksUtils {
     }
 
 
-    public static ArrayList<Trailer> getTrailersFromJson(String idMovie) {
+    public static ArrayList<Trailer> getTrailers(String idMovie) {
 
         if (idMovie == null | idMovie.equals("")) {
             return null;
@@ -353,6 +353,7 @@ public class NetworksUtils {
                     trailer.setIso_3166_1(jsonTrailer.getString(PopularMovieContract.TrailerEntry.ISO_3166_1));
                     trailer.setKey(jsonTrailer.getString(PopularMovieContract.TrailerEntry.KEY));
                     trailer.setName(jsonTrailer.getString(PopularMovieContract.TrailerEntry.NAME));
+                    trailer.setSite(jsonTrailer.getString(PopularMovieContract.TrailerEntry.SITE));
                     trailer.setSize(jsonTrailer.getString(PopularMovieContract.TrailerEntry.SIZE));
                     trailer.setType(jsonTrailer.getString(PopularMovieContract.TrailerEntry.TYPE));
 
@@ -392,7 +393,7 @@ public class NetworksUtils {
 
     }
 
-    public static ArrayList<Review> getReviewsFromJson(String idMovie) {
+    public static ArrayList<Review> getReviews(String idMovie) {
 
         if (idMovie == null | idMovie.equals("")) {
             return null;

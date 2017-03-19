@@ -9,12 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.jmgarzo.udacity.popularmovies.Objects.Movie;
 import com.jmgarzo.udacity.popularmovies.data.PopularMovieContract;
 import com.jmgarzo.udacity.popularmovies.utilities.NetworksUtils;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
 
 /**
  * Created by jmgarzo on 09/02/17.
@@ -98,9 +95,9 @@ public class MovieGridViewAdapter extends RecyclerView.Adapter<MovieGridViewAdap
         public void onClick(View view) {
             int adapterPosition = getAdapterPosition();
             mCursor.moveToPosition(adapterPosition);
-            int index = mCursor.getColumnIndex(PopularMovieContract.MovieEntry.MOVIE_WEB_ID);
-            String webMovieId = mCursor.getString(index);
-            mClickHandler.onClick(Integer.valueOf(webMovieId));
+            int index = mCursor.getColumnIndex(PopularMovieContract.MovieEntry._ID);
+            int movieId = mCursor.getInt(index);
+            mClickHandler.onClick(movieId);
 
 
         }
