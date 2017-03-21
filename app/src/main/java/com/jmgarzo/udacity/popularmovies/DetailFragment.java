@@ -8,6 +8,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,9 +27,15 @@ import com.squareup.picasso.Picasso;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class DetailFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class DetailFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>,
+        TrailerAdapter.TrailerAdapterOnClickHandler {
+
+    private final String LOG_TAG = DetailFragment.class.getSimpleName();
 
     private static final int DETAIL_LOADER = 0;
+    private static final int TRAILER_LOADER = 1;
+    private static final int REVIEW_LOADER = 2;
+
     private int movieId;
 
 
@@ -40,6 +48,13 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     private TextView voteAverage;
     private TextView overview;
 
+    private TrailerAdapter mTrailerAdapter;
+    private ReviewAdapter mReviewAdapter;
+    private RecyclerView mTrailerRecyclerView;
+    private RecyclerView mReviewRecyclerView;
+
+    private int mPosition = RecyclerView.NO_POSITION;
+
 
     public DetailFragment() {
     }
@@ -51,7 +66,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
         mActivity = getActivity();
         mProgressBar = (ProgressBar) view.findViewById(R.id.pb_loading_indicator_detail);
-        mContentLayout = (LinearLayout) view.findViewById(R.id.content_layout);
+        mContentLayout = (LinearLayout) view.findViewById(R.id.movie_detail_summary);
         mErrorMenssageDetail = (TextView) view.findViewById(R.id.tv_error_message_detail);
         releaseDate = (TextView) view.findViewById(R.id.tv_release_date);
         postertImage = (ImageView) view.findViewById(R.id.iv_poster_image);
@@ -66,7 +81,31 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
             }
         }
 
-        getLoaderManager().initLoader(DETAIL_LOADER, null, this);
+        mTrailerRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview_trailer);
+        mReviewRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview_review);
+
+
+        mProgressBar = (ProgressBar) view.findViewById(R.id.pb_loading_indicator_detail);
+
+        LinearLayoutManager trailerLayoutManager =
+                new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager reviewLayoutManager =
+                new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+
+        mTrailerRecyclerView.setLayoutManager(trailerLayoutManager);
+        mTrailerRecyclerView.setHasFixedSize(true);
+        mReviewRecyclerView.setLayoutManager(reviewLayoutManager);
+        mReviewRecyclerView.setHasFixedSize(true);
+
+        mTrailerAdapter = new TrailerAdapter(getActivity(), this);
+        mTrailerRecyclerView.setAdapter(mTrailerAdapter);
+
+        mReviewAdapter = new ReviewAdapter(getActivity());
+        mReviewRecyclerView.setAdapter(mReviewAdapter);
+
+        getActivity().getSupportLoaderManager().initLoader(DETAIL_LOADER, null, this);
+        getActivity().getSupportLoaderManager().initLoader(TRAILER_LOADER, null, this);
+        getActivity().getSupportLoaderManager().initLoader(REVIEW_LOADER, null, this);
 
 
         return view;
@@ -98,13 +137,35 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
                         PopularMovieContract.MovieEntry.CONTENT_URI,
                         DataBaseUtils.MOVIE_COLUMS,
                         selection,
-                        new String[]{Integer.toString(movieId),sortByPreference},
+                        new String[]{Integer.toString(movieId), sortByPreference},
                         null);
 
             }
+            case TRAILER_LOADER: {
+
+                String selection = PopularMovieContract.TrailerEntry.MOVIE_KEY + " = ?";
+                return new CursorLoader(getActivity(),
+                        PopularMovieContract.TrailerEntry.CONTENT_URI,
+                        null,
+                        selection,
+                        new String[]{Integer.toString(movieId)},
+                        null);
+            }
+
+            case REVIEW_LOADER: {
+                String selection = PopularMovieContract.ReviewEntry.MOVIE_KEY + " = ?";
+                return new CursorLoader(getActivity(),
+                        PopularMovieContract.ReviewEntry.CONTENT_URI,
+                        null,
+                        selection,
+                        new String[]{Integer.toString(movieId)},
+                        null);
+            }
+
             default:
                 throw new RuntimeException("Loader Not Implemented: " + id);
         }
+
     }
 
     @Override
@@ -129,16 +190,39 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
 
                 }
+                break;
 
 
+            }
+            case TRAILER_LOADER: {
+                mTrailerAdapter.swapCursor(data);
+                break;
+            }
+            case REVIEW_LOADER: {
+                mReviewAdapter.swapCursor(data);
+                break;
             }
         }
     }
 
-            @Override
-            public void onLoaderReset (Loader < Cursor > loader) {
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
 
+        switch (loader.getId()) {
+            case TRAILER_LOADER: {
+                mTrailerAdapter.swapCursor(null);
+                break;
             }
-
-
+            case REVIEW_LOADER: {
+                mReviewAdapter.swapCursor(null);
+                break;
+            }
         }
+    }
+
+
+    @Override
+    public void onClick(int idTrailer) {
+
+    }
+}

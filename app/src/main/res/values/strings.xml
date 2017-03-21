@@ -14,12 +14,15 @@
 
     <string name="pref_sort_by_label_most_popular">Most popular</string>
     <string name="pref_sort_by_label_top_rated">Top rated</string>
-    <!-- This value must be the same that PopularMovieContract.TOP_MOST_POPULAR-->
-    <string name="pref_sort_by_value_most_popular" translatable="false">most_popular</string>
-    <!-- This value must be the same that PopularMovieContract.TOP_RATED-->
+    <string name="pref_sort_by_label_favorite">Favorite</string>
 
+    <!-- This value must be the same that PopularMovieContract.MOST_POPULAR_REGISTRY_TYPE-->
+    <string name="pref_sort_by_value_most_popular" translatable="false">most_popular</string>
+    <!-- This value must be the same that PopularMovieContract.TOP_RATE_REGISTRY_TYPE-->
     <string name="pref_sort_by_value_top_rated" translatable="false">top_rated</string>
     <string name="pref_sort_by_default" translatable="false">most_popular</string>
+    <!-- This value must be the same that PopularMovieContract.FAVORITE_REGISTRY_TYPE-->
+    <string name="pref_sort_by_value_favorite" translatable="false">favorite</string>
 
 
     <string name="error_message">An error has occurred. </string>
