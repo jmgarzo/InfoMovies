@@ -39,7 +39,7 @@ public class Movie implements Parcelable {
     }
 
     /**
-     * Construct a new Movie from a cursor first row.
+     * Construct a new Movie from a cursor's first row.
      *
      * @param cursor
      */

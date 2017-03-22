@@ -118,7 +118,7 @@ public class MainActivityFragment extends Fragment implements
                 return new CursorLoader(
                         getContext(),
                         PopularMovieContract.MovieEntry.CONTENT_URI,
-                        DataBaseUtils.MOVIE_COLUMS,
+                        DataBaseUtils.MOVIE_COLUMNS,
                         PopularMovieContract.MovieEntry.REGISTRY_TYPE + " = ?",
                         new String[]{selectionArg},
                         null);

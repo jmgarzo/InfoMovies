@@ -162,7 +162,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
                 return new CursorLoader(getActivity(),
                         PopularMovieContract.MovieEntry.CONTENT_URI,
-                        DataBaseUtils.MOVIE_COLUMS,
+                        DataBaseUtils.MOVIE_COLUMNS,
                         selection,
                         new String[]{mMovie.getMovieWebId(), PopularMovieContract.FAVORITE_REGISTRY_TYPE},
                         null);

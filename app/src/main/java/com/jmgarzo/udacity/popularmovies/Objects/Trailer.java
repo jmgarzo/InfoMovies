@@ -1,8 +1,11 @@
 package com.jmgarzo.udacity.popularmovies.Objects;
 
 import android.content.ContentValues;
+import android.database.Cursor;
+import android.util.Log;
 
 import com.jmgarzo.udacity.popularmovies.data.PopularMovieContract;
+import com.jmgarzo.udacity.popularmovies.utilities.DataBaseUtils;
 
 /**
  * Created by jmgarzo on 08/03/17.
@@ -10,18 +13,38 @@ import com.jmgarzo.udacity.popularmovies.data.PopularMovieContract;
 
 public class Trailer {
 
+    private String LOG_TAG = Trailer.class.getSimpleName();
 
-    int id;
-    int movieKey;
-    String webTrailerId;
-    String iso_639_1;
-    String iso_3166_1;
-    String key;
-    String name;
-    String site;
-    String size;
-    String type;
-    String registryType;
+
+
+    private int id;
+    private int movieKey;
+    private String webTrailerId;
+    private String iso_639_1;
+    private String iso_3166_1;
+    private String key;
+    private String name;
+    private String site;
+    private String size;
+    private String type;
+    private String registryType;
+
+    public Trailer (){};
+
+    public Trailer(Cursor cursor){
+        if (cursor != null && cursor.moveToFirst()) {
+            if (cursor.getCount() > 1) {
+                Log.w(LOG_TAG, "Cursor have more than one rows");
+            }
+            cursorToTrailer(cursor);
+        }
+    }
+
+    public Trailer(Cursor cursor, int position){
+        if(cursor != null && cursor.moveToPosition(position)){
+            cursorToTrailer(cursor);
+        }
+    }
 
     public int getId() {
         return id;
@@ -126,5 +149,21 @@ public class Trailer {
         contentValues.put(PopularMovieContract.TrailerEntry.REGISTRY_TYPE,getRegistryType());
 
         return contentValues;
+    }
+
+    private void cursorToTrailer(Cursor cursor){
+
+        id = cursor.getInt(DataBaseUtils.COL_TRAILER_ID);
+        movieKey = cursor.getInt(DataBaseUtils.COL_TRAILER_MOVIE_KEY);
+        webTrailerId = cursor.getString(DataBaseUtils.COL_TRAILER_WEB_TRAILER_ID);
+        iso_639_1 = cursor.getString(DataBaseUtils.COL_TRAILER_ISO_639_1);
+        iso_3166_1= cursor.getString(DataBaseUtils.COL_TRAILER_ISO_3166_1);
+        key = cursor.getString(DataBaseUtils.COL_TRAILER_KEY);
+        name = cursor.getString(DataBaseUtils.COL_TRAILER_NAME);
+        site = cursor.getString(DataBaseUtils.COL_TRAILER_SITE);
+        size = cursor.getString(DataBaseUtils.COL_TRAILER_SIZE);
+        type = cursor.getString(DataBaseUtils.COL_TRAILER_TYPE);
+        registryType = cursor.getString(DataBaseUtils.COL_TRAILER_REGISTRY_TYPE);
+
     }
 }
