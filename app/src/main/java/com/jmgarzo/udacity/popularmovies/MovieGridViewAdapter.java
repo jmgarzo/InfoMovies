@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.jmgarzo.udacity.popularmovies.Objects.Movie;
 import com.jmgarzo.udacity.popularmovies.data.PopularMovieContract;
 import com.jmgarzo.udacity.popularmovies.utilities.NetworksUtils;
 import com.squareup.picasso.Picasso;
@@ -26,7 +27,7 @@ public class MovieGridViewAdapter extends RecyclerView.Adapter<MovieGridViewAdap
 
     public interface MovieGridViewAdapterOnClickHandler {
 
-        void onClick(int movieId);
+        void onClick(Movie movie);
     }
 
 
@@ -94,10 +95,11 @@ public class MovieGridViewAdapter extends RecyclerView.Adapter<MovieGridViewAdap
         @Override
         public void onClick(View view) {
             int adapterPosition = getAdapterPosition();
-            mCursor.moveToPosition(adapterPosition);
-            int index = mCursor.getColumnIndex(PopularMovieContract.MovieEntry._ID);
-            int movieId = mCursor.getInt(index);
-            mClickHandler.onClick(movieId);
+            Movie movie = new Movie(mCursor,adapterPosition);
+//            mCursor.moveToPosition(adapterPosition);
+//            int index = mCursor.getColumnIndex(PopularMovieContract.MovieEntry._ID);
+//            int movieId = mCursor.getInt(index);
+            mClickHandler.onClick(movie);
 
 
         }

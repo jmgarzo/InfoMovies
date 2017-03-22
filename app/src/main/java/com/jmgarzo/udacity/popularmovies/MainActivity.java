@@ -6,9 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.jmgarzo.udacity.popularmovies.Objects.Movie;
 import com.jmgarzo.udacity.popularmovies.sync.PopularMoviesSyncUtils;
 
 public class MainActivity extends AppCompatActivity implements MainActivityFragment.Callback {
+
+    public static final String MOVIE_INTENT_TAG = "movie_intent_tag";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +49,9 @@ public class MainActivity extends AppCompatActivity implements MainActivityFragm
 
 
     @Override
-    public void OnItemSelected(int movieId) {
+    public void OnItemSelected(Movie movie) {
         Intent intent = new Intent(this,Detail.class);
-        intent.putExtra(Intent.EXTRA_TEXT,Integer.toString(movieId));
+        intent.putExtra(MOVIE_INTENT_TAG,movie);
         startActivity(intent);
     }
 }

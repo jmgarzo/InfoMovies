@@ -33,4 +33,11 @@ public class SettingsUtils {
         return false;
     }
 
+    public static boolean isPreferenceSortByFavorite(Context context){
+        if(getPreferredSortBy(context).equalsIgnoreCase(context.getString(R.string.pref_sort_by_value_favorite))){
+            return true;
+        }
+        return false;
+    }
+
 }

@@ -19,6 +19,31 @@ import java.util.ArrayList;
 
 public class PopularMoviesSyncTask {
 
+    public static void addFavorite(Context context,Movie movie){
+
+        movie.setRegistryType(PopularMovieContract.FAVORITE_REGISTRY_TYPE);
+
+        context.getContentResolver().insert(
+                PopularMovieContract.MovieEntry.CONTENT_URI,
+                movie.getContentValues());
+
+    }
+
+    public static void deleteFromFavorite(Context context,Movie movie){
+
+        String selection = PopularMovieContract.MovieEntry.MOVIE_WEB_ID + " = ?  AND "
+                + PopularMovieContract.MovieEntry.REGISTRY_TYPE + " = ?";
+        String[] selectionArgs = {movie.getMovieWebId(), PopularMovieContract.FAVORITE_REGISTRY_TYPE};
+
+        context.getContentResolver().delete(
+                PopularMovieContract.MovieEntry.CONTENT_URI,
+                selection,
+                selectionArgs);
+    }
+
+
+
+
     synchronized public static void syncMovies(Context context) {
 
         try {
@@ -75,9 +100,8 @@ public class PopularMoviesSyncTask {
 
                 insertNewTrailers(context, moviesCursor);
                 moviesCursor.moveToFirst();
-                insertNewReviews(context,moviesCursor);
+                insertNewReviews(context, moviesCursor);
                 moviesCursor.close();
-
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -88,7 +112,7 @@ public class PopularMoviesSyncTask {
 
         do {
             int indexId = moviesCursor.getColumnIndex(PopularMovieContract.MovieEntry._ID);
-            int _id= moviesCursor.getInt(indexId);
+            int _id = moviesCursor.getInt(indexId);
             int indexMovieId = moviesCursor.getColumnIndex(PopularMovieContract.MovieEntry.MOVIE_WEB_ID);
             String movieId = moviesCursor.getString(indexMovieId);
             int indexRegistryType = moviesCursor.getColumnIndex(PopularMovieContract.MovieEntry.REGISTRY_TYPE);
@@ -103,9 +127,8 @@ public class PopularMoviesSyncTask {
                     trailersContentValues[i] = trailersList.get(i).getContentValues();
                 }
 
-                int insercciones = context.getContentResolver().bulkInsert(PopularMovieContract.TrailerEntry.CONTENT_URI,
+                context.getContentResolver().bulkInsert(PopularMovieContract.TrailerEntry.CONTENT_URI,
                         trailersContentValues);
-                insercciones++;
             }
         } while (moviesCursor.moveToNext());
     }
@@ -115,7 +138,7 @@ public class PopularMoviesSyncTask {
 
         do {
             int indexId = moviesCursor.getColumnIndex(PopularMovieContract.MovieEntry._ID);
-            int _id= moviesCursor.getInt(indexId);
+            int _id = moviesCursor.getInt(indexId);
             int indexMovieId = moviesCursor.getColumnIndex(PopularMovieContract.MovieEntry.MOVIE_WEB_ID);
             String movieId = moviesCursor.getString(indexMovieId);
             int indexRegistryType = moviesCursor.getColumnIndex(PopularMovieContract.MovieEntry.REGISTRY_TYPE);
@@ -130,13 +153,11 @@ public class PopularMoviesSyncTask {
                     trailersContentValues[i] = reviewsList.get(i).getContentValues();
                 }
 
-                int insercciones = context.getContentResolver().bulkInsert(PopularMovieContract.ReviewEntry.CONTENT_URI,
+                context.getContentResolver().bulkInsert(PopularMovieContract.ReviewEntry.CONTENT_URI,
                         trailersContentValues);
-                insercciones++;
             }
         } while (moviesCursor.moveToNext());
     }
-
 
 
 }

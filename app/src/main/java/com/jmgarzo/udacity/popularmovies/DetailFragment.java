@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -18,10 +19,12 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.jmgarzo.udacity.popularmovies.Objects.Movie;
 import com.jmgarzo.udacity.popularmovies.data.PopularMovieContract;
+import com.jmgarzo.udacity.popularmovies.sync.AddFavoriteIntentService;
+import com.jmgarzo.udacity.popularmovies.sync.DeleteFromFavoriteIntentService;
 import com.jmgarzo.udacity.popularmovies.utilities.DataBaseUtils;
 import com.jmgarzo.udacity.popularmovies.utilities.NetworksUtils;
-import com.jmgarzo.udacity.popularmovies.utilities.SettingsUtils;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -32,11 +35,14 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
     private final String LOG_TAG = DetailFragment.class.getSimpleName();
 
-    private static final int DETAIL_LOADER = 0;
+    public static final String FAVORITE_MOVIE_TAG = "favorite_movie_tag";
+
+    private static final int FAB_LOADER = 0;
     private static final int TRAILER_LOADER = 1;
     private static final int REVIEW_LOADER = 2;
 
-    private int movieId;
+    //private int movieId;
+    private Movie mMovie;
 
 
     private Activity mActivity;
@@ -48,12 +54,16 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     private TextView voteAverage;
     private TextView overview;
 
+    private FloatingActionButton fab;
+
     private TrailerAdapter mTrailerAdapter;
     private ReviewAdapter mReviewAdapter;
     private RecyclerView mTrailerRecyclerView;
     private RecyclerView mReviewRecyclerView;
 
     private int mPosition = RecyclerView.NO_POSITION;
+
+    private boolean isFavorite = false;
 
 
     public DetailFragment() {
@@ -73,12 +83,28 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         voteAverage = (TextView) view.findViewById(R.id.tv_vote_average);
         overview = (TextView) view.findViewById(R.id.tv_overview_text);
 
+        fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isFavorite) {
+                    Intent deleteFavoriteIntent = new Intent(getContext(), DeleteFromFavoriteIntentService.class);
+                    deleteFavoriteIntent.putExtra(FAVORITE_MOVIE_TAG, mMovie);
+                    getActivity().startService(deleteFavoriteIntent);
+                } else {
+                    //isFavorite = true;
+                    Intent addToFavoriteIntent = new Intent(getContext(), AddFavoriteIntentService.class);
+                    addToFavoriteIntent.putExtra(FAVORITE_MOVIE_TAG, mMovie);
+                    getActivity().startService(addToFavoriteIntent);
+
+                }
+            }
+        });
+
         Intent intent = getActivity().getIntent();
         if (null != intent) {
-            String intentMovieId = intent.getStringExtra(Intent.EXTRA_TEXT);
-            if (null != intentMovieId && !"".equals(intentMovieId)) {
-                movieId = Integer.parseInt(intentMovieId);
-            }
+            mMovie = intent.getParcelableExtra(MainActivity.MOVIE_INTENT_TAG);
+
         }
 
         mTrailerRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview_trailer);
@@ -103,7 +129,9 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         mReviewAdapter = new ReviewAdapter(getActivity());
         mReviewRecyclerView.setAdapter(mReviewAdapter);
 
-        getActivity().getSupportLoaderManager().initLoader(DETAIL_LOADER, null, this);
+        loadMovieData();
+
+        getActivity().getSupportLoaderManager().initLoader(FAB_LOADER, null, this);
         getActivity().getSupportLoaderManager().initLoader(TRAILER_LOADER, null, this);
         getActivity().getSupportLoaderManager().initLoader(REVIEW_LOADER, null, this);
 
@@ -126,10 +154,9 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 
         switch (id) {
-            case DETAIL_LOADER: {
+            case FAB_LOADER: {
 
-                String sortByPreference = SettingsUtils.getPreferredSortBy(getContext());
-                String selection = PopularMovieContract.MovieEntry._ID + "= ? AND "
+                String selection = PopularMovieContract.MovieEntry.MOVIE_WEB_ID + "= ? AND "
                         + PopularMovieContract.MovieEntry.REGISTRY_TYPE + " = ? ";
 
 
@@ -137,7 +164,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
                         PopularMovieContract.MovieEntry.CONTENT_URI,
                         DataBaseUtils.MOVIE_COLUMS,
                         selection,
-                        new String[]{Integer.toString(movieId), sortByPreference},
+                        new String[]{mMovie.getMovieWebId(), PopularMovieContract.FAVORITE_REGISTRY_TYPE},
                         null);
 
             }
@@ -148,7 +175,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
                         PopularMovieContract.TrailerEntry.CONTENT_URI,
                         null,
                         selection,
-                        new String[]{Integer.toString(movieId)},
+                        new String[]{Integer.toString(mMovie.getId())},
                         null);
             }
 
@@ -158,7 +185,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
                         PopularMovieContract.ReviewEntry.CONTENT_URI,
                         null,
                         selection,
-                        new String[]{Integer.toString(movieId)},
+                        new String[]{Integer.toString(mMovie.getId())},
                         null);
             }
 
@@ -172,26 +199,15 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 
         switch (loader.getId()) {
-            case DETAIL_LOADER: {
-                mProgressBar.setVisibility(View.INVISIBLE);
-                if (null != data && data.moveToFirst()) {
-                    showMovieData();
-                    mActivity.setTitle(data.getString(DataBaseUtils.COL_MOVIE_TITLE));
-                    releaseDate.setText(data.getString(DataBaseUtils.COL_MOVIE_RELEASE_DATE));
-                    Picasso.with(mActivity)
-                            .load(NetworksUtils.buildPosterDetail(data.getString(DataBaseUtils.COL_MOVIE_POSTER_PATH)))
-                            .placeholder(R.drawable.placeholder)
-                            .tag(mActivity)
-                            .into(postertImage);
-                    voteAverage.setText(data.getString(DataBaseUtils.COL_MOVIE_VOTE_AVERAGE).concat("/10"));
-                    overview.setText(data.getString(DataBaseUtils.COL_MOVIE_OVERVIEW));
+            case FAB_LOADER: {
+                if (data.moveToFirst()) {
+                    isFavorite = true;
+                    fab.setImageResource(R.drawable.ic_favorite_white_24px);
                 } else {
-                    showErrorMessage();
-
-
+                    isFavorite = false;
+                    fab.setImageResource(R.drawable.ic_favorite_border_white_24px);
                 }
                 break;
-
 
             }
             case TRAILER_LOADER: {
@@ -225,4 +241,21 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     public void onClick(int idTrailer) {
 
     }
+
+
+    private void loadMovieData() {
+        mProgressBar.setVisibility(View.INVISIBLE);
+        showMovieData();
+        mActivity.setTitle(mMovie.getTitle());
+        releaseDate.setText(mMovie.getReleaseDate());
+        Picasso.with(mActivity)
+                .load(NetworksUtils.buildPosterDetail(mMovie.getPosterPath()))
+                .placeholder(R.drawable.placeholder)
+                .tag(mActivity)
+                .into(postertImage);
+        voteAverage.setText(Double.toString(mMovie.getVoteAverage()).concat("/10"));
+        overview.setText(mMovie.getOverview());
+
+    }
+
 }

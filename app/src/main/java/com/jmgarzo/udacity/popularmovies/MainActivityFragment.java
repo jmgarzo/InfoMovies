@@ -15,7 +15,9 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.jmgarzo.udacity.popularmovies.Objects.Movie;
 import com.jmgarzo.udacity.popularmovies.data.PopularMovieContract;
+import com.jmgarzo.udacity.popularmovies.utilities.DataBaseUtils;
 import com.jmgarzo.udacity.popularmovies.utilities.SettingsUtils;
 
 
@@ -34,9 +36,11 @@ public class MainActivityFragment extends Fragment implements
     private TextView mErrorMenssageDisplay;
     private ProgressBar mLoadingIndicator;
 
+    Movie mMovie;
+
 
     public interface Callback {
-        public void OnItemSelected(int movieId);
+        public void OnItemSelected(Movie movie);
     }
 
     @Override
@@ -79,8 +83,8 @@ public class MainActivityFragment extends Fragment implements
     }
 
     @Override
-    public void onClick(int movieId) {
-        ((Callback) getActivity()).OnItemSelected(movieId);
+    public void onClick(Movie movie) {
+        ((Callback) getActivity()).OnItemSelected(movie);
 
 
     }
@@ -105,14 +109,16 @@ public class MainActivityFragment extends Fragment implements
                 String selectionArg = "";
                 if (SettingsUtils.isPreferenceSortByMostPopular(getContext())) {
                     selectionArg = PopularMovieContract.MOST_POPULAR_REGISTRY_TYPE;
-                } else {
+                } else if (SettingsUtils.isPreferenceSortByTopRated(getContext())){
                     selectionArg = PopularMovieContract.TOP_RATE_REGISTRY_TYPE;
+                } else {
+                    selectionArg = PopularMovieContract.FAVORITE_REGISTRY_TYPE;
                 }
 
                 return new CursorLoader(
                         getContext(),
                         PopularMovieContract.MovieEntry.CONTENT_URI,
-                        null,
+                        DataBaseUtils.MOVIE_COLUMS,
                         PopularMovieContract.MovieEntry.REGISTRY_TYPE + " = ?",
                         new String[]{selectionArg},
                         null);
@@ -127,6 +133,7 @@ public class MainActivityFragment extends Fragment implements
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 
         mGridViewAdapter.swapCursor(data);
+
         //TODO:Quedan cosas por hacer para ajusar pantalla
     }
 

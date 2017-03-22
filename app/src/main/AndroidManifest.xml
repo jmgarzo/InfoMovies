@@ -52,7 +52,12 @@
             </intent-filter>
         </service>
 
-
+        <service
+            android:name=".sync.AddFavoriteIntentService"
+            android:exported="false"/>
+        <service
+            android:name=".sync.DeleteFromFavoriteIntentService"
+            android:exported="false"/>
 
     </application>
 
