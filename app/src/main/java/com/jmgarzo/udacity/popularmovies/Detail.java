@@ -1,10 +1,13 @@
 package com.jmgarzo.udacity.popularmovies;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-public class Detail extends AppCompatActivity {
+import com.jmgarzo.udacity.popularmovies.Objects.Trailer;
+
+public class Detail extends AppCompatActivity implements DetailFragment.Callback {
 
 
 
@@ -18,12 +21,12 @@ public class Detail extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-
-
-
-
-
-
     }
 
+
+
+    @Override
+    public void OnItemSelected(Trailer trailer) {
+        startActivity(new Intent(Intent.ACTION_VIEW, trailer.getTrailerUri()));
+    }
 }

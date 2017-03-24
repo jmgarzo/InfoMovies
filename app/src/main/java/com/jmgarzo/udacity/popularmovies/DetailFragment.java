@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -15,11 +16,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.jmgarzo.udacity.popularmovies.Objects.Movie;
+import com.jmgarzo.udacity.popularmovies.Objects.Trailer;
 import com.jmgarzo.udacity.popularmovies.data.PopularMovieContract;
 import com.jmgarzo.udacity.popularmovies.sync.AddFavoriteIntentService;
 import com.jmgarzo.udacity.popularmovies.sync.DeleteFromFavoriteIntentService;
@@ -48,7 +49,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     private Activity mActivity;
     private ProgressBar mProgressBar;
     private TextView mErrorMenssageDetail;
-    private LinearLayout mContentLayout;
+    private ConstraintLayout mContentLayout;
     private ImageView postertImage;
     private TextView releaseDate;
     private TextView voteAverage;
@@ -65,9 +66,11 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
     private boolean isFavorite = false;
 
-
-    public DetailFragment() {
+    public interface Callback {
+        public void OnItemSelected(Trailer trailer);
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,7 +79,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
         mActivity = getActivity();
         mProgressBar = (ProgressBar) view.findViewById(R.id.pb_loading_indicator_detail);
-        mContentLayout = (LinearLayout) view.findViewById(R.id.movie_detail_summary);
+        mContentLayout = (ConstraintLayout) view.findViewById(R.id.movie_detail);
         mErrorMenssageDetail = (TextView) view.findViewById(R.id.tv_error_message_detail);
         releaseDate = (TextView) view.findViewById(R.id.tv_release_date);
         postertImage = (ImageView) view.findViewById(R.id.iv_poster_image);
@@ -92,7 +95,6 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
                     deleteFavoriteIntent.putExtra(FAVORITE_MOVIE_TAG, mMovie);
                     getActivity().startService(deleteFavoriteIntent);
                 } else {
-                    //isFavorite = true;
                     Intent addToFavoriteIntent = new Intent(getContext(), AddFavoriteIntentService.class);
                     addToFavoriteIntent.putExtra(FAVORITE_MOVIE_TAG, mMovie);
                     getActivity().startService(addToFavoriteIntent);
@@ -110,7 +112,6 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         mTrailerRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview_trailer);
         mReviewRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview_review);
 
-
         mProgressBar = (ProgressBar) view.findViewById(R.id.pb_loading_indicator_detail);
 
         LinearLayoutManager trailerLayoutManager =
@@ -123,10 +124,10 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         mReviewRecyclerView.setLayoutManager(reviewLayoutManager);
         mReviewRecyclerView.setHasFixedSize(true);
 
-        mTrailerAdapter = new TrailerAdapter(getActivity(), this);
+        mTrailerAdapter = new TrailerAdapter(getContext(), this);
         mTrailerRecyclerView.setAdapter(mTrailerAdapter);
 
-        mReviewAdapter = new ReviewAdapter(getActivity());
+        mReviewAdapter = new ReviewAdapter(getContext());
         mReviewRecyclerView.setAdapter(mReviewAdapter);
 
         loadMovieData();
@@ -238,7 +239,10 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
 
     @Override
-    public void onClick(int idTrailer) {
+    public void onClick(Trailer trailer) {
+
+        ((Callback) getActivity()).OnItemSelected(trailer);
+
 
     }
 

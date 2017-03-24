@@ -30,7 +30,6 @@ public class MovieGridViewAdapter extends RecyclerView.Adapter<MovieGridViewAdap
         void onClick(Movie movie);
     }
 
-
     private Cursor mCursor;
 
     public MovieGridViewAdapter(@NonNull Context context, MovieGridViewAdapterOnClickHandler clickHandler) {

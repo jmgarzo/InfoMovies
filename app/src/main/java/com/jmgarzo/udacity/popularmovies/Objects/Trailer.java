@@ -2,6 +2,7 @@ package com.jmgarzo.udacity.popularmovies.Objects;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.net.Uri;
 import android.util.Log;
 
 import com.jmgarzo.udacity.popularmovies.data.PopularMovieContract;
@@ -132,6 +133,14 @@ public class Trailer {
 
     public void setRegistryType(String registryType) {
         this.registryType = registryType;
+    }
+
+
+    public Uri getTrailerUri() {
+
+        final String BASE_YOUTUBE_URI = "http://www.youtube.com/watch";
+        final String VIDEO_PARAM = "v";
+        return Uri.parse(BASE_YOUTUBE_URI).buildUpon().appendQueryParameter(VIDEO_PARAM, getKey()).build();
     }
 
     public ContentValues getContentValues(){

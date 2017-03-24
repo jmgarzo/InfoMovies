@@ -14,21 +14,22 @@
             android:orientation="vertical">
 
             <include
-                android:id="@+id/movie_detail_summary"
-                layout="@layout/item_movie_detail_summary"
+                android:id="@+id/movie_detail"
+                layout="@layout/movie_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerview_trailer"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:clipToPadding="false"
-                android:paddingBottom="8dp" />
+                android:paddingBottom="8dp"
+                />
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerview_review"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:clipToPadding="false"
                 android:paddingBottom="8dp" />
         </LinearLayout>

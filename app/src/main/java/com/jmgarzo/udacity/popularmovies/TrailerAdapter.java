@@ -7,9 +7,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.jmgarzo.udacity.popularmovies.Objects.Trailer;
 import com.jmgarzo.udacity.popularmovies.data.PopularMovieContract;
 
 /**
@@ -22,9 +22,8 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerA
 
     private final TrailerAdapterOnClickHandler mClickHandler;
 
-
     public interface TrailerAdapterOnClickHandler {
-        void onClick(int idTrailer);
+        void onClick(Trailer trailer);
     }
 
     private Cursor mCursor;
@@ -71,23 +70,24 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerA
 
     public class TrailerAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public final ImageButton playImage;
+
         public final TextView tvTitle;
         public final TextView tvTrailerInfo;
 
         public TrailerAdapterViewHolder(View view) {
             super(view);
-            playImage = (ImageButton) view.findViewById(R.id.ib_play);
             tvTitle = (TextView) view.findViewById(R.id.tv_title);
             tvTrailerInfo = (TextView) view.findViewById(R.id.tv_trailer_info);
+            view.setOnClickListener(this);
+
 
         }
-
 
         @Override
         public void onClick(View view) {
             int adapterPosition = getAdapterPosition();
-            mCursor.moveToPosition(adapterPosition);
+            Trailer trailer = new Trailer(mCursor,adapterPosition);
+            mClickHandler.onClick(trailer);
         }
     }
 }
