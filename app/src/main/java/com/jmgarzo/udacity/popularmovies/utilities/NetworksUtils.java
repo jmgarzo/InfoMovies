@@ -407,7 +407,7 @@ public class NetworksUtils {
         try {
             reviewJsonStr = getResponseFromHttpUrl(reviewUrl);
         } catch (IOException e) {
-            Log.e(LOG_TAG + " trailer url: " + reviewUrl, e.toString());
+            Log.e(LOG_TAG + " review url: " + reviewUrl, e.toString());
             e.printStackTrace();
         }
 

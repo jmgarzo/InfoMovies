@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -16,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -49,7 +49,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     private Activity mActivity;
     private ProgressBar mProgressBar;
     private TextView mErrorMenssageDetail;
-    private ConstraintLayout mContentLayout;
+    private LinearLayout mContentLayout;
     private ImageView postertImage;
     private TextView releaseDate;
     private TextView voteAverage;
@@ -79,7 +79,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
         mActivity = getActivity();
         mProgressBar = (ProgressBar) view.findViewById(R.id.pb_loading_indicator_detail);
-        mContentLayout = (ConstraintLayout) view.findViewById(R.id.movie_detail);
+        mContentLayout = (LinearLayout) view.findViewById(R.id.movie_detail);
         mErrorMenssageDetail = (TextView) view.findViewById(R.id.tv_error_message_detail);
         releaseDate = (TextView) view.findViewById(R.id.tv_release_date);
         postertImage = (ImageView) view.findViewById(R.id.iv_poster_image);

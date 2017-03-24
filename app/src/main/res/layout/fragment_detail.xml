@@ -15,7 +15,7 @@
 
             <include
                 android:id="@+id/movie_detail"
-                layout="@layout/movie_detail"
+                layout="@layout/item_movie_detail_summary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

@@ -131,6 +131,7 @@ public class PopularMoviesSyncTask {
                 contentResolver.bulkInsert(PopularMovieContract.MovieEntry.CONTENT_URI,
                         contentValues);
 
+                //We can't update all trailer and review here because the API have a limitation.
                 syncTrailersAndReviews(context);
 
 
