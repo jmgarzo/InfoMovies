@@ -37,6 +37,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     private final String LOG_TAG = DetailFragment.class.getSimpleName();
 
     public static final String FAVORITE_MOVIE_TAG = "favorite_movie_tag";
+    public static final String MOVIE_TAG = "movie_tag";
 
     private static final int FAB_LOADER = 0;
     private static final int TRAILER_LOADER = 1;

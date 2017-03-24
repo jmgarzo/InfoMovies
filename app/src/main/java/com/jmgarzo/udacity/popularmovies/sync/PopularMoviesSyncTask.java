@@ -38,7 +38,7 @@ public class PopularMoviesSyncTask {
 
         if (newIdMovie != null) {
             addTrailersToFavorite(context, movie, newIdMovie);
-            addReviewsToFavorite(context,movie,newIdMovie);
+            addReviewsToFavorite(context, movie, newIdMovie);
         }
 
 
@@ -125,14 +125,14 @@ public class PopularMoviesSyncTask {
                 ContentResolver contentResolver = context.getContentResolver();
                 contentResolver.delete(
                         PopularMovieContract.MovieEntry.CONTENT_URI,
-                        null,
-                        null);
+                        PopularMovieContract.MovieEntry.REGISTRY_TYPE + " <> ? ",
+                        new String[]{PopularMovieContract.FAVORITE_REGISTRY_TYPE});
 
                 contentResolver.bulkInsert(PopularMovieContract.MovieEntry.CONTENT_URI,
                         contentValues);
 
                 //We can't update all trailer and review here because the API have a limitation.
-                syncTrailersAndReviews(context);
+                //syncTrailersAndReviews(context);
 
 
             }
@@ -172,6 +172,78 @@ public class PopularMoviesSyncTask {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static void addTrailersAndReviews(Context context, Movie movie) {
+        String selection = PopularMovieContract.TrailerEntry.MOVIE_KEY + " = ? AND "
+                + PopularMovieContract.TrailerEntry.REGISTRY_TYPE + " = ? ";
+        String[] selectionArg = new String[]{Integer.toString(movie.getId()), movie.getRegistryType()};
+        Cursor cursorTrailer = context.getContentResolver().query(
+                PopularMovieContract.TrailerEntry.CONTENT_URI,
+                DataBaseUtils.TRAILER_COLUMNS,
+                selection,
+                selectionArg,
+                null);
+
+
+        context.getContentResolver().delete(
+                PopularMovieContract.TrailerEntry.CONTENT_URI,
+                selection,
+                selectionArg);
+
+
+        insertTrailersFromMovie(context, movie);
+
+        Cursor cursorReview = context.getContentResolver().query(
+                PopularMovieContract.ReviewEntry.CONTENT_URI,
+                DataBaseUtils.REVIEW_COLUMNS,
+                selection,
+                selectionArg,
+                null);
+
+
+        context.getContentResolver().delete(
+                PopularMovieContract.ReviewEntry.CONTENT_URI,
+                selection,
+                selectionArg);
+
+
+        insertReviewsFromMovie(context, movie);
+
+
+    }
+
+
+    private static void insertTrailersFromMovie(Context context, Movie movie) {
+        ArrayList<Trailer> trailersList = NetworksUtils.getTrailers(movie.getMovieWebId());
+        if (trailersList != null && trailersList.size() > 0) {
+            ContentValues[] trailersContentValues = new ContentValues[trailersList.size()];
+            for (int i = 0; i < trailersList.size(); i++) {
+                trailersList.get(i).setMovieKey(movie.getId());
+                trailersList.get(i).setRegistryType(movie.getRegistryType());
+                trailersContentValues[i] = trailersList.get(i).getContentValues();
+            }
+
+            context.getContentResolver().bulkInsert(PopularMovieContract.TrailerEntry.CONTENT_URI,
+                    trailersContentValues);
+        }
+
+    }
+
+    private static void insertReviewsFromMovie(Context context, Movie movie) {
+        ArrayList<Review> reviewList = NetworksUtils.getReviews(movie.getMovieWebId());
+        if (reviewList != null && reviewList.size() > 0) {
+            ContentValues[] reviewContentValues = new ContentValues[reviewList.size()];
+            for (int i = 0; i < reviewList.size(); i++) {
+                reviewList.get(i).setMovieKey(movie.getId());
+                reviewList.get(i).setRegistryType(movie.getRegistryType());
+                reviewContentValues[i] = reviewList.get(i).getContentValues();
+            }
+
+            context.getContentResolver().bulkInsert(PopularMovieContract.ReviewEntry.CONTENT_URI,
+                    reviewContentValues);
+        }
+
     }
 
     private static void insertNewTrailers(Context context, Cursor moviesCursor) {

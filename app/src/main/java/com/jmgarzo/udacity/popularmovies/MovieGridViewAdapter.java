@@ -1,7 +1,9 @@
 package com.jmgarzo.udacity.popularmovies;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +13,9 @@ import android.widget.ImageView;
 
 import com.jmgarzo.udacity.popularmovies.Objects.Movie;
 import com.jmgarzo.udacity.popularmovies.data.PopularMovieContract;
+import com.jmgarzo.udacity.popularmovies.sync.AddFavoriteIntentService;
+import com.jmgarzo.udacity.popularmovies.sync.AddTrailerAndReviewIntentService;
+import com.jmgarzo.udacity.popularmovies.utilities.DataBaseUtils;
 import com.jmgarzo.udacity.popularmovies.utilities.NetworksUtils;
 import com.squareup.picasso.Picasso;
 
@@ -53,8 +58,7 @@ public class MovieGridViewAdapter extends RecyclerView.Adapter<MovieGridViewAdap
     public void onBindViewHolder(MovieAdapterViewHolder holder, int position) {
 
         mCursor.moveToPosition(position);
-        int index = mCursor.getColumnIndex(PopularMovieContract.MovieEntry.POSTER_PATH);
-        String posterPath = mCursor.getString(index);
+        String posterPath = mCursor.getString(DataBaseUtils.COL_MOVIE_POSTER_PATH);
 
         String posterUrl = NetworksUtils.buildPosterThumbnail(posterPath);
         Picasso.with(mContext)
@@ -62,6 +66,12 @@ public class MovieGridViewAdapter extends RecyclerView.Adapter<MovieGridViewAdap
                 .placeholder(R.drawable.placeholder)
                 .tag(mContext)
                 .into(holder.mMovieThumb);
+
+        Intent addTrailersAndReviewsIntent = new Intent(mContext, AddTrailerAndReviewIntentService.class);
+        addTrailersAndReviewsIntent.putExtra(DetailFragment.MOVIE_TAG, new Movie(mCursor,position));
+        mContext.startService(addTrailersAndReviewsIntent);
+
+
     }
 
     @Override
@@ -94,10 +104,8 @@ public class MovieGridViewAdapter extends RecyclerView.Adapter<MovieGridViewAdap
         @Override
         public void onClick(View view) {
             int adapterPosition = getAdapterPosition();
-            Movie movie = new Movie(mCursor,adapterPosition);
-//            mCursor.moveToPosition(adapterPosition);
-//            int index = mCursor.getColumnIndex(PopularMovieContract.MovieEntry._ID);
-//            int movieId = mCursor.getInt(index);
+            Movie movie = new Movie(mCursor, adapterPosition);
+
             mClickHandler.onClick(movie);
 
 

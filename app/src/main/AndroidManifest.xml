@@ -58,6 +58,9 @@
         <service
             android:name=".sync.DeleteFromFavoriteIntentService"
             android:exported="false"/>
+        <service
+            android:name=".sync.AddTrailerAndReviewIntentService"
+            android:exported="false"/>
 
     </application>
 

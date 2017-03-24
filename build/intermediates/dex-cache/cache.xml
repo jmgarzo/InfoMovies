@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="/home/jmgarzo/.android/build-cache/d53cbdcf63fe7aac6d94f15f8cd5305b15f91eed/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="93c1199fcb0a34b980e6fff8350daff62e696ec2">
+        <dex dex="/home/jmgarzo/Android/Scholarship/PopularMovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_956dceaa652a84b720ff95c2f204dd20ed5df884/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/jmgarzo/.android/build-cache/deb68bd2cb9f5f10bb8c6c9b3eaae23ba4ef8a2f/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="93c10d68ab5ea070f15782ae6d3a28d1f1d8f45e">
+        <dex dex="/home/jmgarzo/Android/Scholarship/PopularMovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_4c7f30e658a66511fc8660f835f26c85ba694acb/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/jmgarzo/.android/build-cache/edd7cafa295d1c9c584cf0a8e12b069682ba3bd5/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="a3e61044038fb54cddf6b8dc79f41d2b57f42caf">
+        <dex dex="/home/jmgarzo/Android/Scholarship/PopularMovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_3830bd0cb79507d8716445da087b6c96eafd7398/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/jmgarzo/.android/build-cache/f8704b5226cd426a994e0fae3ac9fea6a1ad2d8d/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="44ee06abb66da30f5855e6bf54574e64cdcd982a">
+        <dex dex="/home/jmgarzo/Android/Scholarship/PopularMovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_fd7d6e2e19d9b0858572611c34ad6cdf1dffb9b5/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/jmgarzo/.android/build-cache/ed25f6470218a3b08dde849759c88f59d0955ce2/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="9ab787a20aae245b5b3651ae0b9c38459eb37715">
+        <dex dex="/home/jmgarzo/Android/Scholarship/PopularMovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_bc2e53c338b7f4e3736e4c8c6d0b8ccc74a089c9/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/jmgarzo/Android/Scholarship/PopularMovies/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="c82741bc129dd5f99f11a4ab8666ae24262053b6">
+        <dex dex="/home/jmgarzo/Android/Scholarship/PopularMovies/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_71e74356b6b5d29de43bdff7b6393b5bb3597006/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/jmgarzo/.android/build-cache/529e50315d56912b7969d09006392efa677ac360/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="fbb206f7a119f66ce171d95aae1225a5b209a8b7">
+        <dex dex="/home/jmgarzo/Android/Scholarship/PopularMovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_be80755e6349e18bf822530b187ae15728b381b7/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/jmgarzo/.android/build-cache/36ce301b266a580678f5710b7964fab5aa0a1d0b/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="70f23cb87278f89aa51e6f57e8f0fd5266572d95">
+        <dex dex="/home/jmgarzo/Android/Scholarship/PopularMovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_6fc7210f3311fce7105b57a5f7b07e3227605eba/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/jmgarzo/Android/Sdk/extras/m2repository/com/android/support/constraint/constraint-layout-solver/1.0.2/constraint-layout-solver-1.0.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="b9cd8fc6bd15cb915735d34535db30ece0c44603">
+        <dex dex="/home/jmgarzo/Android/Scholarship/PopularMovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/constraint-layout-solver-1.0.2_4db52a18b45badb6d62a609564e967412cfdbe75/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/jmgarzo/.android/build-cache/c2c82605d382533bb77543c1f5b7f3a86e47679e/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="518768f3200963fbfec652f498da2c9d39245234">
+        <dex dex="/home/jmgarzo/Android/Scholarship/PopularMovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_e4f77571d790e48efa351826a29c3a804c8f2f27/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/jmgarzo/.android/build-cache/b63fc5d8b7d5406036942371ba7e4801742993f7/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="5cc5ef8347a6bafa14556cbd35230aa9b3431bb0">
+        <dex dex="/home/jmgarzo/Android/Scholarship/PopularMovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_464f6831d67118cf3149909031b5720c52c45ff8/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/jmgarzo/.android/build-cache/52676391f88f867803e4973ef15a88dc12639b74/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="4b746ef0fd46acb5aaf3d9ab9a4cec22c28d3211">
+        <dex dex="/home/jmgarzo/Android/Scholarship/PopularMovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_a21093ce04aa546f0f6f55de79c43cbffe922a1c/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/jmgarzo/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/25.3.0/support-annotations-25.3.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="dd84903d2e1af25a6081ef9038ad863cb14ca3a0">
+        <dex dex="/home/jmgarzo/Android/Scholarship/PopularMovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-25.3.0_46a5f456cb7b9786b29ed72965bd51e6c0acbd09/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/jmgarzo/.android/build-cache/16d54757edd2910e03ea63275f9d3e49dbb0bf98/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d6a04527c17597019dad82777c5094a3d60d1c33">
+        <dex dex="/home/jmgarzo/Android/Scholarship/PopularMovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_9dc5a75cafc60a2162c28b588d049491fa6b68e8/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/jmgarzo/.android/build-cache/f4f2fb8ee3884b6196876fa64937d186bdc8df4f/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="425c7b17887e5c3f8cbdf67ba171bc246f29b42c">
+        <dex dex="/home/jmgarzo/Android/Scholarship/PopularMovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_af4d4dff65c16b69afdc407b1e3ba10b0e03bee9/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/jmgarzo/.android/build-cache/3a91419f3f80bd13b8ec1f803ea2db3fab3b0508/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/home/jmgarzo/Android/Scholarship/PopularMovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_c8fcce08b0e1e8045692007986e469fd1ae73e02/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/jmgarzo/Android/Scholarship/PopularMovies/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="a4aef921ffa02d342717b7de415387eadfdac2fa">
+        <dex dex="/home/jmgarzo/Android/Scholarship/PopularMovies/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_af2b3c4c9f497a9e595753e5bfbc6a84d2158087/classes.dex" />
+    </item>
+
+</items>
