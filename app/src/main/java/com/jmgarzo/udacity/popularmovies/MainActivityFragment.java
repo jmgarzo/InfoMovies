@@ -28,6 +28,12 @@ public class MainActivityFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor>,
         MovieGridViewAdapter.MovieGridViewAdapterOnClickHandler {
 
+    private static final int LANDSCAPE_AND_600 = 4;
+    private static final int LANDSCAPE_AND_PHONE = 3;
+    private static final int PORTRAIT_AND_600=3;
+    private static final int DEFAULT = 2;
+
+
     private static final String TAG_LOG = MainActivityFragment.class.getSimpleName();
 
     private static final int ID_MOVIES_LOADER = 14;
@@ -59,7 +65,9 @@ public class MainActivityFragment extends Fragment implements
 
         ButterKnife.bind(this,viewRoot);
 
-        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2, LinearLayoutManager.VERTICAL, false);
+
+
+        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), getSpanCount(), LinearLayoutManager.VERTICAL, false);
 
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
@@ -71,6 +79,21 @@ public class MainActivityFragment extends Fragment implements
         getActivity().getSupportLoaderManager().initLoader(ID_MOVIES_LOADER, null, this);
 
         return viewRoot;
+    }
+
+    private int getSpanCount(){
+
+
+        boolean landscape = getResources().getBoolean(R.bool.isLandscape);
+        boolean width600 = getResources().getBoolean(R.bool.is600);
+        if(landscape && width600){
+            return LANDSCAPE_AND_600;
+        }else if(landscape){
+            return LANDSCAPE_AND_PHONE;
+        }else if(width600){
+            return PORTRAIT_AND_600;
+        }
+        return DEFAULT;
     }
 
     private void loadMovieThumbs() {
@@ -85,13 +108,13 @@ public class MainActivityFragment extends Fragment implements
     }
 
     private void showMovieThumbs() {
-        mErrorMenssageDisplay.setVisibility(View.INVISIBLE);
+        mLoadingIndicator.setVisibility(View.INVISIBLE);
         mRecyclerView.setVisibility(View.VISIBLE);
     }
 
     private void showErrorMessage() {
         mRecyclerView.setVisibility(View.INVISIBLE);
-        mErrorMenssageDisplay.setVisibility(View.VISIBLE);
+        mLoadingIndicator.setVisibility(View.VISIBLE);
     }
 
 
@@ -132,6 +155,8 @@ public class MainActivityFragment extends Fragment implements
         }else{
             showMovieThumbs();
         }
+
+;
 
         mGridViewAdapter.swapCursor(data);
 
