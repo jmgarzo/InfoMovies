@@ -64,11 +64,12 @@ public class MovieGridViewAdapter extends RecyclerView.Adapter<MovieGridViewAdap
         Picasso.with(mContext)
                 .load(posterUrl)
                 .placeholder(R.drawable.placeholder)
+                .error(R.drawable.ic_broken_image_black_48px)
                 .tag(mContext)
                 .into(holder.mMovieThumb);
 
         Intent addTrailersAndReviewsIntent = new Intent(mContext, AddTrailerAndReviewIntentService.class);
-        addTrailersAndReviewsIntent.putExtra(DetailFragment.MOVIE_TAG, new Movie(mCursor,position));
+        addTrailersAndReviewsIntent.putExtra(DetailFragment.MOVIE_TAG, new Movie(mCursor, position));
         mContext.startService(addTrailersAndReviewsIntent);
 
 

@@ -25,7 +25,7 @@
     <string name="pref_sort_by_value_favorite" translatable="false">favorite</string>
 
 
-    <string name="error_message">An error has occurred. </string>
+    <string name="error_message">An error has occurred. Offline?</string>
     <string name="title_activity_detail">Detail</string>
 
 

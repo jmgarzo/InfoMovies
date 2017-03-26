@@ -132,6 +132,12 @@ public class MainActivityFragment extends Fragment implements
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 
+        if(data.getCount()==0){
+            showErrorMessage();
+        }else{
+            showMovieThumbs();
+        }
+
         mGridViewAdapter.swapCursor(data);
 
         //TODO:Quedan cosas por hacer para ajusar pantalla
@@ -142,6 +148,9 @@ public class MainActivityFragment extends Fragment implements
 
         mGridViewAdapter.swapCursor(null);
     }
+
+
+
 
 
 }

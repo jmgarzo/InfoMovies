@@ -256,6 +256,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         Picasso.with(mActivity)
                 .load(NetworksUtils.buildPosterDetail(mMovie.getPosterPath()))
                 .placeholder(R.drawable.placeholder)
+                .error(R.drawable.ic_broken_image_black_48px)
                 .tag(mActivity)
                 .into(postertImage);
         voteAverage.setText(Double.toString(mMovie.getVoteAverage()).concat("/10"));
