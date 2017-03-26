@@ -20,6 +20,9 @@ import com.jmgarzo.udacity.popularmovies.data.PopularMovieContract;
 import com.jmgarzo.udacity.popularmovies.utilities.DataBaseUtils;
 import com.jmgarzo.udacity.popularmovies.utilities.SettingsUtils;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 
 public class MainActivityFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor>,
@@ -30,13 +33,11 @@ public class MainActivityFragment extends Fragment implements
     private static final int ID_MOVIES_LOADER = 14;
 
 
-    private RecyclerView mRecyclerView;
+    @BindView(R.id.recyclerview_movies) RecyclerView mRecyclerView;
+    @BindView(R.id.tv_error_message_display) TextView mErrorMenssageDisplay;
+    @BindView(R.id.pb_loading_indicator) ProgressBar mLoadingIndicator;
+
     private MovieGridViewAdapter mGridViewAdapter;
-
-    private TextView mErrorMenssageDisplay;
-    private ProgressBar mLoadingIndicator;
-
-    Movie mMovie;
 
 
     public interface Callback {
@@ -56,24 +57,18 @@ public class MainActivityFragment extends Fragment implements
         // Inflate the layout for this fragment
         View viewRoot = inflater.inflate(R.layout.fragment_main_activity, container, false);
 
-        mRecyclerView = (RecyclerView) viewRoot.findViewById(R.id.recyclerview_movies);
-
-        mErrorMenssageDisplay = (TextView) viewRoot.findViewById(R.id.tv_error_message_display);
+        ButterKnife.bind(this,viewRoot);
 
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2, LinearLayoutManager.VERTICAL, false);
-        mRecyclerView.setLayoutManager(layoutManager);
 
+        mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
 
         mGridViewAdapter = new MovieGridViewAdapter(getContext(), this);
-
         mRecyclerView.setAdapter(mGridViewAdapter);
-
-        mLoadingIndicator = (ProgressBar) viewRoot.findViewById(R.id.pb_loading_indicator);
         loadMovieThumbs();
 
         getActivity().getSupportLoaderManager().initLoader(ID_MOVIES_LOADER, null, this);
-
 
         return viewRoot;
     }

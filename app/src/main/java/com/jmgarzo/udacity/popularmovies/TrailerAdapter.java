@@ -12,6 +12,9 @@ import android.widget.TextView;
 import com.jmgarzo.udacity.popularmovies.Objects.Trailer;
 import com.jmgarzo.udacity.popularmovies.data.PopularMovieContract;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by jmgarzo on 21/03/17.
  */
@@ -70,17 +73,15 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerA
 
     public class TrailerAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-
-        public final TextView tvTitle;
-        public final TextView tvTrailerInfo;
+        @BindView(R.id.tv_title) TextView tvTitle;
+        @BindView(R.id.tv_trailer_info) TextView tvTrailerInfo;
 
         public TrailerAdapterViewHolder(View view) {
             super(view);
-            tvTitle = (TextView) view.findViewById(R.id.tv_title);
-            tvTrailerInfo = (TextView) view.findViewById(R.id.tv_trailer_info);
+
+            ButterKnife.bind(this,view);
+
             view.setOnClickListener(this);
-
-
         }
 
         @Override

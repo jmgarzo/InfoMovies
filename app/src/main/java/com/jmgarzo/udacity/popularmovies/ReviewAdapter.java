@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 import com.jmgarzo.udacity.popularmovies.data.PopularMovieContract;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by jmgarzo on 21/03/17.
  */
@@ -59,13 +62,12 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewAdap
     }
 
     public class ReviewAdapterViewHolder extends RecyclerView.ViewHolder {
-        public final TextView tvAuthor;
-        public final TextView tvReview;
+        @BindView(R.id.tv_review_author) TextView tvAuthor;
+        @BindView(R.id.tv_review) TextView tvReview;
 
         public ReviewAdapterViewHolder (View view){
             super(view);
-            tvAuthor = (TextView) view.findViewById(R.id.tv_review_author);
-            tvReview = (TextView) view.findViewById(R.id.tv_review);
+            ButterKnife.bind(this,view);
 
         }
 
