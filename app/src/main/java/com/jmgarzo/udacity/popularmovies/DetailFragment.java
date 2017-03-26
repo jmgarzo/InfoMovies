@@ -28,6 +28,9 @@ import com.jmgarzo.udacity.popularmovies.utilities.DataBaseUtils;
 import com.jmgarzo.udacity.popularmovies.utilities.NetworksUtils;
 import com.squareup.picasso.Picasso;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * A placeholder fragment containing a simple view.
  */
@@ -47,21 +50,21 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     private Movie mMovie;
 
 
-    private Activity mActivity;
-    private ProgressBar mProgressBar;
-    private TextView mErrorMenssageDetail;
-    private LinearLayout mContentLayout;
-    private ImageView postertImage;
-    private TextView releaseDate;
-    private TextView voteAverage;
-    private TextView overview;
+    @BindView(R.id.pb_loading_indicator_detail) ProgressBar mProgressBar;
+    @BindView(R.id.tv_error_message_detail) TextView mErrorMenssageDetail;
+    @BindView(R.id.movie_detail) LinearLayout mContentLayout;// private LinearLayout mContentLayout;
+    @BindView(R.id.iv_poster_image) ImageView postertImage;
+    @BindView(R.id.tv_release_date) TextView releaseDate;
+    @BindView(R.id.tv_vote_average) TextView voteAverage;
+    @BindView(R.id.tv_overview_text) TextView overview;
 
-    private FloatingActionButton fab;
+
+    @BindView(R.id.fab) FloatingActionButton fab; //private FloatingActionButton fab;
 
     private TrailerAdapter mTrailerAdapter;
     private ReviewAdapter mReviewAdapter;
-    private RecyclerView mTrailerRecyclerView;
-    private RecyclerView mReviewRecyclerView;
+    @BindView(R.id.recyclerview_trailer) RecyclerView  mTrailerRecyclerView;
+    @BindView(R.id.recyclerview_review) RecyclerView  mReviewRecyclerView;
 
     private int mPosition = RecyclerView.NO_POSITION;
 
@@ -78,16 +81,8 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
 
-        mActivity = getActivity();
-        mProgressBar = (ProgressBar) view.findViewById(R.id.pb_loading_indicator_detail);
-        mContentLayout = (LinearLayout) view.findViewById(R.id.movie_detail);
-        mErrorMenssageDetail = (TextView) view.findViewById(R.id.tv_error_message_detail);
-        releaseDate = (TextView) view.findViewById(R.id.tv_release_date);
-        postertImage = (ImageView) view.findViewById(R.id.iv_poster_image);
-        voteAverage = (TextView) view.findViewById(R.id.tv_vote_average);
-        overview = (TextView) view.findViewById(R.id.tv_overview_text);
+        ButterKnife.bind(this,view);
 
-        fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,8 +105,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
         }
 
-        mTrailerRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview_trailer);
-        mReviewRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview_review);
+
 
         mProgressBar = (ProgressBar) view.findViewById(R.id.pb_loading_indicator_detail);
 
@@ -251,13 +245,13 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     private void loadMovieData() {
         mProgressBar.setVisibility(View.INVISIBLE);
         showMovieData();
-        mActivity.setTitle(mMovie.getTitle());
+        getActivity().setTitle(mMovie.getTitle());
         releaseDate.setText(mMovie.getReleaseDate());
-        Picasso.with(mActivity)
+        Picasso.with(getActivity())
                 .load(NetworksUtils.buildPosterDetail(mMovie.getPosterPath()))
                 .placeholder(R.drawable.placeholder)
                 .error(R.drawable.ic_broken_image_black_48px)
-                .tag(mActivity)
+                .tag(getActivity())
                 .into(postertImage);
         voteAverage.setText(Double.toString(mMovie.getVoteAverage()).concat("/10"));
         overview.setText(mMovie.getOverview());

@@ -3,15 +3,6 @@
 
     <item
         is-multidex="true"
-        jar="/home/jmgarzo/.android/build-cache/f8704b5226cd426a994e0fae3ac9fea6a1ad2d8d/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="44ee06abb66da30f5855e6bf54574e64cdcd982a">
-        <dex dex="/home/jmgarzo/Android/Scholarship/PopularMovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_fd7d6e2e19d9b0858572611c34ad6cdf1dffb9b5/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="/home/jmgarzo/Android/Scholarship/PopularMovies/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
         jumboMode="true"
         optimize="true"
@@ -21,29 +12,11 @@
     </item>
     <item
         is-multidex="true"
-        jar="/home/jmgarzo/Android/Sdk/extras/m2repository/com/android/support/constraint/constraint-layout-solver/1.0.2/constraint-layout-solver-1.0.2.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="b9cd8fc6bd15cb915735d34535db30ece0c44603">
-        <dex dex="/home/jmgarzo/Android/Scholarship/PopularMovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/constraint-layout-solver-1.0.2_4db52a18b45badb6d62a609564e967412cfdbe75/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/jmgarzo/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/25.3.0/support-annotations-25.3.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="dd84903d2e1af25a6081ef9038ad863cb14ca3a0">
-        <dex dex="/home/jmgarzo/Android/Scholarship/PopularMovies/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-25.3.0_46a5f456cb7b9786b29ed72965bd51e6c0acbd09/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="/home/jmgarzo/Android/Scholarship/PopularMovies/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="a4aef921ffa02d342717b7de415387eadfdac2fa">
+        sha1="08367c873237afe42294be59766846ddb315546e">
         <dex dex="/home/jmgarzo/Android/Scholarship/PopularMovies/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_af2b3c4c9f497a9e595753e5bfbc6a84d2158087/classes.dex" />
     </item>
 
