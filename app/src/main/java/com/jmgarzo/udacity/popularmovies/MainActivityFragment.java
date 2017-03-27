@@ -160,7 +160,7 @@ public class MainActivityFragment extends Fragment implements
 
         mGridViewAdapter.swapCursor(data);
 
-        //TODO:Quedan cosas por hacer para ajusar pantalla
+        //TODO:Quedan cosas por hacer para ajustar pantalla
     }
 
     @Override

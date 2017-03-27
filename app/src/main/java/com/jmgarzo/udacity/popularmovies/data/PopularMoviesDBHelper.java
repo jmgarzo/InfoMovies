@@ -81,9 +81,11 @@ public class PopularMoviesDBHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+        //We should delete only normal data, not favorite data
         db.execSQL("DROP TABLE IF EXISTS " + PopularMovieContract.MovieEntry.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + PopularMovieContract.TrailerEntry.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + PopularMovieContract.ReviewEntry.TABLE_NAME);
+
 
     }
 }

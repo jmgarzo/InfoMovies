@@ -36,7 +36,6 @@ public class PopularMovieContract {
         public static final String ADULT = "adult";
         public static final String OVERVIEW = "overview";
         public static final String RELEASE_DATE = "release_date";
-        //TODO:IF I have time store Genre_ids
         //public static final String GENRE_IDS = "genre_ids";
         public static final String MOVIE_WEB_ID = "id";
         public static final String ORIGINAL_TITLE = "original_title";
@@ -67,8 +66,8 @@ public class PopularMovieContract {
 
         public static final String TABLE_NAME = "trailer";
         public static final String _ID = "_id";
+        //Foreign key
         public static final String MOVIE_KEY = "id_movie";
-
         public static final String WEB_TRAILER_ID = "id";
         public static final String ISO_639_1 = "iso_639_1";
         public static final String ISO_3166_1 = "iso_3166_1";
@@ -91,9 +90,8 @@ public class PopularMovieContract {
 
         public static final String TABLE_NAME = "review";
         public static final String _ID ="_id";
+        //Foreign key
         public static final String MOVIE_KEY = "id_movie";
-
-
         public static final String WEB_REVIEW_ID = "id";
         public static final String AUTHOR = "author";
         public static final String CONTENT = "content";

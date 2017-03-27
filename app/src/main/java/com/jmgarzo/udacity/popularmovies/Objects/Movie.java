@@ -52,6 +52,11 @@ public class Movie implements Parcelable {
         }
     }
 
+    /**
+     * Movie's constructor from a cursor and a position
+     * @param cursor
+     * @param position
+     */
     public Movie(Cursor cursor, int position) {
         if (cursor != null && cursor.moveToPosition(position)) {
             cursorToMovie(cursor);

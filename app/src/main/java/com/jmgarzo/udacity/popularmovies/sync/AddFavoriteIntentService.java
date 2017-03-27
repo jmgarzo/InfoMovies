@@ -11,6 +11,9 @@ import com.jmgarzo.udacity.popularmovies.Objects.Movie;
  * Created by jmgarzo on 22/03/17.
  */
 
+/**
+ * This Intent Service add a movie to favorites.
+ */
 public class AddFavoriteIntentService extends IntentService {
 
     public AddFavoriteIntentService() {

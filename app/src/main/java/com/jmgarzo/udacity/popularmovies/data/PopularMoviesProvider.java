@@ -47,7 +47,6 @@ public class PopularMoviesProvider extends ContentProvider {
 
     }
 
-
     @Override
     public boolean onCreate() {
         mOpenHelper = new PopularMoviesDBHelper(getContext());

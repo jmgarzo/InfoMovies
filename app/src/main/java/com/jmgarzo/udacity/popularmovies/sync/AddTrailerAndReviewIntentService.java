@@ -15,7 +15,6 @@ public class AddTrailerAndReviewIntentService extends IntentService {
 
     public AddTrailerAndReviewIntentService(){super("AddTrailerAndReviewIntentService");}
 
-
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         Movie movie = intent.getParcelableExtra(DetailFragment.MOVIE_TAG);
