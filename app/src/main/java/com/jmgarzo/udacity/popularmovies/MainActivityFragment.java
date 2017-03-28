@@ -157,8 +157,6 @@ public class MainActivityFragment extends Fragment implements
             showMovieThumbs();
         }
 
-;
-
         mGridViewAdapter.swapCursor(data);
 
         //TODO:Quedan cosas por hacer para ajustar pantalla

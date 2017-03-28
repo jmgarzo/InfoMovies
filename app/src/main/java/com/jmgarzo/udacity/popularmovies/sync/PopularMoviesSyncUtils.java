@@ -22,14 +22,15 @@ public class PopularMoviesSyncUtils {
 
     private static boolean sInitialized;
 
-//    private static final int SYNC_INTERVAL_HOURS =3;
-//    private static final int SYNC_INTERVAL_SECONDS = (int) java.util.concurrent.TimeUnit.HOURS.toSeconds(SYNC_INTERVAL_HOURS);
-//    private static final int SYNC_FLEXTIME_SECONDS = SYNC_INTERVAL_SECONDS / 3;
+    private static final int SYNC_INTERVAL_HOURS =3;
+    private static final int SYNC_INTERVAL_SECONDS = (int) java.util.concurrent.TimeUnit.HOURS.toSeconds(SYNC_INTERVAL_HOURS);
+    private static final int SYNC_FLEXTIME_SECONDS = SYNC_INTERVAL_SECONDS / 3;
 
 
     //TODO: Change to PRO values
-    private static final int SYNC_INTERVAL_SECONDS = 60;
-    private static final int SYNC_FLEXTIME_SECONDS =SYNC_INTERVAL_SECONDS/3 ;
+//    private static final int SYNC_INTERVAL_SECONDS = 60;
+//    private static final int SYNC_FLEXTIME_SECONDS =SYNC_INTERVAL_SECONDS/3 ;
+
     private static final String MOVIES_SYNC_TAG="movies-sync";
 
     static void scheduleFirebaseJobDispatcherSync(@NonNull final Context context){

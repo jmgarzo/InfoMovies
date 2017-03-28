@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--I know that UI is the worst part of my project. I'm sorry for that. I decided don't spend more time in this project and going on. -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
