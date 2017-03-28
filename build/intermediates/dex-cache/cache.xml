@@ -3,21 +3,21 @@
 
     <item
         is-multidex="true"
-        jar="/home/jmgarzo/Android/Scholarship/PopularMovies/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jar="/home/jmgarzo/Android/Projects/PopularMovies/PopularMovies/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="486c5094415e18bae4d445b9e670f5538ba2e0e2">
+        <dex dex="/home/jmgarzo/Android/Projects/PopularMovies/PopularMovies/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_2faafef832ef3a67bbb203ed999c80ea48d520a9/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/jmgarzo/Android/Projects/PopularMovies/PopularMovies/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
         sha1="c82741bc129dd5f99f11a4ab8666ae24262053b6">
-        <dex dex="/home/jmgarzo/Android/Scholarship/PopularMovies/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_71e74356b6b5d29de43bdff7b6393b5bb3597006/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/jmgarzo/Android/Scholarship/PopularMovies/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="03ae5d6b4594aec3c26f2f7f84a0846b19ae27ef">
-        <dex dex="/home/jmgarzo/Android/Scholarship/PopularMovies/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_af2b3c4c9f497a9e595753e5bfbc6a84d2158087/classes.dex" />
+        <dex dex="/home/jmgarzo/Android/Projects/PopularMovies/PopularMovies/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_d95ad6987f9b32a9f435018cef93a909da7cd44e/classes.dex" />
     </item>
 
 </items>

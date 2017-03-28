@@ -65,8 +65,6 @@ public class MainActivityFragment extends Fragment implements
 
         ButterKnife.bind(this,viewRoot);
 
-
-
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), getSpanCount(), LinearLayoutManager.VERTICAL, false);
 
         mRecyclerView.setLayoutManager(layoutManager);
@@ -74,7 +72,6 @@ public class MainActivityFragment extends Fragment implements
 
         mGridViewAdapter = new MovieGridViewAdapter(getContext(), this);
         mRecyclerView.setAdapter(mGridViewAdapter);
-        loadMovieThumbs();
 
         getActivity().getSupportLoaderManager().initLoader(ID_MOVIES_LOADER, null, this);
 
@@ -96,9 +93,7 @@ public class MainActivityFragment extends Fragment implements
         return DEFAULT;
     }
 
-    private void loadMovieThumbs() {
-        // new FetchDataMovies().execute(getActivity());
-    }
+
 
     @Override
     public void onClick(Movie movie) {
@@ -108,13 +103,16 @@ public class MainActivityFragment extends Fragment implements
     }
 
     private void showMovieThumbs() {
+        mErrorMenssageDisplay.setVisibility(View.INVISIBLE);
         mLoadingIndicator.setVisibility(View.INVISIBLE);
         mRecyclerView.setVisibility(View.VISIBLE);
+
     }
 
     private void showErrorMessage() {
         mRecyclerView.setVisibility(View.INVISIBLE);
-        mLoadingIndicator.setVisibility(View.VISIBLE);
+        mLoadingIndicator.setVisibility(View.INVISIBLE);
+        mErrorMenssageDisplay.setVisibility(View.VISIBLE);
     }
 
 
@@ -151,6 +149,9 @@ public class MainActivityFragment extends Fragment implements
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 
         if(data.getCount()==0){
+            if(SettingsUtils.isPreferenceSortByFavorite(getContext())){
+                mErrorMenssageDisplay.setText(getString(R.string.error_message_favorite));
+            }
             showErrorMessage();
         }else{
             showMovieThumbs();

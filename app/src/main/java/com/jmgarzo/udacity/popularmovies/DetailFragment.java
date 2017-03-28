@@ -1,6 +1,5 @@
 package com.jmgarzo.udacity.popularmovies;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -59,7 +58,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     @BindView(R.id.tv_overview_text) TextView overview;
 
 
-    @BindView(R.id.fab) FloatingActionButton fab; //private FloatingActionButton fab;
+    @BindView(R.id.fab) FloatingActionButton fab;
 
     private TrailerAdapter mTrailerAdapter;
     private ReviewAdapter mReviewAdapter;
@@ -102,8 +101,8 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         Intent intent = getActivity().getIntent();
         if (null != intent) {
             mMovie = intent.getParcelableExtra(MainActivity.MOVIE_INTENT_TAG);
-
         }
+
 
 
 

@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.jmgarzo.udacity.popularmovies.Objects.Trailer;
-import com.jmgarzo.udacity.popularmovies.data.PopularMovieContract;
+import com.jmgarzo.udacity.popularmovies.utilities.DataBaseUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,10 +51,9 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerA
     public void onBindViewHolder(TrailerAdapterViewHolder holder, int position) {
         if (mCursor != null && mCursor.moveToPosition(position)) {
 
-            int indexTitle = mCursor.getColumnIndex(PopularMovieContract.TrailerEntry.NAME);
-            holder.tvTitle.setText(mCursor.getString(indexTitle));
-            int indexSite = mCursor.getColumnIndex(PopularMovieContract.TrailerEntry.SITE);
-            holder.tvTrailerInfo.setText(mCursor.getString(indexSite));
+            holder.tvTitle.setText(mCursor.getString(DataBaseUtils.COL_TRAILER_NAME));
+            holder.tvTrailerInfo.setText(mCursor.getString(DataBaseUtils.COL_TRAILER_SITE) + " - "
+            + mCursor.getString(DataBaseUtils.COL_TRAILER_SIZE) + "p");
         }
 
     }

@@ -26,7 +26,11 @@
 
 
     <string name="error_message">An error has occurred. Offline?</string>
+    <string name="error_message_favorite">Favorite list is empty</string>
+
     <string name="title_activity_detail">Detail</string>
+
+    <string name="image_play">Play</string>
 
 
 </resources>
