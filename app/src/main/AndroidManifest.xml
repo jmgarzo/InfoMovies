@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.jmgarzo.udacity.popularmovies">
+    package="com.jmgarzo.infomovies2">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -24,7 +24,7 @@
             android:theme="@style/SettingsTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jmgarzo.udacity.popularmovies.MainActivity" />
+                android:value=".MainActivity" />
         </activity>
         <activity
             android:name=".Detail"
@@ -33,7 +33,7 @@
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jmgarzo.udacity.popularmovies.MainActivity" />
+                android:value=".MainActivity" />
         </activity>
 
         <provider
