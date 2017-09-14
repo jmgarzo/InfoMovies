@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.1"
     defaultConfig {
         applicationId "com.jmgarzo.infomovies2"
         minSdkVersion 15
-        targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        targetSdkVersion 26
+        versionCode 4
+        versionName "4.00"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
@@ -19,7 +19,8 @@ android {
         }
     }
     buildTypes.each {
-        it.buildConfigField 'String', 'THE_MOVIE_DB_API_KEY', API_KEY
+        it.buildConfigField 'String', 'THE_MOVIE_DB_API_KEY', '"3890bbe3b27964c4c01fe8863a852df5"'
+
     }
 }
 
@@ -30,11 +31,12 @@ dependencies {
     })
 
 
-    compile 'com.android.support:recyclerview-v7:25.3.0'
-    compile 'com.android.support:appcompat-v7:25.3.0'
-    compile 'com.android.support:support-v4:25.3.0'
+    compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.android.support:design:26.0.0-alpha1'
+    compile 'com.android.support:recyclerview-v7:26.0.0-alpha1'
+    compile 'com.android.support:support-v4:26.0.0-alpha1'
     compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.android.support:design:25.3.0'
     compile 'com.firebase:firebase-jobdispatcher:0.5.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.jakewharton:butterknife:8.5.1'

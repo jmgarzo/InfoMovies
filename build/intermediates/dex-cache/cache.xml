@@ -3,192 +3,57 @@
 
     <item
         is-multidex="true"
-        jar="C:\Users\jmgarzo\Android\Projects\PopularMovies\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jar="C:\Users\jmgarzo\Android\Projects\TopMoviesProject\InfoMovies\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
         jumboMode="true"
         optimize="true"
-        revision="25.0.2"
-        sha1="434bf8c9d2a420ac3947f2d6f780cd911008398f">
-        <dex dex="C:\Users\jmgarzo\Android\Projects\PopularMovies\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_c338c95dab96f26ea52e2f1bc0383ed8801e8bbb\classes.dex" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\jmgarzo\.android\build-cache\5331a0d9417478a85098f23a2502a2e5e4d857f7\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="d6a04527c17597019dad82777c5094a3d60d1c33">
-        <dex dex="C:\Users\jmgarzo\Android\Projects\PopularMovies\app\build\intermediates\pre-dexed\release\classes_76562ffd2cd98a78044a7085b0c07bc44fd7d807.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\jmgarzo\.android\build-cache\3843247a84202e5b44067f367babd350b618d693\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="425c7b17887e5c3f8cbdf67ba171bc246f29b42c">
-        <dex dex="C:\Users\jmgarzo\Android\Projects\PopularMovies\app\build\intermediates\pre-dexed\release\classes_5fb2850108fa4ad048636712e4208a463bdda5f2.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\jmgarzo\.android\build-cache\05d07f5b33910058f7f9fdaa290eee9c4aaab0e2\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="93c1199fcb0a34b980e6fff8350daff62e696ec2">
-        <dex dex="C:\Users\jmgarzo\Android\Projects\PopularMovies\app\build\intermediates\pre-dexed\release\classes_ba95d304f496b420897c67abfb255486348857ac.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\jmgarzo\.gradle\caches\modules-2\files-2.1\com.squareup.picasso\picasso\2.5.2\7446d06ec8d4f7ffcc53f1da37c95f200dcb9387\picasso-2.5.2.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="7446d06ec8d4f7ffcc53f1da37c95f200dcb9387">
-        <dex dex="C:\Users\jmgarzo\Android\Projects\PopularMovies\app\build\intermediates\pre-dexed\release\picasso-2.5.2_1c3eda0be984680edab98ef229ca5ecc57641aee.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\jmgarzo\AppData\Local\Android\Sdk\extras\m2repository\com\android\support\constraint\constraint-layout-solver\1.0.2\constraint-layout-solver-1.0.2.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="b9cd8fc6bd15cb915735d34535db30ece0c44603">
-        <dex dex="C:\Users\jmgarzo\Android\Projects\PopularMovies\app\build\intermediates\pre-dexed\release\constraint-layout-solver-1.0.2_0e4d9f6a148f24ce1966272de08dc8d9dccff762.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\jmgarzo\AppData\Local\Android\Sdk\extras\android\m2repository\com\android\support\support-annotations\25.3.0\support-annotations-25.3.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="dd84903d2e1af25a6081ef9038ad863cb14ca3a0">
-        <dex dex="C:\Users\jmgarzo\Android\Projects\PopularMovies\app\build\intermediates\pre-dexed\release\support-annotations-25.3.0_8c682a8e9b953849685d53612ab8317cb2dab0ce.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\jmgarzo\.android\build-cache\2d27f42a99796c739053d5968831c7e71199db96\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="19f281a785ca0eb5f6799fc7bf7ca199a9ca1e8b">
-        <dex dex="C:\Users\jmgarzo\Android\Projects\PopularMovies\app\build\intermediates\pre-dexed\release\classes_e2e911709a0919f91e5ad6ddb4f4317405afe83d.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\jmgarzo\.android\build-cache\9ace58f7257114b2fc79178242ebc0837cd552df\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="4b746ef0fd46acb5aaf3d9ab9a4cec22c28d3211">
-        <dex dex="C:\Users\jmgarzo\Android\Projects\PopularMovies\app\build\intermediates\pre-dexed\release\classes_ea7d77448de6a8eac50f1495a66cd302f187b188.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\jmgarzo\.android\build-cache\4299775f16439deaf73983ae4d2342a40adddd93\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="5cc5ef8347a6bafa14556cbd35230aa9b3431bb0">
-        <dex dex="C:\Users\jmgarzo\Android\Projects\PopularMovies\app\build\intermediates\pre-dexed\release\classes_9017398199571281a6a0c3ae16bf1b7b029c0738.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\jmgarzo\.android\build-cache\d6c2fbceb2d33252ad523b7bd1188466d9d19f94\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="a7d1d5f89815c94a839ffd4de5f083f5e166d9a5">
-        <dex dex="C:\Users\jmgarzo\Android\Projects\PopularMovies\app\build\intermediates\pre-dexed\release\classes_05a54b184f27fa5281bcbaba7fe3145c2baae3d6.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\jmgarzo\.android\build-cache\e4d7abc9261d0313f269a01a68bc55ccfda10bbf\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="44ee06abb66da30f5855e6bf54574e64cdcd982a">
-        <dex dex="C:\Users\jmgarzo\Android\Projects\PopularMovies\app\build\intermediates\pre-dexed\release\classes_43425900e575f1cce4b0a5eba39617d40b4fa448.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\jmgarzo\.android\build-cache\64fc326e2bb6f8e4897d4d81c6d1c38c41d14c42\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="a3e61044038fb54cddf6b8dc79f41d2b57f42caf">
-        <dex dex="C:\Users\jmgarzo\Android\Projects\PopularMovies\app\build\intermediates\pre-dexed\release\classes_553e631fefab0f6b4d68d65851956c0c81cd7510.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\jmgarzo\.android\build-cache\5cff6b780fe68392646609c6dba5febb78ff287a\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="518768f3200963fbfec652f498da2c9d39245234">
-        <dex dex="C:\Users\jmgarzo\Android\Projects\PopularMovies\app\build\intermediates\pre-dexed\release\classes_635f3723e80aaeb3d087fa57e6b64169395d6858.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\jmgarzo\.android\build-cache\bdb4ebaa1334012a197ec97fd5309b634011c367\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="fbb206f7a119f66ce171d95aae1225a5b209a8b7">
-        <dex dex="C:\Users\jmgarzo\Android\Projects\PopularMovies\app\build\intermediates\pre-dexed\release\classes_ea292d402b7f65f4eac27504a7d268cdd5bf8988.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\jmgarzo\.android\build-cache\4e1f493c29f3d60ace961001cd12210b3dc1d13b\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="9ab787a20aae245b5b3651ae0b9c38459eb37715">
-        <dex dex="C:\Users\jmgarzo\Android\Projects\PopularMovies\app\build\intermediates\pre-dexed\release\classes_52f27fcd343bdf304f465477ea3af30415be8d0b.jar" />
+        revision="26.0.1"
+        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
+        <dex dex="C:\Users\jmgarzo\Android\Projects\TopMoviesProject\InfoMovies\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_3ccd81f53cad8f1dbaf8dcb67fd59374109943cf\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\jmgarzo\Android\Projects\PopularMovies\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jar="C:\Users\jmgarzo\.gradle\caches\modules-2\files-2.1\com.jakewharton\butterknife-annotations\8.5.1\bb67dad90bab7cd77a8f7f1b8442b47e3a2326bc\butterknife-annotations-8.5.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="bb67dad90bab7cd77a8f7f1b8442b47e3a2326bc">
+        <dex dex="C:\Users\jmgarzo\Android\Projects\TopMoviesProject\InfoMovies\app\build\intermediates\transforms\dex\debug\folders\1000\10\butterknife-annotations-8.5.1_67d2dcd4b8bbc272d70058d6ed772b8b4f50f7fb\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\jmgarzo\.android\build-cache\2d27f42a99796c739053d5968831c7e71199db96\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="19f281a785ca0eb5f6799fc7bf7ca199a9ca1e8b">
+        <dex dex="C:\Users\jmgarzo\Android\Projects\TopMoviesProject\InfoMovies\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_e2e911709a0919f91e5ad6ddb4f4317405afe83d\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\jmgarzo\Android\Projects\TopMoviesProject\InfoMovies\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="8fa1624cea7b583516f129f7bf5b57d5245c5a5c">
+        <dex dex="C:\Users\jmgarzo\Android\Projects\TopMoviesProject\InfoMovies\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_db6ef28a136ea23a5270162267a7b969785b84e1\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\jmgarzo\Android\Projects\TopMoviesProject\InfoMovies\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="dea8400494d90223897d3a862737257a287e3f0f">
+        <dex dex="C:\Users\jmgarzo\Android\Projects\TopMoviesProject\InfoMovies\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_db6ef28a136ea23a5270162267a7b969785b84e1\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\jmgarzo\Android\Projects\TopMoviesProject\InfoMovies\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
         sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
-        <dex dex="C:\Users\jmgarzo\Android\Projects\PopularMovies\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_873225fea55b190a9e3a4754f5293af8eb354c29\classes.dex" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\jmgarzo\.android\build-cache\35e24e37cb4e39d84e8e016f46cf3803228bbaed\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="93c10d68ab5ea070f15782ae6d3a28d1f1d8f45e">
-        <dex dex="C:\Users\jmgarzo\Android\Projects\PopularMovies\app\build\intermediates\pre-dexed\release\classes_675deddb087d86133412355956d6027675511137.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\jmgarzo\.android\build-cache\d5cc6d908ca723500645d6e24cd0177851511be1\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="70f23cb87278f89aa51e6f57e8f0fd5266572d95">
-        <dex dex="C:\Users\jmgarzo\Android\Projects\PopularMovies\app\build\intermediates\pre-dexed\release\classes_e3fd71c5acc877a197d903ec9a41b866dd4dd9e7.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\jmgarzo\.gradle\caches\modules-2\files-2.1\com.jakewharton\butterknife-annotations\8.5.1\bb67dad90bab7cd77a8f7f1b8442b47e3a2326bc\butterknife-annotations-8.5.1.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="bb67dad90bab7cd77a8f7f1b8442b47e3a2326bc">
-        <dex dex="C:\Users\jmgarzo\Android\Projects\PopularMovies\app\build\intermediates\pre-dexed\release\butterknife-annotations-8.5.1_67d2dcd4b8bbc272d70058d6ed772b8b4f50f7fb.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\jmgarzo\.android\build-cache\6e6f331aed15ce3006fa967d1dd6f638c04208f6\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
-        <dex dex="C:\Users\jmgarzo\Android\Projects\PopularMovies\app\build\intermediates\pre-dexed\release\classes_dfcf0af94a1ae7f84b5c0411a9c087c767bf8665.jar" />
+        <dex dex="C:\Users\jmgarzo\Android\Projects\TopMoviesProject\InfoMovies\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_3ccd81f53cad8f1dbaf8dcb67fd59374109943cf\classes.dex" />
     </item>
 
 </items>
